@@ -9,6 +9,7 @@ import Events from "./pages/Events";
 import Leaderboard from "./pages/Leaderboard";
 import News from "./pages/News";
 import Rules from "./pages/Rules";
+import Players from "./pages/Players";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -25,6 +26,7 @@ const App = () => (
             <Route path="/events" element={<Events />} />
             <Route path="/leaderboard" element={<Leaderboard />} />
             <Route path="/news" element={<News />} />
+            <Route path="/players" element={<Players />} />
             <Route path="/rules" element={<Rules />} />
           </Route>
           <Route path="*" element={<NotFound />} />

@@ -5,8 +5,9 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 
 const navItems = [
-  { to: "/events", label: "Events" },
   { to: "/leaderboard", label: "Leaderboard" },
+  { to: "/events", label: "Events" },
+  { to: "/players", label: "Players" },
   { to: "/news", label: "News" },
   { to: "/rules", label: "Rules" },
 ];
