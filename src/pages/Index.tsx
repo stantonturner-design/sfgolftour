@@ -22,7 +22,7 @@ Golf Tour
           <p className="mx-auto mt-6 max-w-xl text-lg opacity-80 font-sans">
             Competitive amateur golf across the finest courses in the Bay Area. Join the tour, compete in events, and track your journey to the top.
           </p>
-          <div className="mt-8 flex flex-wrap justify-center gap-4">
+          <div className="mt-8 flex flex-wrap justify-center gap-4 border-0">
             <Button size="lg" asChild>
               <Link to="/events">View Events</Link>
             </Button>
