@@ -9,16 +9,17 @@ const Index = () => {
       {/* Hero */}
       <section className="relative overflow-hidden bg-secondary py-24 text-secondary-foreground md:py-32">
         <div className="absolute inset-0 opacity-10">
-          <div className="h-full w-full bg-[radial-gradient(ellipse_at_top_right,hsl(var(--primary))_0%,transparent_60%)]" />
+          <div className="h-full w-full bg-[radial-gradient(ellipse_at_top_right,hsl(var(--primary))_0%,transparent_60%)] shadow-md rounded-none" />
         </div>
-        <div className="container relative text-center">
+        <div className="container relative text-center border-4 border-primary-foreground border-dashed bg-[#25344b]">
           <p className="mb-3 text-sm font-semibold uppercase tracking-[0.2em] text-accent">
             Est. 2025 &middot; San Francisco, CA
           </p>
-          <h1 className="font-display text-5xl font-bold leading-tight md:text-7xl">
-            San Francisco<br />Golf Tour
+          <h1 className="text-5xl font-bold leading-tight text-[#fff3e0] font-sans bg-[#15841d] md:text-8xl">San Francisco 
+Golf Tour
+            <br />Golf Tour
           </h1>
-          <p className="mx-auto mt-6 max-w-xl text-lg opacity-80">
+          <p className="mx-auto mt-6 max-w-xl text-lg opacity-80 font-sans">
             Competitive amateur golf across the finest courses in the Bay Area. Join the tour, compete in events, and track your journey to the top.
           </p>
           <div className="mt-8 flex flex-wrap justify-center gap-4">
@@ -35,26 +36,25 @@ const Index = () => {
       {/* Quick Links */}
       <section className="container -mt-10 relative z-10">
         <div className="grid gap-4 md:grid-cols-3">
-          {[
-            { icon: Calendar, title: "Upcoming Events", desc: "See the schedule and sign up for tee times", to: "/events" },
-            { icon: Trophy, title: "Leaderboard", desc: "Season standings and player rankings", to: "/leaderboard" },
-            { icon: Newspaper, title: "Tour News", desc: "Latest updates and announcements", to: "/news" },
-          ].map((item) => (
-            <Link key={item.to} to={item.to}>
+          {[{ icon: Calendar, title: "Upcoming Events", desc: "See the schedule and sign up for tee times", to: "/events" },
+          { icon: Trophy, title: "Leaderboard", desc: "Season standings and player rankings", to: "/leaderboard" },
+          { icon: Newspaper, title: "Tour News", desc: "Latest updates and announcements", to: "/news" }].
+          map((item) =>
+          <Link key={item.to} to={item.to}>
               <Card className="group transition-shadow hover:shadow-md">
                 <CardContent className="flex items-start gap-4 p-6">
                   <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-md bg-primary/10 text-primary">
                     <item.icon className="h-5 w-5" />
                   </div>
                   <div className="flex-1">
-                    <h3 className="font-display text-lg font-semibold">{item.title}</h3>
-                    <p className="mt-1 text-sm text-muted-foreground">{item.desc}</p>
+                    <h3 className="text-lg font-semibold font-sans">{item.title}</h3>
+                    <p className="mt-1 text-sm text-muted-foreground font-sans">{item.desc}</p>
                   </div>
                   <ArrowRight className="mt-1 h-4 w-4 text-muted-foreground opacity-0 transition-opacity group-hover:opacity-100" />
                 </CardContent>
               </Card>
             </Link>
-          ))}
+          )}
         </div>
       </section>
 
@@ -95,8 +95,8 @@ const Index = () => {
             </Button>
           </div>
           <div className="mt-8 grid gap-6 md:grid-cols-3">
-            {[1, 2, 3].map((i) => (
-              <Card key={i} className="overflow-hidden">
+            {[1, 2, 3].map((i) =>
+            <Card key={i} className="overflow-hidden">
                 <div className="h-40 bg-muted" />
                 <CardContent className="p-5">
                   <p className="text-xs text-muted-foreground">Coming soon</p>
@@ -106,12 +106,12 @@ const Index = () => {
                   </p>
                 </CardContent>
               </Card>
-            ))}
+            )}
           </div>
         </div>
       </section>
-    </div>
-  );
+    </div>);
+
 };
 
 export default Index;
