@@ -15,9 +15,10 @@ const Index = () => {
           <p className="mb-3 text-sm font-semibold uppercase tracking-[0.2em] text-accent">
             Est. 2025 &middot; San Francisco, CA
           </p>
-          <h1 className="text-5xl font-bold leading-tight text-[#fff3e0] font-sans bg-[#15841d] md:text-8xl">San Francisco 
-Golf Tour
-            <br />Golf Tour
+          <h1 className="text-5xl font-bold leading-tight text-[#fff3e0] font-sans bg-[#15841d] md:text-8xl">
+            San Francisco
+            <br />
+            Golf Tour
           </h1>
           <p className="mx-auto mt-6 max-w-xl text-lg opacity-80 font-sans">
             Competitive amateur golf across the finest courses in the Bay Area. Join the tour, compete in events, and track your journey to the top.
