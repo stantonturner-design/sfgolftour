@@ -11,14 +11,13 @@ const Index = () => {
         <div className="absolute inset-0 opacity-10">
           <div className="h-full w-full bg-[radial-gradient(ellipse_at_top_right,hsl(var(--primary))_0%,transparent_60%)] shadow-md rounded-none" />
         </div>
-        <div className="container relative text-center border-4 border-primary-foreground border-dashed bg-[#25344b]">
+        <div className="container relative text-center border-4 border-primary-foreground bg-[#25344b] border-none">
           <p className="mb-3 text-sm font-semibold uppercase tracking-[0.2em] text-accent">
             Est. 2025 &middot; San Francisco, CA
           </p>
-          <h1 className="text-5xl font-bold leading-tight text-[#fff3e0] font-sans bg-[#15841d] md:text-8xl">
-            San Francisco
-            <br />
-            Golf Tour
+          <h1 className="text-5xl font-bold leading-tight text-[#fff3e0] font-sans bg-[#15841d] md:text-8xl border-4">San Francisco 
+Golf Tour
+            <br />Golf Tour
           </h1>
           <p className="mx-auto mt-6 max-w-xl text-lg opacity-80 font-sans">
             Competitive amateur golf across the finest courses in the Bay Area. Join the tour, compete in events, and track your journey to the top.
