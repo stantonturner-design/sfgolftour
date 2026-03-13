@@ -12,10 +12,10 @@ const Index = () => {
           <div className="h-full w-full bg-[radial-gradient(ellipse_at_top_right,hsl(var(--primary))_0%,transparent_60%)] shadow-md rounded-none" />
         </div>
         <div className="container relative text-center border-4 border-primary-foreground bg-[#25344b] border-none">
-          <p className="mb-3 font-semibold uppercase tracking-[0.2em] text-xl text-[#fff3e0]">EST. 2022 · SAN FRANCISCO, CA
+          <p className="mb-3 font-semibold uppercase tracking-[0.2em] text-xl text-[#fff3e0]">EST. 2022
 
           </p>
-          <h1 className="text-5xl font-bold leading-tight text-[#fff3e0] font-sans bg-[#15841d] md:text-8xl border-4">San Francisco 
+          <h1 className="text-5xl font-bold leading-tight text-[#fff3e0] font-sans bg-[#15841d] md:text-8xl border-4">San Francisco
 Golf Tour
             <br />Golf Tour
           </h1>
