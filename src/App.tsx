@@ -10,6 +10,7 @@ import Leaderboard from "./pages/Leaderboard";
 import News from "./pages/News";
 import Rules from "./pages/Rules";
 import Players from "./pages/Players";
+import TeeSheet from "./pages/TeeSheet";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -28,6 +29,7 @@ const App = () => (
             <Route path="/news" element={<News />} />
             <Route path="/players" element={<Players />} />
             <Route path="/rules" element={<Rules />} />
+            <Route path="/tee-sheet" element={<TeeSheet />} />
           </Route>
           <Route path="*" element={<NotFound />} />
         </Routes>
