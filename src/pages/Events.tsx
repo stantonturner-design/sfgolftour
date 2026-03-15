@@ -116,9 +116,9 @@ const Events = () => {
                   </div>
                   <div className="flex gap-2">
                     <Button variant="outline" size="sm" asChild>
-                      <a href={evt.teeSheet} target="_blank" rel="noopener noreferrer">
+                      <Link to={`/tee-sheet?event=${encodeURIComponent(evt.name)}`}>
                         <ClipboardList className="mr-1" /> Tee Sheet
-                      </a>
+                      </Link>
                     </Button>
                     <Button size="sm" asChild>
                       <a href={evt.results} target="_blank" rel="noopener noreferrer">
