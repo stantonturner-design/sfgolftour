@@ -10,6 +10,7 @@ import Leaderboard from "./pages/Leaderboard";
 import News from "./pages/News";
 import Rules from "./pages/Rules";
 import Players from "./pages/Players";
+import TeeSheet from "./pages/TeeSheet";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
