@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Users } from "lucide-react";
+import { Users, ExternalLink } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { parseCSV } from "@/lib/csv";
 
@@ -15,6 +15,7 @@ type Player = {
   wins: number;
   top5: number;
   top10: number;
+  roundRecapUrl: string;
 };
 
 const Players = () => {
@@ -40,6 +41,7 @@ const Players = () => {
             wins: parseInt(r[7]) || 0,
             top5: parseInt(r[8]) || 0,
             top10: parseInt(r[9]) || 0,
+            roundRecapUrl: (r[10] || "").trim(),
           });
         }
         setPlayers(parsed);
@@ -72,27 +74,40 @@ const Players = () => {
 
       {!loading && players.length > 0 && (
         <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-          {players.map((p) => (
-            <Card key={p.name} className="overflow-hidden transition-shadow hover:shadow-lg">
-              <CardContent className="flex items-start gap-4 p-5">
-                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-primary text-primary-foreground font-bold text-sm">
-                  {initials(p.name)}
-                </div>
-                <div className="min-w-0">
-                  <p className="font-semibold truncate">{p.name}</p>
-                  <p className="text-xs text-muted-foreground">
-                    Rank #{p.rank} · {p.points} pts
-                  </p>
-                  <div className="mt-2 flex flex-wrap gap-x-3 gap-y-1 text-xs text-muted-foreground">
-                    <span>{p.events} events</span>
-                    <span>{p.wins} wins</span>
-                    <span>{p.birdies} birdies</span>
-                    {p.top5 > 0 && <span>{p.top5} top-5</span>}
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          ))}
+          {players.map((p) => {
+            const hasLink = !!p.roundRecapUrl;
+            const Wrapper = hasLink ? "a" : "div";
+            const wrapperProps = hasLink
+              ? { href: p.roundRecapUrl, target: "_blank", rel: "noopener noreferrer" }
+              : {};
+
+            return (
+              <Wrapper key={p.name} {...wrapperProps} className={hasLink ? "block" : ""}>
+                <Card className={`overflow-hidden transition-shadow hover:shadow-lg h-full ${hasLink ? "cursor-pointer" : ""}`}>
+                  <CardContent className="flex items-start gap-4 p-5">
+                    <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-primary text-primary-foreground font-bold text-sm">
+                      {initials(p.name)}
+                    </div>
+                    <div className="min-w-0 flex-1">
+                      <div className="flex items-center gap-1.5">
+                        <p className="font-semibold truncate">{p.name}</p>
+                        {hasLink && <ExternalLink className="h-3.5 w-3.5 shrink-0 text-muted-foreground" />}
+                      </div>
+                      <p className="text-xs text-muted-foreground">
+                        Rank #{p.rank} · {p.points} pts
+                      </p>
+                      <div className="mt-2 flex flex-wrap gap-x-3 gap-y-1 text-xs text-muted-foreground">
+                        <span>{p.events} events</span>
+                        <span>{p.wins} wins</span>
+                        <span>{p.birdies} birdies</span>
+                        {p.top5 > 0 && <span>{p.top5} top-5</span>}
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              </Wrapper>
+            );
+          })}
         </div>
       )}
     </div>
