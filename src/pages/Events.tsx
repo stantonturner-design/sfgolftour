@@ -1,4 +1,5 @@
 import { Calendar, ExternalLink, ClipboardList, Trophy, DollarSign } from "lucide-react";
+import { Link } from "react-router-dom";
 import { Card, CardContent, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
