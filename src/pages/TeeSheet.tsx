@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { parseCSV } from "@/lib/csv";
 
 const SHEET_URL =
-  "https://docs.google.com/spreadsheets/d/e/2PACX-1vTFoFbbyxvSushAcAppZY8YEP-cDAXH5GhQCewq4QOgIW-WqIW7SDcHX4Xsz2UeP7tI4OYAjZTgQVOc/pub?gid=1979318911&single=true&output=csv";
+  "https://docs.google.com/spreadsheets/d/e/2PACX-1vTFoFbbyxvSushAcAppZY8YEP-cDAXH5GhQCewq4QOgIW-WqIW7SDcHX4Xsz2UeP7tI4OYAjZTgQVOc/pub?gid=1479662039&single=true&output=csv";
 
 interface Player {
   name: string;
