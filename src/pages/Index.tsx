@@ -2,8 +2,12 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Calendar, Trophy, Newspaper, ArrowRight } from "lucide-react";
+import { newsArticles } from "@/data/newsArticles";
+import { format } from "date-fns";
 
 const Index = () => {
+  const latestNews = newsArticles.slice(0, 3);
+
   return (
     <div>
       {/* Hero */}
@@ -12,11 +16,10 @@ const Index = () => {
           <div className="h-full w-full bg-[radial-gradient(ellipse_at_top_right,hsl(var(--primary))_0%,transparent_60%)] shadow-md rounded-none" />
         </div>
         <div className="container relative text-center border-4 border-primary-foreground bg-[#25344b] border-none">
-          <p className="mb-3 font-semibold uppercase tracking-[0.2em] text-xl text-[#fff3e0]">EST. 2022
-
-          </p>
-          <h1 className="text-5xl font-bold leading-tight text-[#fff3e0] font-sans bg-[#15841d] md:text-8xl border-4">San Francisco
-Golf Tour
+          <p className="mb-3 font-semibold uppercase tracking-[0.2em] text-xl text-[#fff3e0]">EST. 2022</p>
+          <h1 className="text-5xl font-bold leading-tight text-[#fff3e0] font-sans bg-[#15841d] md:text-8xl border-4">
+            San Francisco
+            Golf Tour
             <br />Golf Tour
           </h1>
           <p className="mx-auto mt-6 max-w-xl text-lg opacity-80 font-sans">
@@ -36,11 +39,12 @@ Golf Tour
       {/* Quick Links */}
       <section className="container -mt-10 relative z-10">
         <div className="grid gap-4 md:grid-cols-3">
-          {[{ icon: Calendar, title: "Upcoming Events", desc: "See the schedule and sign up for tee times", to: "/events" },
-          { icon: Trophy, title: "Leaderboard", desc: "Season standings and player rankings", to: "/leaderboard" },
-          { icon: Newspaper, title: "Tour News", desc: "Latest updates and announcements", to: "/news" }].
-          map((item) =>
-          <Link key={item.to} to={item.to}>
+          {[
+            { icon: Calendar, title: "Upcoming Events", desc: "See the schedule and sign up for tee times", to: "/events" },
+            { icon: Trophy, title: "Leaderboard", desc: "Season standings and player rankings", to: "/leaderboard" },
+            { icon: Newspaper, title: "Tour News", desc: "Latest updates and announcements", to: "/news" },
+          ].map((item) => (
+            <Link key={item.to} to={item.to}>
               <Card className="group transition-shadow hover:shadow-md">
                 <CardContent className="flex items-start gap-4 p-6">
                   <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-md bg-primary/10 text-primary">
@@ -54,7 +58,7 @@ Golf Tour
                 </CardContent>
               </Card>
             </Link>
-          )}
+          ))}
         </div>
       </section>
 
@@ -82,7 +86,7 @@ Golf Tour
         </div>
       </section>
 
-      {/* News Preview */}
+      {/* Latest News */}
       <section className="bg-muted/50 py-16 md:py-24">
         <div className="container">
           <div className="flex items-end justify-between">
@@ -95,23 +99,35 @@ Golf Tour
             </Button>
           </div>
           <div className="mt-8 grid gap-6 md:grid-cols-3">
-            {[1, 2, 3].map((i) =>
-            <Card key={i} className="overflow-hidden">
-                <div className="h-40 bg-muted" />
-                <CardContent className="p-5">
-                  <p className="text-xs text-muted-foreground">Coming soon</p>
-                  <h3 className="mt-1 font-display text-lg font-semibold">News Article {i}</h3>
-                  <p className="mt-2 text-sm text-muted-foreground">
-                    Stay tuned for the latest updates from the San Francisco Golf Tour.
-                  </p>
-                </CardContent>
-              </Card>
-            )}
+            {latestNews.map((article) => (
+              <Link key={article.id} to={`/news/${article.slug}`} className="group">
+                <Card className="h-full overflow-hidden transition-shadow group-hover:shadow-md">
+                  <div className="relative h-44 overflow-hidden">
+                    <img
+                      src={article.coverImage}
+                      alt={article.title}
+                      className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    />
+                  </div>
+                  <CardContent className="p-5">
+                    <p className="text-xs text-muted-foreground">
+                      {format(new Date(article.publishDate), "MMM d, yyyy")}
+                    </p>
+                    <h3 className="mt-1 font-display text-lg font-semibold leading-snug">
+                      {article.title}
+                    </h3>
+                    <p className="mt-2 text-sm text-muted-foreground line-clamp-2">
+                      {article.excerpt}
+                    </p>
+                  </CardContent>
+                </Card>
+              </Link>
+            ))}
           </div>
         </div>
       </section>
-    </div>);
-
+    </div>
+  );
 };
 
 export default Index;

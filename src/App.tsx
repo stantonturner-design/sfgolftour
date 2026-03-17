@@ -8,6 +8,7 @@ import Index from "./pages/Index";
 import Events from "./pages/Events";
 import Leaderboard from "./pages/Leaderboard";
 import News from "./pages/News";
+import NewsArticle from "./pages/NewsArticle";
 import Rules from "./pages/Rules";
 import Players from "./pages/Players";
 import TeeSheet from "./pages/TeeSheet";
@@ -27,6 +28,7 @@ const App = () => (
             <Route path="/events" element={<Events />} />
             <Route path="/leaderboard" element={<Leaderboard />} />
             <Route path="/news" element={<News />} />
+            <Route path="/news/:slug" element={<NewsArticle />} />
             <Route path="/players" element={<Players />} />
             <Route path="/rules" element={<Rules />} />
             <Route path="/tee-sheet" element={<TeeSheet />} />
