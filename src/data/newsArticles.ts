@@ -1,8 +1,7 @@
-import baylandsImg from "@/assets/news/baylands-recap.jpg";
 import seasonImg from "@/assets/news/season-preview.jpg";
-import trophyImg from "@/assets/news/championship-trophy.jpg";
-import membersImg from "@/assets/news/new-members.jpg";
+import baylandsImg from "@/assets/news/baylands-recap.jpg";
 import presidioImg from "@/assets/news/presidio-spotlight.jpg";
+import membersImg from "@/assets/news/new-members.jpg";
 
 export interface NewsArticle {
   id: string;
@@ -11,113 +10,106 @@ export interface NewsArticle {
   excerpt: string;
   coverImage: string;
   publishDate: string; // ISO string
-  category: "Recap" | "Announcement" | "Course Spotlight" | "Tour Update";
+  category: "Tour News" | "Schedule" | "Event News" | "Anchor Day";
   body: string; // HTML string — will be replaced by rich text from backend later
 }
 
 export const newsArticles: NewsArticle[] = [
   {
     id: "1",
-    slug: "baylands-season-opener-recap",
-    title: "Baylands Season Opener: A Day to Remember",
+    slug: "2026-enhancements-announced",
+    title: "2026 Enhancements Announced",
     excerpt:
-      "The 2026 SFGT season kicked off at Baylands Golf Links with 24 players battling morning fog and afternoon sunshine across one of the Bay Area's most demanding layouts.",
-    coverImage: baylandsImg,
-    publishDate: "2026-03-15T10:00:00Z",
-    category: "Recap",
+      "The SFGT is leveling up for 2026 with Anchor Days, a bigger prize pool, a new Tour Hub, Round Recap integration, and updated membership expectations.",
+    coverImage: seasonImg,
+    publishDate: "2026-03-01T12:00:00Z",
+    category: "Tour News",
     body: `
-      <p>The 2026 San Francisco Golf Tour season got underway at Baylands Golf Links in Palo Alto, and what a start it was. Twenty-four players teed it up under a blanket of early morning fog that gradually gave way to clear skies and ideal scoring conditions by the back nine.</p>
-      <p>The course was in superb shape after recent rains, with firm and fast greens that rewarded precision over power. Several groups reported pin positions that were as demanding as anything they'd seen on the SFGT circuit.</p>
-      <h3>Highlights from the Field</h3>
-      <p>The low gross honor went to a sizzling 74 — two over par on a course that rarely yields scores in the 70s for amateurs. Three players broke 80, marking one of the strongest opening-round performances in tour history.</p>
-      <p>On the net side, the competition was even tighter. The top five net scores were separated by just three strokes, setting the stage for a fiercely competitive season ahead.</p>
-      <h3>Looking Ahead</h3>
-      <p>The tour heads to Callippe Preserve next month, where the hillside layout will offer a very different challenge. Registration is now open on the Events page.</p>
+      <p>The 2026 SFGT season is bringing some major upgrades.</p>
+      <p>After listening to player feedback and looking at how we can make the tour more competitive, more connected, and more fun to follow, we're rolling out a set of enhancements across the board this season.</p>
+      <p>The biggest addition is Anchor Days. All five regular-season events will feature a dedicated Anchor Day with 6–8 consecutive tee times, giving players more chances to compete alongside each other, build camaraderie, and make the tour feel more connected week to week.</p>
+      <p>We're also increasing the entry fee from $50 to $75. That extra buy-in is going directly back into the events through larger cash prizes. In 2026, each event will now feature payouts for Net 1, Net 2, and Gross winner, along with a season-long race for Most Birdies.</p>
+      <p>Another major step forward is the launch of the new Tour Hub. This will be the central home for standings, schedules, event details, and season storylines. We're also partnering with Round Recap, a more detailed data engine for stats and performance, to give players a deeper look into their games and add a whole new layer to how the season is tracked.</p>
+      <p>Finally, all players — new and returning — will be expected to maintain an active GHIN / NCGA membership. This helps ensure accurate handicap tracking, clean payout eligibility, and access to discounted rates for the 2026 Major.</p>
+      <p>More structure. More visibility. More competition.<br />2026 is going to be the biggest SFGT season yet.</p>
     `,
   },
   {
     id: "2",
-    slug: "2026-season-preview",
-    title: "2026 Season Preview: Five Courses, One Champion",
+    slug: "2026-course-list-revealed",
+    title: "2026 Course List Revealed",
     excerpt:
-      "A look at this year's schedule, the courses on the rotation, and what's new for SFGT members heading into the 2026 season.",
-    coverImage: seasonImg,
-    publishDate: "2026-03-01T12:00:00Z",
-    category: "Announcement",
+      "The 2026 SFGT schedule is here, featuring a strong mix of favorites, major venues, and season-defining tests.",
+    coverImage: baylandsImg,
+    publishDate: "2026-02-24T12:00:00Z",
+    category: "Schedule",
     body: `
-      <p>The 2026 San Francisco Golf Tour season promises to be the best yet. With five events across some of the Bay Area's finest public courses, there's no shortage of variety and challenge on this year's schedule.</p>
-      <h3>The 2026 Course Rotation</h3>
+      <p>The official 2026 SFGT course list has arrived.</p>
+      <p>This season's schedule brings together a balanced mix of competition styles, course personalities, and layouts that should test every part of the bag. From strategic public tracks to event-worthy favorites, the lineup was built to create a season that feels competitive, fair, and fun to follow from start to finish.</p>
+      <p>The 2026 slate includes:</p>
       <ul>
-        <li><strong>Baylands Golf Links</strong> — Season opener in Palo Alto</li>
-        <li><strong>Callippe Preserve</strong> — Hillside challenge in Pleasanton</li>
-        <li><strong>Presidio Golf Course</strong> — Historic San Francisco gem</li>
-        <li><strong>Poppy Hills</strong> — Pebble Beach's public treasure</li>
-        <li><strong>Corica Park (North)</strong> — Season finale in Alameda</li>
+        <li>Corica Park – North Course</li>
+        <li>Coyote Creek – Valley Course</li>
+        <li>Chardonnay Golf Club</li>
+        <li>Poppy Ridge</li>
+        <li>Presidio Golf Course</li>
+        <li>Corica Park – South Course</li>
       </ul>
-      <h3>What's New</h3>
-      <p>This season introduces a revised points system that rewards consistency across all five events. The player who accumulates the most points across the full schedule will be crowned SFGT Season Champion at a post-season awards gathering.</p>
-      <p>We've also expanded the tour to welcome new members. If you know someone who'd be a great fit, send them to the sign-up page.</p>
+      <p>A few of these stops will serve as especially big moments on the calendar, with select events also carrying cash prize payouts, Anchor Days, and added season implications as the standings take shape.</p>
+      <p>This year's mix should create a little bit of everything: scoring opportunities, tough stretches, different visual styles, and a few courses that players will absolutely want revenge on the second time around.</p>
+      <p>The full schedule, event pages, payout details, and tee information will live inside the Tour Hub as the season unfolds.</p>
+      <p>The courses are set.<br />Now it's time to see who shows up.</p>
     `,
   },
   {
     id: "3",
-    slug: "season-championship-format-announced",
-    title: "Season Championship Format Announced",
+    slug: "opening-event-corica-park-north",
+    title: "Opening Event: Corica Park North",
     excerpt:
-      "The SFGT Season Championship will crown its winner through a cumulative points system across all five tour events. Here's how it works.",
-    coverImage: trophyImg,
-    publishDate: "2026-02-20T09:00:00Z",
-    category: "Announcement",
+      "The 2026 season starts at Corica Park North, where the first points, first payouts, and first storylines of the year will be on the line.",
+    coverImage: presidioImg,
+    publishDate: "2026-02-18T12:00:00Z",
+    category: "Event News",
     body: `
-      <p>We're excited to announce the format for the inaugural SFGT Season Championship. Rather than a single event deciding the champion, we're rewarding consistency and performance across the entire 2026 schedule.</p>
-      <h3>Points System</h3>
-      <p>After each event, points will be awarded based on net score placement:</p>
+      <p>The SFGT season officially gets underway at Corica Park North.</p>
+      <p>As the first stop of the 2026 campaign, this event is about more than just one round. It's the first look at who came into the season ready, who made offseason improvements, and who wants to grab an early lead in both the standings and the storylines.</p>
+      <p>The event will feature a payout date of May 2 and a prize structure of:</p>
       <ul>
-        <li>1st Place — 100 points</li>
-        <li>2nd Place — 85 points</li>
-        <li>3rd Place — 70 points</li>
-        <li>Top 10 — sliding scale from 60 to 20 points</li>
-        <li>All other finishers — 10 participation points</li>
+        <li>Net 1: $300</li>
+        <li>Net 2: $50</li>
+        <li>Gross: $50</li>
       </ul>
-      <p>At the end of the five-event season, the player with the highest total points will be named Season Champion. Tiebreakers will be decided by head-to-head results, then lowest average net score.</p>
-      <h3>The Trophy</h3>
-      <p>The Season Champion will receive a custom SFGT trophy and permanent recognition on the tour's leaderboard page. Details about the awards celebration will be shared later in the season.</p>
+      <p>Players will compete from the Blue tees at 6,087 yards, playing the course as a par 72.</p>
+      <p>Corica North is a great opener because it demands solid all-around golf. It gives players chances to score, but it also punishes loose swings and rewards those who stay disciplined. That makes it a fitting place to start a season where every point matters.</p>
+      <p>Whether you're chasing the win, trying to get off to a strong start in the standings, or just looking to put your first full round on the board, this opening event should give us an early read on the field.</p>
+      <p>New season. Fresh leaderboard.<br />Let's get it rolling.</p>
     `,
   },
   {
     id: "4",
-    slug: "welcome-new-members-spring-2026",
-    title: "Welcome to the Tour: Spring 2026 New Members",
+    slug: "first-anchor-day-april-4",
+    title: "First Anchor Day Set for April 4",
     excerpt:
-      "The SFGT family grows! Meet the newest players joining the tour this spring and get to know a bit about their games.",
+      "The first Anchor Day of the 2026 season is locked in for April 4 at Corica Park North, with 24 spots available.",
     coverImage: membersImg,
-    publishDate: "2026-02-10T14:00:00Z",
-    category: "Tour Update",
+    publishDate: "2026-02-12T12:00:00Z",
+    category: "Anchor Day",
     body: `
-      <p>One of the best things about the San Francisco Golf Tour is the community, and this spring we're thrilled to welcome a new group of players to the fold.</p>
-      <p>Our newest members bring a wide range of skill levels and backgrounds, but they all share a love for competitive golf and the camaraderie that comes with it. Whether they're single-digit handicaps or working to break 100, everyone has a place on the SFGT.</p>
-      <h3>Getting Started</h3>
-      <p>New members can sign up for events through the Events page and reserve tee times once registration opens. We recommend joining the group chat to stay connected between rounds and don't be shy about introducing yourself.</p>
-      <p>Welcome aboard — we'll see you on the first tee.</p>
-    `,
-  },
-  {
-    id: "5",
-    slug: "course-spotlight-presidio",
-    title: "Course Spotlight: The Presidio Golf Course",
-    excerpt:
-      "Nestled among towering cypress and eucalyptus trees in San Francisco's Presidio, this historic course offers one of the most unique rounds in the Bay Area.",
-    coverImage: presidioImg,
-    publishDate: "2026-01-28T11:00:00Z",
-    category: "Course Spotlight",
-    body: `
-      <p>Few courses in the Bay Area can match the atmosphere of the Presidio Golf Course. Surrounded by the towering trees of San Francisco's Presidio national park, the course feels miles removed from the city despite being just minutes from the Golden Gate Bridge.</p>
-      <h3>The Layout</h3>
-      <p>Originally designed by Robert Johnstone in 1895, the course has been renovated several times but retains its classic character. At just over 6,500 yards from the tips, it's not the longest course on the tour, but the tight, tree-lined fairways and elevated greens demand accuracy.</p>
-      <p>The signature stretch comes at holes 7 through 10, where the course weaves through dense forest with dramatic elevation changes. Missing the fairway here means a difficult recovery from the trees — or worse.</p>
-      <h3>SFGT History</h3>
-      <p>The Presidio has been a fan-favorite on the SFGT rotation since the tour's founding. Its walkable layout, strong conditioning, and proximity to the city make it an ideal venue for a Saturday tournament.</p>
-      <p>The tour returns to the Presidio in July. Mark your calendars and start practicing those approach shots.</p>
+      <p>The first Anchor Day of the 2026 SFGT season is officially on the calendar.</p>
+      <p>Set for April 4 at Corica Park North, this Anchor Day will bring players together across a run of consecutive tee times, making it one of the best chances of the season to compete alongside each other and feel the energy of the tour in real time.</p>
+      <p>The tee times for the day are:</p>
+      <ul>
+        <li>9:05</li>
+        <li>9:15</li>
+        <li>9:25</li>
+        <li>9:35</li>
+        <li>9:45</li>
+        <li>9:55</li>
+      </ul>
+      <p>That gives us 24 total spots available, with the day priced at $130 to ride.</p>
+      <p>Anchor Days are one of the biggest additions to the tour this year. They're designed to create more connection between players, more visible competition, and more of a shared-event feel than the standard scattered-round format can offer. Instead of everyone playing in isolation, Anchor Days give the tour a stronger pulse.</p>
+      <p>For players who want the full SFGT experience, this is the kind of day to circle. You'll get the competition, the camaraderie, and the feeling that the season is truly underway.</p>
+      <p>Spots are limited, so this one should fill quickly.</p>
     `,
   },
 ];
