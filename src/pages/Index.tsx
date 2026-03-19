@@ -50,18 +50,19 @@ const Index = () => {
       {/* Hero */}
       <section className="relative overflow-hidden bg-secondary py-24 text-secondary-foreground md:py-32">
         <div className="absolute inset-0 opacity-10">
-          <div className="h-full w-full bg-[radial-gradient(ellipse_at_top_right,hsl(var(--primary))_0%,transparent_60%)]" />
+          <div className="h-full w-full bg-[radial-gradient(ellipse_at_top_right,hsl(var(--primary))_0%,transparent_60%)] shadow-md rounded-none" />
         </div>
-        <div className="container relative text-center">
-          <p className="mb-3 font-semibold uppercase tracking-[0.2em] text-sm text-secondary-foreground/70">EST. 2022</p>
-          <h1 className="text-5xl font-bold leading-tight font-sans md:text-7xl">
+        <div className="container relative text-center border-4 border-primary-foreground bg-[#25344b] border-none">
+          <p className="mb-3 font-semibold uppercase tracking-[0.2em] text-xl text-[#fff3e0]">EST. 2022</p>
+          <h1 className="text-5xl font-bold leading-tight text-[#fff3e0] font-sans bg-[#15841d] md:text-8xl border-4">
             San Francisco
+            Golf Tour
             <br />Golf Tour
           </h1>
-          <p className="mx-auto mt-6 max-w-xl text-lg text-secondary-foreground/80 font-sans">
+          <p className="mx-auto mt-6 max-w-xl text-lg opacity-80 font-sans">
             Competitive amateur golf across the finest courses in the Bay Area. Join the tour, compete in events, and track your journey to the top.
           </p>
-          <div className="mt-8 flex flex-wrap justify-center gap-4">
+          <div className="mt-8 flex flex-wrap justify-center gap-4 border-0">
             <Button size="lg" asChild>
               <Link to="/events">View Events</Link>
             </Button>
@@ -173,8 +174,70 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Spacer */}
-      <div className="py-8" />
+      {/* Player Spotlight */}
+      <section className="container py-16 md:py-24">
+        <div className="grid items-center gap-8 md:grid-cols-2">
+          <div>
+            <p className="text-sm font-semibold uppercase tracking-wider text-accent">Player Spotlight</p>
+            <h2 className="mt-2 text-3xl font-bold md:text-4xl font-sans">Featured Player</h2>
+            <p className="mt-4 text-muted-foreground">
+              Each month, we highlight an outstanding tour member. Check back soon to see who's making waves on the SFGT circuit.
+            </p>
+            <Button variant="outline" className="mt-6" asChild>
+              <Link to="/leaderboard">View All Players <ArrowRight className="ml-2 h-4 w-4" /></Link>
+            </Button>
+          </div>
+          <Card className="overflow-hidden">
+            <div className="flex h-64 items-center justify-center bg-muted">
+              <div className="text-center text-muted-foreground">
+                <Trophy className="mx-auto h-12 w-12 opacity-40" />
+                <p className="mt-3 text-sm">Spotlight coming soon</p>
+              </div>
+            </div>
+          </Card>
+        </div>
+      </section>
+
+      {/* Latest News */}
+      <section className="bg-muted/50 py-16 md:py-24">
+        <div className="container">
+          <div className="flex items-end justify-between">
+            <div>
+              <p className="text-sm font-semibold uppercase tracking-wider text-accent">Latest</p>
+              <h2 className="mt-2 text-3xl font-bold font-sans">Tour News</h2>
+            </div>
+            <Button variant="link" asChild>
+              <Link to="/news">View All <ArrowRight className="ml-1 h-4 w-4" /></Link>
+            </Button>
+          </div>
+          <div className="mt-8 grid gap-6 md:grid-cols-3">
+            {latestNews.map((article) => (
+              <Link key={article.id} to={`/news/${article.slug}`} className="group">
+                <Card className="h-full overflow-hidden transition-shadow group-hover:shadow-md">
+                  <div className="relative h-44 overflow-hidden">
+                    <img
+                      src={article.coverImage}
+                      alt={article.title}
+                      className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    />
+                  </div>
+                  <CardContent className="p-5">
+                    <p className="text-xs text-muted-foreground">
+                      {format(new Date(article.publishDate), "MMM d, yyyy")}
+                    </p>
+                    <h3 className="mt-1 font-display text-lg font-semibold leading-snug">
+                      {article.title}
+                    </h3>
+                    <p className="mt-2 text-sm text-muted-foreground line-clamp-2">
+                      {article.excerpt}
+                    </p>
+                  </CardContent>
+                </Card>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
     </div>
   );
 };
