@@ -24,7 +24,9 @@ const CURRENT_EVENT = {
 type TopPlayer = { rank: number; name: string; points: number };
 
 const Index = () => {
-  const latestNews = newsArticles.slice(0, 3);
+  const latestNews = [...newsArticles]
+    .sort((a, b) => new Date(b.publishDate).getTime() - new Date(a.publishDate).getTime())
+    .slice(0, 3);
   const [topPlayers, setTopPlayers] = useState<TopPlayer[]>([]);
 
   useEffect(() => {
