@@ -141,7 +141,7 @@ const Leaderboard = () => {
                     {finishView === "event" ? "Event Rank Finishes" : "Net Score Finishes"}
                   </TableHead>
                   <TableHead className="bg-secondary/15 text-center text-sm font-bold uppercase tracking-wider text-secondary-foreground">
-                    Season
+                    BIRDIES
                   </TableHead>
                 </TableRow>
                 {/* Column header row */}
