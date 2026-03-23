@@ -32,7 +32,7 @@ const TeeSheet = () => {
   const [error, setError] = useState("");
 
   useEffect(() => {
-    fetch(SHEET_URL)
+    fetch(TEE_SHEET_URL)
       .then((r) => r.text())
       .then((text) => {
         const rows = parseCSV(text);
