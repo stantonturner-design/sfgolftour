@@ -4,6 +4,13 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 
+import coricaImg from "@/assets/courses/corica-north.jpg";
+import coyoteImg from "@/assets/courses/coyote-creek.jpg";
+import chardonnayImg from "@/assets/courses/chardonnay.jpg";
+import poppyImg from "@/assets/courses/poppy-ridge.jpg";
+import presidioImg from "@/assets/courses/presidio.jpg";
+import finaleImg from "@/assets/courses/finale.jpg";
+
 interface EventData {
   name: string;
   subtitle: string;
@@ -22,7 +29,7 @@ const EVENTS: EventData[] = [
   {
     name: "Corica",
     subtitle: "The North Course",
-    image: "/placeholder.svg",
+    image: coricaImg,
     payoutDate: "May 2",
     anchorDay: "April 4",
     prizes: [
@@ -37,7 +44,7 @@ const EVENTS: EventData[] = [
   {
     name: "Coyote Creek",
     subtitle: "The Valley Course",
-    image: "/placeholder.svg",
+    image: coyoteImg,
     payoutDate: "June 13",
     anchorDay: "May 31",
     prizes: [
@@ -52,7 +59,7 @@ const EVENTS: EventData[] = [
   {
     name: "Chardonnay",
     subtitle: "",
-    image: "/placeholder.svg",
+    image: chardonnayImg,
     payoutDate: "August 1",
     anchorDay: "July 11",
     prizes: [
@@ -67,7 +74,7 @@ const EVENTS: EventData[] = [
   {
     name: "Poppy Ridge",
     subtitle: "",
-    image: "/placeholder.svg",
+    image: poppyImg,
     payoutDate: "September 26",
     anchorDay: "TBD",
     prizes: [
@@ -82,7 +89,7 @@ const EVENTS: EventData[] = [
   {
     name: "Presidio",
     subtitle: "",
-    image: "/placeholder.svg",
+    image: presidioImg,
     payoutDate: "November 7",
     anchorDay: "TBD",
     prizes: [
@@ -97,7 +104,7 @@ const EVENTS: EventData[] = [
   {
     name: "Finale",
     subtitle: "Details coming soon",
-    image: "/placeholder.svg",
+    image: finaleImg,
     payoutDate: "TBD",
     anchorDay: "TBD",
     prizes: [],
@@ -110,8 +117,8 @@ const EVENTS: EventData[] = [
 
 const EventCard = ({ evt }: { evt: EventData }) => {
   const imageSection = (
-    <div className="w-full h-28 bg-muted relative shrink-0">
-      <img src={evt.image} alt={evt.name} className="h-full w-full object-cover" />
+    <div className="w-full aspect-[2/1] bg-muted relative shrink-0">
+      <img src={evt.image} alt={evt.name} className="h-full w-full object-cover" loading="lazy" width={800} height={512} />
       {evt.isFinale && (
         <div className="absolute inset-0 bg-foreground/5 flex items-center justify-center">
           <Lock className="h-8 w-8 text-muted-foreground/40" />
@@ -191,7 +198,7 @@ const EventCard = ({ evt }: { evt: EventData }) => {
             </div>
             <div className="flex flex-wrap justify-end gap-2">
               {evt.prizes.map((p) => (
-                <Badge key={p.place} variant="secondary" className="text-sm font-semibold px-3 py-1.5">
+                <Badge key={p.place} variant="secondary" className="text-xs font-semibold px-2 py-1">
                   {p.place}: {p.amount}
                 </Badge>
               ))}
