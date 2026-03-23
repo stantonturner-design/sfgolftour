@@ -1,8 +1,7 @@
 import { Calendar, ExternalLink, ClipboardList, Trophy, DollarSign, BarChart3, Anchor } from "lucide-react";
 import { Link } from "react-router-dom";
-import { Card, CardTitle } from "@/components/ui/card";
+import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { Badge } from "@/components/ui/badge";
 
 interface EventData {
@@ -107,68 +106,77 @@ const Events = () => {
         The 5 tour events this season.
       </p>
 
-      <div className="mt-10 flex flex-col gap-6">
+      <div className="mt-10 flex flex-col gap-5 max-w-3xl">
         {EVENTS.map((evt) => (
           <Card key={evt.name} className="overflow-hidden">
             <div className="flex flex-col sm:flex-row">
               {/* Course photo */}
-              <div className="sm:w-56 shrink-0">
-                <AspectRatio ratio={16 / 10}>
+              <div className="sm:w-44 shrink-0 bg-muted">
+                <div className="aspect-[4/3] sm:h-full">
                   <img
                     src={evt.image}
                     alt={evt.name}
                     className="h-full w-full object-cover"
                   />
-                </AspectRatio>
+                </div>
               </div>
 
               {/* Event details */}
-              <div className="flex flex-1 flex-col gap-3 p-5">
-                <div className="flex items-start justify-between gap-4 flex-wrap">
-                  <div>
-                    <CardTitle className="text-2xl">
+              <div className="flex flex-1 flex-col p-4 sm:p-5">
+                {/* Top row: name + buttons */}
+                <div className="flex items-start justify-between gap-3">
+                  <div className="min-w-0">
+                    <h2 className="font-display text-xl font-bold leading-tight tracking-tight">
                       {evt.name}
                       {evt.subtitle && (
-                        <span className="ml-2 text-base font-normal text-muted-foreground">
+                        <span className="ml-1.5 text-sm font-normal text-muted-foreground">
                           ({evt.subtitle})
                         </span>
                       )}
-                    </CardTitle>
-                    <div className="mt-1.5 flex flex-col gap-0.5 text-sm text-muted-foreground">
-                      <p className="flex items-center gap-1">
-                        <DollarSign className="h-3.5 w-3.5" />
-                        Cash Prize Payout: {evt.payoutDate}
-                      </p>
-                      <p className="flex items-center gap-1">
-                        <Anchor className="h-3.5 w-3.5" />
-                        Anchor Day: {evt.anchorDay}
-                      </p>
-                    </div>
+                    </h2>
                   </div>
-                  <div className="flex gap-2 flex-wrap">
-                    <Button variant="outline" size="sm" asChild>
+                  <div className="flex items-center gap-1.5 shrink-0">
+                    <Button variant="outline" size="sm" className="h-7 px-2.5 text-xs" asChild>
                       <Link to={`/tee-sheet?event=${encodeURIComponent(evt.name)}`}>
-                        <ClipboardList className="mr-1" /> Tee Sheet
+                        <ClipboardList className="mr-1 h-3 w-3" /> Tee Sheet
                       </Link>
                     </Button>
-                    <Button variant="outline" size="sm" asChild>
+                    <Button variant="outline" size="sm" className="h-7 px-2.5 text-xs" asChild>
                       <a href={evt.handicaps} target="_blank" rel="noopener noreferrer">
-                        <BarChart3 className="mr-1" /> Handicaps
+                        <BarChart3 className="mr-1 h-3 w-3" /> Handicaps
                       </a>
                     </Button>
-                    <Button size="sm" asChild>
+                    <Button size="sm" className="h-7 px-2.5 text-xs" asChild>
                       <a href={evt.results} target="_blank" rel="noopener noreferrer">
-                        <ExternalLink className="mr-1" /> Results
+                        <ExternalLink className="mr-1 h-3 w-3" /> Results
                       </a>
                     </Button>
                   </div>
                 </div>
 
+                {/* Dates */}
+                <div className="mt-2.5 flex items-center gap-5 text-sm">
+                  <span className="flex items-center gap-1.5">
+                    <DollarSign className="h-3.5 w-3.5 text-primary" />
+                    <span className="text-muted-foreground">Payout:</span>
+                    <span className="font-semibold">{evt.payoutDate}</span>
+                  </span>
+                  <span className="flex items-center gap-1.5">
+                    <Anchor className="h-3.5 w-3.5 text-primary" />
+                    <span className="text-muted-foreground">Anchor Day:</span>
+                    <span className="font-semibold">{evt.anchorDay}</span>
+                  </span>
+                </div>
+
                 {/* Prizes */}
-                <div className="flex items-center gap-2 flex-wrap">
-                  <Trophy className="h-4 w-4 text-accent" />
+                <div className="mt-3 flex items-center gap-2 flex-wrap">
+                  <Trophy className="h-4 w-4 text-primary" />
                   {evt.prizes.map((p) => (
-                    <Badge key={p.place} variant="secondary" className="text-xs font-medium">
+                    <Badge
+                      key={p.place}
+                      variant="secondary"
+                      className="text-xs font-semibold px-2.5 py-1"
+                    >
                       {p.place}: {p.amount}
                     </Badge>
                   ))}
@@ -176,7 +184,7 @@ const Events = () => {
 
                 {/* Optional note */}
                 {evt.note && (
-                  <p className="text-xs text-muted-foreground italic">{evt.note}</p>
+                  <p className="mt-2 text-xs text-muted-foreground italic">{evt.note}</p>
                 )}
               </div>
             </div>
