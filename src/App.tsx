@@ -11,6 +11,7 @@ import News from "./pages/News";
 import NewsArticle from "./pages/NewsArticle";
 import Rules from "./pages/Rules";
 import Players from "./pages/Players";
+import PlayerProfile from "./pages/PlayerProfile";
 import TeeSheet from "./pages/TeeSheet";
 import NotFound from "./pages/NotFound";
 
@@ -30,6 +31,7 @@ const App = () => (
             <Route path="/news" element={<News />} />
             <Route path="/news/:slug" element={<NewsArticle />} />
             <Route path="/players" element={<Players />} />
+            <Route path="/players/:slug" element={<PlayerProfile />} />
             <Route path="/rules" element={<Rules />} />
             <Route path="/tee-sheet" element={<TeeSheet />} />
           </Route>
