@@ -112,38 +112,40 @@ const EventCard = ({ evt }: { evt: EventData }) => {
   if (evt.isFinale) {
     return (
       <Card className="overflow-hidden flex flex-col opacity-75">
-        <div className="aspect-[21/9] bg-muted relative">
+        <div className="h-36 bg-muted relative">
           <img src={evt.image} alt={evt.name} className="h-full w-full object-cover" />
           <div className="absolute inset-0 bg-foreground/5 flex items-center justify-center">
             <Lock className="h-8 w-8 text-muted-foreground/40" />
           </div>
         </div>
-        <div className="flex flex-1 flex-col p-5 gap-1.5">
-          <h2 className="font-display text-2xl font-bold tracking-tight">{evt.name}</h2>
-          <p className="text-sm text-muted-foreground italic">{evt.subtitle}</p>
+        <div className="flex flex-1 flex-col p-6 gap-3">
+          <div>
+            <h2 className="font-display text-3xl font-bold tracking-tight">{evt.name}</h2>
+            <p className="text-base text-muted-foreground italic mt-1">{evt.subtitle}</p>
+          </div>
 
-          <div className="mt-1 flex flex-col gap-0.5 text-[0.8125rem]">
-            <span className="flex items-center gap-1.5">
-              <DollarSign className="h-3.5 w-3.5 text-muted-foreground/40" />
+          <div className="flex flex-col gap-1 text-base">
+            <span className="flex items-center gap-2">
+              <DollarSign className="h-4 w-4 text-muted-foreground/40" />
               <span className="text-muted-foreground">Cash Prize Payout:</span>
               <span className="font-medium text-muted-foreground">TBD</span>
             </span>
-            <span className="flex items-center gap-1.5">
-              <Anchor className="h-3.5 w-3.5 text-muted-foreground/40" />
+            <span className="flex items-center gap-2">
+              <Anchor className="h-4 w-4 text-muted-foreground/40" />
               <span className="text-muted-foreground">Anchor Day:</span>
               <span className="font-medium text-muted-foreground">TBD</span>
             </span>
           </div>
 
-          <div className="mt-auto pt-3 flex gap-2">
-            <Button variant="outline" size="sm" className="h-8 px-3 text-[0.8125rem]" disabled>
-              <ClipboardList className="mr-1 h-3.5 w-3.5" /> Tee Sheet
+          <div className="mt-auto pt-4 flex gap-2">
+            <Button variant="outline" size="sm" className="h-9 px-4 text-sm" disabled>
+              <ClipboardList className="mr-1.5 h-4 w-4" /> Tee Sheet
             </Button>
-            <Button variant="outline" size="sm" className="h-8 px-3 text-[0.8125rem]" disabled>
-              <BarChart3 className="mr-1 h-3.5 w-3.5" /> Handicaps
+            <Button variant="outline" size="sm" className="h-9 px-4 text-sm" disabled>
+              <BarChart3 className="mr-1.5 h-4 w-4" /> Handicaps
             </Button>
-            <Button size="sm" className="h-8 px-3 text-[0.8125rem]" disabled>
-              <ExternalLink className="mr-1 h-3.5 w-3.5" /> Results
+            <Button size="sm" className="h-9 px-4 text-sm" disabled>
+              <ExternalLink className="mr-1.5 h-4 w-4" /> Results
             </Button>
           </div>
         </div>
@@ -153,86 +155,70 @@ const EventCard = ({ evt }: { evt: EventData }) => {
 
   return (
     <Card className="overflow-hidden flex flex-col">
-      <div className="aspect-[21/9] bg-muted">
+      <div className="h-36 bg-muted">
         <img src={evt.image} alt={evt.name} className="h-full w-full object-cover" />
       </div>
-      <div className="flex flex-1 flex-col p-5 gap-1.5">
-        <h2 className="font-display text-2xl font-bold tracking-tight">
-          {evt.name}
-          {evt.subtitle && (
-            <span className="ml-2 text-base font-normal text-muted-foreground">
-              ({evt.subtitle})
-            </span>
-          )}
-        </h2>
+      <div className="flex flex-1 flex-col p-6 gap-4">
+        {/* Two-column content area */}
+        <div className="flex gap-6">
+          {/* Left: name, subtitle, anchor day */}
+          <div className="flex-1 min-w-0">
+            <h2 className="font-display text-3xl font-bold tracking-tight leading-tight">
+              {evt.name}
+            </h2>
+            {evt.subtitle && (
+              <p className="text-base text-muted-foreground mt-0.5">
+                {evt.subtitle}
+              </p>
+            )}
+            <div className="mt-3 flex items-center gap-2 text-base">
+              <Anchor className="h-4 w-4 text-primary shrink-0" />
+              <span className="text-muted-foreground">Anchor Day:</span>
+              <span className="font-semibold">{evt.anchorDay}</span>
+            </div>
+          </div>
 
-        {/* Dates */}
-        <div className="flex flex-col gap-0.5 text-[0.8125rem]">
-          <span className="flex items-center gap-1.5">
-            <DollarSign className="h-3.5 w-3.5 text-primary" />
-            <span className="text-muted-foreground">Cash Prize Payout:</span>
-            <span className="font-semibold">{evt.payoutDate}</span>
-          </span>
-          <span className="flex items-center gap-1.5">
-            <Anchor className="h-3.5 w-3.5 text-primary" />
-            <span className="text-muted-foreground">Anchor Day:</span>
-            <span className="font-semibold">{evt.anchorDay}</span>
-          </span>
-        </div>
-
-        {/* Prizes */}
-        <div className="flex items-center gap-2 flex-wrap">
-          <Trophy className="h-4 w-4 text-primary" />
-          {evt.prizes.map((p) => (
-            <Badge key={p.place} variant="secondary" className="text-[0.8125rem] font-semibold px-2.5 py-1">
-              {p.place}: {p.amount}
-            </Badge>
-          ))}
+          {/* Right: payout date + prize chips */}
+          <div className="shrink-0 text-right flex flex-col items-end gap-2">
+            <div className="flex items-center gap-2 text-base">
+              <DollarSign className="h-4 w-4 text-primary shrink-0" />
+              <span className="text-muted-foreground">Payout:</span>
+              <span className="font-semibold">{evt.payoutDate}</span>
+            </div>
+            <div className="flex flex-wrap justify-end gap-1.5 mt-1">
+              {evt.prizes.map((p) => (
+                <Badge key={p.place} variant="secondary" className="text-sm font-semibold px-3 py-1">
+                  {p.place}: {p.amount}
+                </Badge>
+              ))}
+            </div>
+          </div>
         </div>
 
         {evt.note && (
-          <p className="text-xs text-muted-foreground italic">{evt.note}</p>
+          <p className="text-sm text-muted-foreground italic">{evt.note}</p>
         )}
 
         {/* Buttons */}
-        <div className="mt-auto pt-3 flex gap-2">
-          <Button variant="outline" size="sm" className="h-8 px-3 text-[0.8125rem]" asChild>
+        <div className="mt-auto pt-2 flex gap-2">
+          <Button variant="outline" size="sm" className="h-9 px-4 text-sm" asChild>
             <Link to={`/tee-sheet?event=${encodeURIComponent(evt.name)}`}>
-              <ClipboardList className="mr-1 h-3.5 w-3.5" /> Tee Sheet
+              <ClipboardList className="mr-1.5 h-4 w-4" /> Tee Sheet
             </Link>
           </Button>
-          <Button variant="outline" size="sm" className="h-8 px-3 text-[0.8125rem]" asChild>
+          <Button variant="outline" size="sm" className="h-9 px-4 text-sm" asChild>
             <a href={evt.handicaps} target="_blank" rel="noopener noreferrer">
-              <BarChart3 className="mr-1 h-3.5 w-3.5" /> Handicaps
+              <BarChart3 className="mr-1.5 h-4 w-4" /> Handicaps
             </a>
           </Button>
-          <Button size="sm" className="h-8 px-3 text-[0.8125rem]" asChild>
+          <Button size="sm" className="h-9 px-4 text-sm" asChild>
             <a href={evt.results} target="_blank" rel="noopener noreferrer">
-              <ExternalLink className="mr-1 h-3.5 w-3.5" /> Results
+              <ExternalLink className="mr-1.5 h-4 w-4" /> Results
             </a>
           </Button>
         </div>
       </div>
     </Card>
-  );
-};
-const Events = () => {
-  return (
-    <div className="container py-16">
-      <div className="flex items-center gap-3">
-        <Calendar className="h-8 w-8 text-primary" />
-        <h1 className="font-display text-4xl font-bold">Event Schedule</h1>
-      </div>
-      <p className="mt-2 text-muted-foreground">
-        6 events this season — 5 regular season + the Finale.
-      </p>
-
-      <div className="mt-10 grid grid-cols-1 md:grid-cols-2 gap-6">
-        {EVENTS.map((evt) => (
-          <EventCard key={evt.name} evt={evt} />
-        ))}
-      </div>
-    </div>
   );
 };
 
