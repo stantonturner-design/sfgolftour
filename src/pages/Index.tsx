@@ -8,8 +8,7 @@ import { Badge } from "@/components/ui/badge";
 import { parseCSV } from "@/lib/csv";
 import { format } from "date-fns";
 
-const SHEET_URL =
-  "https://docs.google.com/spreadsheets/d/e/2PACX-1vTFoFbbyxvSushAcAppZY8YEP-cDAXH5GhQCewq4QOgIW-WqIW7SDcHX4Xsz2UeP7tI4OYAjZTgQVOc/pub?gid=191837314&single=true&output=csv";
+import { SHEET_URL } from "@/lib/playerUtils";
 
 const CURRENT_EVENT = {
   name: "Corica Park – North Course",

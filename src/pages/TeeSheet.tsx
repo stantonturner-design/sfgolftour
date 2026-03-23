@@ -6,16 +6,15 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { parseCSV } from "@/lib/csv";
 
-const SHEET_URL =
-  "https://docs.google.com/spreadsheets/d/e/2PACX-1vTFoFbbyxvSushAcAppZY8YEP-cDAXH5GhQCewq4QOgIW-WqIW7SDcHX4Xsz2UeP7tI4OYAjZTgQVOc/pub?gid=1479662039&single=true&output=csv";
+import { TEE_SHEET_URL } from "@/lib/playerUtils";
 
 // Map event names to section headers in the sheet
 const EVENT_SECTION_MAP: Record<string, string[]> = {
-  Baylands: ["Baylands"],
-  Callippe: ["Callippe Preserve", "Callippe"],
-  "Poppy Hills": ["Poppy Hills (Pebble Beach)", "Poppy Hills"],
-  Presidio: ["Presidio"],
   Corica: ["Corica NORTH", "Corica"],
+  "Coyote Creek": ["Coyote Creek"],
+  Chardonnay: ["Chardonnay"],
+  "Poppy Ridge": ["Poppy Ridge"],
+  Presidio: ["Presidio"],
 };
 
 interface TeeTime {
@@ -33,7 +32,7 @@ const TeeSheet = () => {
   const [error, setError] = useState("");
 
   useEffect(() => {
-    fetch(SHEET_URL)
+    fetch(TEE_SHEET_URL)
       .then((r) => r.text())
       .then((text) => {
         const rows = parseCSV(text);
