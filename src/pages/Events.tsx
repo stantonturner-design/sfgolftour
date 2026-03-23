@@ -29,7 +29,7 @@ const EVENTS: EventData[] = [
   {
     name: "Corica",
     subtitle: "The North Course",
-    image: "/placeholder.svg",
+    image: coricaImg,
     payoutDate: "May 2",
     anchorDay: "April 4",
     prizes: [
