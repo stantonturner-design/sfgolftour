@@ -93,6 +93,12 @@ const PlayerProfile = () => {
             </a>
           </Button>
         )}
+        {(!player.roundRecapUrl || player.roundRecapUrl === "0") && (
+          <Button size="lg" className="absolute top-4 right-4 md:top-6 md:right-6" disabled>
+            Round Recap
+            <ExternalLink className="h-4 w-4 ml-1.5" />
+          </Button>
+        )}
         <div className="flex flex-col md:flex-row md:items-center gap-6">
           {/* Avatar */}
           <div className="flex h-20 w-20 md:h-28 md:w-28 shrink-0 items-center justify-center rounded-full bg-primary text-primary-foreground font-bold text-2xl md:text-4xl">
