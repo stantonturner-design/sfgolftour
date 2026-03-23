@@ -67,14 +67,6 @@ const Header = () => {
                 {item.label}
               </NavLink>
           )}
-            <div className="mt-2 flex flex-col gap-2">
-              <Button variant="outline" size="sm" asChild>
-                <Link to="/login">Log In</Link>
-              </Button>
-              <Button size="sm" asChild>
-                <Link to="/signup">Sign Up</Link>
-              </Button>
-            </div>
           </div>
         </nav>
       }

@@ -68,7 +68,7 @@ const Index = () => {
               <Link to="/events">View Events</Link>
             </Button>
             <Button size="lg" variant="outline" className="border-secondary-foreground/30 text-secondary-foreground hover:bg-secondary-foreground/10" asChild>
-              <Link to="/signup">Join the Tour</Link>
+              <a href="https://www.roundrecap.com" target="_blank" rel="noopener noreferrer">View in Round Recap</a>
             </Button>
           </div>
         </div>
