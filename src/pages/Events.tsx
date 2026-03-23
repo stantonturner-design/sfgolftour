@@ -115,7 +115,7 @@ const EVENTS: EventData[] = [
   {
     name: "Finale",
     subtitle: "Details coming soon",
-    image: "/placeholder.svg",
+    image: finaleImg,
     payoutDate: "TBD",
     anchorDay: "TBD",
     prizes: [],
