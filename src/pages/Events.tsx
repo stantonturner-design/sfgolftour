@@ -4,6 +4,13 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 
+import coricaImg from "@/assets/courses/corica-north.jpg";
+import coyoteImg from "@/assets/courses/coyote-creek.jpg";
+import chardonnayImg from "@/assets/courses/chardonnay.jpg";
+import poppyImg from "@/assets/courses/poppy-ridge.jpg";
+import presidioImg from "@/assets/courses/presidio.jpg";
+import finaleImg from "@/assets/courses/finale.jpg";
+
 interface EventData {
   name: string;
   subtitle: string;
