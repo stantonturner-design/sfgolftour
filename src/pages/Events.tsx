@@ -85,7 +85,7 @@ const EVENTS: EventData[] = [
   {
     name: "Poppy Ridge",
     subtitle: "",
-    image: "/placeholder.svg",
+    image: poppyImg,
     payoutDate: "September 26",
     anchorDay: "TBD",
     prizes: [
