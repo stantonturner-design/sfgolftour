@@ -22,7 +22,7 @@ export const newsArticles: NewsArticle[] = [
     excerpt:
       "The SFGT is leveling up for 2026 with Anchor Days, a bigger prize pool, a new Tour Hub, Round Recap integration, and updated membership expectations.",
     coverImage: seasonImg,
-    publishDate: "2026-03-01T12:00:00Z",
+    publishDate: "2026-03-08T12:00:00Z",
     category: "Tour News",
     body: `
       <p>The 2026 SFGT season is bringing some major upgrades.</p>
@@ -41,7 +41,7 @@ export const newsArticles: NewsArticle[] = [
     excerpt:
       "The 2026 SFGT schedule is here, featuring a strong mix of favorites, major venues, and season-defining tests.",
     coverImage: baylandsImg,
-    publishDate: "2026-02-24T12:00:00Z",
+    publishDate: "2026-03-09T12:00:00Z",
     category: "Schedule",
     body: `
       <p>The official 2026 SFGT course list has arrived.</p>
@@ -68,7 +68,7 @@ export const newsArticles: NewsArticle[] = [
     excerpt:
       "The 2026 season starts at Corica Park North, where the first points, first payouts, and first storylines of the year will be on the line.",
     coverImage: presidioImg,
-    publishDate: "2026-02-18T12:00:00Z",
+    publishDate: "2026-03-10T12:00:00Z",
     category: "Event News",
     body: `
       <p>The SFGT season officially gets underway at Corica Park North.</p>
@@ -92,7 +92,7 @@ export const newsArticles: NewsArticle[] = [
     excerpt:
       "The first Anchor Day of the 2026 season is locked in for April 4 at Corica Park North, with 24 spots available.",
     coverImage: membersImg,
-    publishDate: "2026-02-12T12:00:00Z",
+    publishDate: "2026-03-15T12:00:00Z",
     category: "Anchor Day",
     body: `
       <p>The first Anchor Day of the 2026 SFGT season is officially on the calendar.</p>
