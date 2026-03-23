@@ -6,10 +6,12 @@ import {
   TableCell,
   TableHead,
   TableHeader,
-  TableRow } from
-"@/components/ui/table";
+  TableRow,
+} from "@/components/ui/table";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { parseCSV } from "@/lib/csv";
+import { useIsMobile } from "@/hooks/use-mobile";
+import MobileLeaderboard from "@/components/leaderboard/MobileLeaderboard";
 
 const SHEET_URL =
 "https://docs.google.com/spreadsheets/d/e/2PACX-1vTFoFbbyxvSushAcAppZY8YEP-cDAXH5GhQCewq4QOgIW-WqIW7SDcHX4Xsz2UeP7tI4OYAjZTgQVOc/pub?gid=191837314&single=true&output=csv";
