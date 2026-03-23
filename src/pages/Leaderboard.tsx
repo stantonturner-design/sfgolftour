@@ -107,7 +107,11 @@ const Leaderboard = () => {
       <p className="mt-12 text-center text-destructive">{error}</p>
       }
 
-      {!loading && !error && players.length > 0 &&
+      {!loading && !error && players.length > 0 && isMobile && (
+        <MobileLeaderboard players={players} eventNames={EVENT_NAMES} />
+      )}
+
+      {!loading && !error && players.length > 0 && !isMobile &&
       <>
           {/* Toggle positioned above table, aligned right over finishes section */}
           <div className="mt-6 flex justify-end">
