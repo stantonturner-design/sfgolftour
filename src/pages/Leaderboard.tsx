@@ -38,6 +38,7 @@ const Leaderboard = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [finishView, setFinishView] = useState<string>("event");
+  const isMobile = useIsMobile();
 
   useEffect(() => {
     fetch(SHEET_URL).
