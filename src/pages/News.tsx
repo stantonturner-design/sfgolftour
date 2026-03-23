@@ -6,7 +6,10 @@ import { Calendar } from "lucide-react";
 import { format } from "date-fns";
 
 const News = () => {
-  const [featured, ...rest] = newsArticles;
+  const sorted = [...newsArticles].sort(
+    (a, b) => new Date(b.publishDate).getTime() - new Date(a.publishDate).getTime()
+  );
+  const [featured, ...rest] = sorted;
 
   return (
     <div className="container py-12 md:py-16">
