@@ -222,4 +222,24 @@ const EventCard = ({ evt }: { evt: EventData }) => {
   );
 };
 
+const Events = () => {
+  return (
+    <div className="container py-16">
+      <div className="flex items-center gap-3">
+        <Calendar className="h-8 w-8 text-primary" />
+        <h1 className="font-display text-4xl font-bold">Event Schedule</h1>
+      </div>
+      <p className="mt-2 text-muted-foreground">
+        6 events this season — 5 regular season + the Finale.
+      </p>
+
+      <div className="mt-10 grid grid-cols-1 md:grid-cols-2 gap-6">
+        {EVENTS.map((evt) => (
+          <EventCard key={evt.name} evt={evt} />
+        ))}
+      </div>
+    </div>
+  );
+};
+
 export default Events;
