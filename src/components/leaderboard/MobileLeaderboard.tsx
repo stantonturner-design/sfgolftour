@@ -103,7 +103,7 @@ const MobileLeaderboard = ({ players, eventNames }: Props) => {
                       <div key={name} className="flex justify-between text-sm">
                         <span className="text-muted-foreground">{name}</span>
                         <span className="font-medium">
-                          {p.eventPoints[i] > 0 ? p.eventPoints[i] : "—"}
+                          {p.eventPoints[i] > 0 ? p.eventPoints[i].toFixed(1) : "—"}
                         </span>
                       </div>
                     ))}

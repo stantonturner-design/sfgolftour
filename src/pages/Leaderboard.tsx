@@ -196,7 +196,7 @@ const Leaderboard = () => {
                       key={i}
                       className={`text-center ${i === EVENT_NAMES.length - 1 ? "border-r" : ""}`}>
                       
-                          {ep > 0 ? ep : "—"}
+                          {ep > 0 ? ep.toFixed(1) : "—"}
                         </TableCell>
                     )}
                       {finishVals.map((v, i) =>
