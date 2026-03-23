@@ -70,7 +70,7 @@ const EVENTS: EventData[] = [
   {
     name: "Chardonnay",
     subtitle: "",
-    image: "/placeholder.svg",
+    image: chardonnayImg,
     payoutDate: "August 1",
     anchorDay: "July 11",
     prizes: [
