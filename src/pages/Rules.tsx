@@ -201,7 +201,7 @@ const Rules = () => (
           </div>
           <div>
             <h4 className="font-semibold text-foreground mb-1">Putting / gimmes</h4>
-            <p>Gimmes are generally fine within a reasonable distance — use common sense and keep it fair. When in doubt, putt it out.</p>
+            <p>If it's within a foot, pick it up and keep things moving. If it's outside 12 inches — well, you're on the SF Golf Tour, not the PGA Tour. That ain't a gimme for you. Roll 'em out.</p>
           </div>
           <div>
             <h4 className="font-semibold text-foreground mb-1">Weather & incomplete rounds</h4>
