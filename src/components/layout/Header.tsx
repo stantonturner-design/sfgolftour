@@ -39,14 +39,6 @@ const Header = () => {
               {item.label}
             </NavLink>
           )}
-          <div className="ml-4 flex items-center gap-2">
-            <Button variant="outline" size="sm" asChild>
-              <Link to="/login">Log In</Link>
-            </Button>
-            <Button size="sm" asChild>
-              <Link to="/signup">Sign Up</Link>
-            </Button>
-          </div>
         </nav>
 
         {/* Mobile toggle */}
