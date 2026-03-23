@@ -23,8 +23,8 @@ const EVENTS: EventData[] = [
     name: "Corica",
     subtitle: "The North Course",
     image: "/placeholder.svg",
-    payoutDate: "5/2",
-    anchorDay: "4/4",
+    payoutDate: "May 2",
+    anchorDay: "April 4",
     prizes: [
       { place: "Net 1", amount: "$300" },
       { place: "Net 2", amount: "$50" },
@@ -38,8 +38,8 @@ const EVENTS: EventData[] = [
     name: "Coyote Creek",
     subtitle: "The Valley Course",
     image: "/placeholder.svg",
-    payoutDate: "6/13",
-    anchorDay: "5/31",
+    payoutDate: "June 13",
+    anchorDay: "May 31",
     prizes: [
       { place: "Net 1", amount: "$TBD" },
       { place: "Net 2", amount: "$TBD" },
@@ -53,8 +53,8 @@ const EVENTS: EventData[] = [
     name: "Chardonnay",
     subtitle: "",
     image: "/placeholder.svg",
-    payoutDate: "8/1",
-    anchorDay: "7/11",
+    payoutDate: "August 1",
+    anchorDay: "July 11",
     prizes: [
       { place: "Net 1", amount: "$TBD" },
       { place: "Net 2", amount: "$TBD" },
@@ -68,7 +68,7 @@ const EVENTS: EventData[] = [
     name: "Poppy Ridge",
     subtitle: "",
     image: "/placeholder.svg",
-    payoutDate: "9/26",
+    payoutDate: "September 26",
     anchorDay: "TBD",
     prizes: [
       { place: "Net 1", amount: "$TBD" },
@@ -83,7 +83,7 @@ const EVENTS: EventData[] = [
     name: "Presidio",
     subtitle: "",
     image: "/placeholder.svg",
-    payoutDate: "11/7",
+    payoutDate: "November 7",
     anchorDay: "TBD",
     prizes: [
       { place: "Net 1", amount: "$TBD" },
