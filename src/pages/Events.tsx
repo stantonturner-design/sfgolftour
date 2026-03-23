@@ -100,7 +100,7 @@ const EVENTS: EventData[] = [
   {
     name: "Presidio",
     subtitle: "",
-    image: "/placeholder.svg",
+    image: presidioImg,
     payoutDate: "November 7",
     anchorDay: "TBD",
     prizes: [
