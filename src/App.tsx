@@ -11,6 +11,7 @@ import News from "./pages/News";
 import NewsArticle from "./pages/NewsArticle";
 import Rules from "./pages/Rules";
 import Players from "./pages/Players";
+import PlayerProfile from "./pages/PlayerProfile";
 import TeeSheet from "./pages/TeeSheet";
 import NotFound from "./pages/NotFound";
 
