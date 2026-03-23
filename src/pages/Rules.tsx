@@ -84,7 +84,7 @@ const Rules = () => (
           <p>For a round to count for points — and to be eligible for cash if submitted before the cutoff — it must meet all of the requirements below.</p>
           <div>
             <h4 className="font-semibold text-foreground mb-1">1) Pre-round declaration</h4>
-            <p>Before teeing off, notify the SFGT Committee that the round will be your official round for that event.</p>
+            <p>Before teeing off, notify the SFGT Committee at least 36 hours before your tee time that the round will be your official round for that event.</p>
           </div>
           <div>
             <h4 className="font-semibold text-foreground mb-1">2) Play with a tour member</h4>
@@ -197,11 +197,11 @@ const Rules = () => (
             <h4 className="font-semibold text-foreground mb-1">Lost ball / out of bounds (local tour rule)</h4>
             <p>If a ball is not found, including out of bounds, SFGT uses a local rule to keep play moving.</p>
             <p className="mt-2">Drop within two club-lengths, no nearer the hole, from the nearest point where the ball is believed to have been lost or gone out of bounds. Add one penalty stroke.</p>
-            <p className="mt-2">If the original ball is found, it must be played as it lies.</p>
+            <p className="mt-2">If the original ball is found, you can play it as it lies.</p>
           </div>
           <div>
             <h4 className="font-semibold text-foreground mb-1">Putting / gimmes</h4>
-            <p>Gimmes are permitted only within approximately 6 inches. Any putt outside that distance must be holed.</p>
+            <p>Gimmes are generally fine within a reasonable distance — use common sense and keep it fair. When in doubt, putt it out.</p>
           </div>
           <div>
             <h4 className="font-semibold text-foreground mb-1">Weather & incomplete rounds</h4>
