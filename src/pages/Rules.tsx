@@ -84,7 +84,7 @@ const Rules = () => (
           <p>For a round to count for points — and to be eligible for cash if submitted before the cutoff — it must meet all of the requirements below.</p>
           <div>
             <h4 className="font-semibold text-foreground mb-1">1) Pre-round declaration</h4>
-            <p>Before teeing off, notify the SFGT Committee that the round will be your official round for that event.</p>
+            <p>Before teeing off, notify the SFGT Committee at least 36 hours before your tee time that the round will be your official round for that event.</p>
           </div>
           <div>
             <h4 className="font-semibold text-foreground mb-1">2) Play with a tour member</h4>
