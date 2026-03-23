@@ -10,11 +10,11 @@ import { TEE_SHEET_URL } from "@/lib/playerUtils";
 
 // Map event names to section headers in the sheet
 const EVENT_SECTION_MAP: Record<string, string[]> = {
-  Baylands: ["Baylands"],
-  Callippe: ["Callippe Preserve", "Callippe"],
-  "Poppy Hills": ["Poppy Hills (Pebble Beach)", "Poppy Hills"],
-  Presidio: ["Presidio"],
   Corica: ["Corica NORTH", "Corica"],
+  "Coyote Creek": ["Coyote Creek"],
+  Chardonnay: ["Chardonnay"],
+  "Poppy Ridge": ["Poppy Ridge"],
+  Presidio: ["Presidio"],
 };
 
 interface TeeTime {
