@@ -80,7 +80,8 @@ export function parsePlayerRows(rows: string[][]): PlayerData[] {
     const r = rows[i];
     const rank = parseInt(r[1]);
     if (isNaN(rank)) continue;
-    const name = r[2] || "";
+    const name = (r[2] || "").trim();
+    if (!name) continue;
     parsed.push({
       rank,
       name,
