@@ -189,7 +189,7 @@ const Leaderboard = () => {
                     
                       <TableCell className="text-center font-bold">{p.rank}</TableCell>
                       <TableCell className="whitespace-nowrap">{p.name}</TableCell>
-                      <TableCell className="text-center font-semibold">{p.points}</TableCell>
+                      <TableCell className="text-center font-semibold">{p.points.toFixed(1)}</TableCell>
                       <TableCell className="text-center border-r">{p.events}</TableCell>
                       {p.eventPoints.map((ep, i) =>
                     <TableCell
