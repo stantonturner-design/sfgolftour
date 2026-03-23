@@ -6,10 +6,12 @@ import {
   TableCell,
   TableHead,
   TableHeader,
-  TableRow } from
-"@/components/ui/table";
+  TableRow,
+} from "@/components/ui/table";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { parseCSV } from "@/lib/csv";
+import { useIsMobile } from "@/hooks/use-mobile";
+import MobileLeaderboard from "@/components/leaderboard/MobileLeaderboard";
 
 const SHEET_URL =
 "https://docs.google.com/spreadsheets/d/e/2PACX-1vTFoFbbyxvSushAcAppZY8YEP-cDAXH5GhQCewq4QOgIW-WqIW7SDcHX4Xsz2UeP7tI4OYAjZTgQVOc/pub?gid=191837314&single=true&output=csv";
@@ -36,6 +38,7 @@ const Leaderboard = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [finishView, setFinishView] = useState<string>("event");
+  const isMobile = useIsMobile();
 
   useEffect(() => {
     fetch(SHEET_URL).
@@ -104,7 +107,11 @@ const Leaderboard = () => {
       <p className="mt-12 text-center text-destructive">{error}</p>
       }
 
-      {!loading && !error && players.length > 0 &&
+      {!loading && !error && players.length > 0 && isMobile && (
+        <MobileLeaderboard players={players} eventNames={EVENT_NAMES} />
+      )}
+
+      {!loading && !error && players.length > 0 && !isMobile &&
       <>
           {/* Toggle positioned above table, aligned right over finishes section */}
           <div className="mt-6 flex justify-end">

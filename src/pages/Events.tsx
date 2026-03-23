@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { useIsMobile } from "@/hooks/use-mobile";
+import MobileEventCard from "@/components/events/MobileEventCard";
 
 import coricaImg from "@/assets/courses/corica-north.jpg";
 import coyoteImg from "@/assets/courses/coyote-creek.jpg";
@@ -233,6 +235,8 @@ const EventCard = ({ evt }: { evt: EventData }) => {
   );
 };
 const Events = () => {
+  const isMobile = useIsMobile();
+
   return (
     <div className="container py-16">
       <div className="flex items-center gap-3">
@@ -243,11 +247,19 @@ const Events = () => {
         6 events this season — 5 regular season + the Finale.
       </p>
 
-      <div className="mt-10 grid grid-cols-1 md:grid-cols-2 gap-6">
-        {EVENTS.map((evt) => (
-          <EventCard key={evt.name} evt={evt} />
-        ))}
-      </div>
+      {isMobile ? (
+        <div className="mt-8 space-y-5">
+          {EVENTS.map((evt) => (
+            <MobileEventCard key={evt.name} evt={evt} />
+          ))}
+        </div>
+      ) : (
+        <div className="mt-10 grid grid-cols-1 md:grid-cols-2 gap-6">
+          {EVENTS.map((evt) => (
+            <EventCard key={evt.name} evt={evt} />
+          ))}
+        </div>
+      )}
     </div>
   );
 };
