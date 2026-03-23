@@ -170,7 +170,7 @@ const Leaderboard = () => {
                     <div>
                       {"\n"}
                     </div>
-                    <div className="text-[10px] font-normal text-muted-foreground">Total</div>
+                    <div className="text-[10px] font-normal text-muted-foreground">{"\n"}</div>
                   </TableHead>
                 </TableRow>
               </TableHeader>
