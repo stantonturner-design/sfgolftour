@@ -96,25 +96,6 @@ const Leaderboard = () => {
         Season-long standings and per-event results — powered by the live Google Sheet.
       </p>
 
-      {/* Toggle control */}
-      <div className="mt-6 flex items-center gap-3">
-        <span className="text-sm font-medium text-muted-foreground">Show:</span>
-        <ToggleGroup
-          type="single"
-          value={finishView}
-          onValueChange={(v) => v && setFinishView(v)}
-          variant="outline"
-          size="sm"
-        >
-          <ToggleGroupItem value="event" className="text-xs">
-            Event Rank Finishes
-          </ToggleGroupItem>
-          <ToggleGroupItem value="net" className="text-xs">
-            Net Score Finishes
-          </ToggleGroupItem>
-        </ToggleGroup>
-      </div>
-
       {loading && (
         <p className="mt-12 text-center text-muted-foreground">Loading standings…</p>
       )}
@@ -135,8 +116,23 @@ const Leaderboard = () => {
                 <TableHead colSpan={EVENT_NAMES.length} className="bg-accent/40 text-center text-xs font-semibold uppercase tracking-wider text-accent-foreground border-r">
                   Event Points
                 </TableHead>
-                <TableHead colSpan={3} className="bg-secondary/40 text-center text-xs font-semibold uppercase tracking-wider text-secondary-foreground border-r">
-                  {finishView === "event" ? "Event Rank Finishes" : "Net Score Finishes"}
+                <TableHead colSpan={3} className="bg-secondary/40 border-r p-0">
+                  <div className="flex items-center justify-center gap-2 px-2 py-1">
+                    <ToggleGroup
+                      type="single"
+                      value={finishView}
+                      onValueChange={(v) => v && setFinishView(v)}
+                      variant="outline"
+                      size="sm"
+                    >
+                      <ToggleGroupItem value="event" className="text-[10px] h-6 px-2">
+                        Event Rank
+                      </ToggleGroupItem>
+                      <ToggleGroupItem value="net" className="text-[10px] h-6 px-2">
+                        Net Score
+                      </ToggleGroupItem>
+                    </ToggleGroup>
+                  </div>
                 </TableHead>
                 <TableHead className="bg-muted text-center text-xs font-semibold uppercase tracking-wider text-muted-foreground">
                   Season
@@ -147,28 +143,28 @@ const Leaderboard = () => {
                 {/* Section 1: Standings */}
                 <TableHead className="w-14 text-center">#</TableHead>
                 <TableHead>Golfer</TableHead>
-                <TableHead className="text-right">Points</TableHead>
-                <TableHead className="text-right border-r">Events</TableHead>
+                <TableHead className="text-center">Points</TableHead>
+                <TableHead className="text-center border-r">Events</TableHead>
                 {/* Section 2: Event Points */}
                 {EVENT_NAMES.map((e, i) => (
                   <TableHead
                     key={e}
-                    className={`text-right whitespace-nowrap ${i === EVENT_NAMES.length - 1 ? "border-r" : ""}`}
+                    className={`text-center whitespace-nowrap ${i === EVENT_NAMES.length - 1 ? "border-r" : ""}`}
                   >
                     {e}
                   </TableHead>
                 ))}
-                {/* Section 3: Finish stats */}
+                {/* Section 3: Finish stats — fixed-width columns */}
                 {finishHeaders.map((h, i) => (
                   <TableHead
                     key={h}
-                    className={`text-right whitespace-nowrap ${i === finishHeaders.length - 1 ? "border-r" : ""}`}
+                    className={`text-center whitespace-nowrap w-[90px] min-w-[90px] max-w-[90px] ${i === finishHeaders.length - 1 ? "border-r" : ""}`}
                   >
                     {h}
                   </TableHead>
                 ))}
                 {/* Birdies */}
-                <TableHead className="text-right">Birdies</TableHead>
+                <TableHead className="text-center">Birdies</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -181,12 +177,12 @@ const Leaderboard = () => {
                   >
                     <TableCell className="text-center font-bold">{p.rank}</TableCell>
                     <TableCell className="whitespace-nowrap">{p.name}</TableCell>
-                    <TableCell className="text-right font-semibold">{p.points}</TableCell>
-                    <TableCell className="text-right border-r">{p.events}</TableCell>
+                    <TableCell className="text-center font-semibold">{p.points}</TableCell>
+                    <TableCell className="text-center border-r">{p.events}</TableCell>
                     {p.eventPoints.map((ep, i) => (
                       <TableCell
                         key={i}
-                        className={`text-right ${i === EVENT_NAMES.length - 1 ? "border-r" : ""}`}
+                        className={`text-center ${i === EVENT_NAMES.length - 1 ? "border-r" : ""}`}
                       >
                         {ep > 0 ? ep : "—"}
                       </TableCell>
@@ -194,12 +190,12 @@ const Leaderboard = () => {
                     {finishVals.map((v, i) => (
                       <TableCell
                         key={i}
-                        className={`text-right ${i === finishHeaders.length - 1 ? "border-r" : ""}`}
+                        className={`text-center w-[90px] min-w-[90px] max-w-[90px] ${i === finishHeaders.length - 1 ? "border-r" : ""}`}
                       >
                         {v}
                       </TableCell>
                     ))}
-                    <TableCell className="text-right">{p.birdies}</TableCell>
+                    <TableCell className="text-center">{p.birdies}</TableCell>
                   </TableRow>
                 );
               })}
