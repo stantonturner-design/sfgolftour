@@ -198,7 +198,7 @@ const EventCard = ({ evt }: { evt: EventData }) => {
             </div>
             <div className="flex flex-wrap justify-end gap-2">
               {evt.prizes.map((p) => (
-                <Badge key={p.place} variant="secondary" className="text-sm font-semibold px-3 py-1.5">
+                <Badge key={p.place} variant="secondary" className="text-xs font-semibold px-2 py-1">
                   {p.place}: {p.amount}
                 </Badge>
               ))}
