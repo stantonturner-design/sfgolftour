@@ -56,17 +56,6 @@ const EVENTS: EventData[] = [
     handicaps: "#",
     results: "#",
   },
-    payoutDate: "June 13",
-    anchorDay: "May 31",
-    prizes: [
-      { place: "Net 1", amount: "$TBD" },
-      { place: "Net 2", amount: "$TBD" },
-      { place: "Gross", amount: "$TBD" },
-    ],
-    teeSheet: "#",
-    handicaps: "#",
-    results: "#",
-  },
   {
     name: "Chardonnay",
     subtitle: "",
