@@ -49,25 +49,24 @@ const Index = () => {
   return (
     <div>
       {/* Hero */}
-      <section className="relative overflow-hidden bg-secondary py-24 text-secondary-foreground md:py-32">
+      <section className="relative overflow-hidden bg-secondary py-10 text-secondary-foreground md:py-32">
         <div className="absolute inset-0 opacity-10">
-          <div className="h-full w-full bg-[radial-gradient(ellipse_at_top_right,hsl(var(--primary))_0%,transparent_60%)] shadow-md rounded-none" />
+          <div className="h-full w-full bg-[radial-gradient(ellipse_at_top_right,hsl(var(--primary))_0%,transparent_60%)]" />
         </div>
-        <div className="container relative text-center border-4 border-primary-foreground bg-[#25344b] border-none">
-          <p className="mb-3 font-semibold uppercase tracking-[0.2em] text-xl text-[#fff3e0]">EST. 2022</p>
-          <h1 className="text-5xl font-bold leading-tight text-[#fff3e0] font-sans bg-[#15841d] md:text-8xl border-4">
+        <div className="container relative text-center">
+          <p className="mb-1.5 md:mb-3 font-semibold uppercase tracking-[0.2em] text-xs md:text-xl text-accent">EST. 2022</p>
+          <h1 className="text-3xl font-bold leading-tight text-primary-foreground font-sans bg-primary inline-block px-4 py-2 md:px-6 md:py-3 md:text-8xl">
             San Francisco
-            Golf Tour
             <br />Golf Tour
           </h1>
-          <p className="mx-auto mt-6 max-w-xl text-lg opacity-80 font-sans">
+          <p className="mx-auto mt-3 md:mt-6 max-w-xl text-sm md:text-lg opacity-80 font-sans">
             Competitive amateur golf across the finest courses in the Bay Area. Join the tour, compete in events, and track your journey to the top.
           </p>
-          <div className="mt-8 flex flex-wrap justify-center gap-4 border-0">
-            <Button size="lg" asChild>
+          <div className="mt-4 md:mt-8 flex flex-wrap justify-center gap-3 md:gap-4">
+            <Button size="lg" asChild className="h-9 px-4 text-sm md:h-11 md:px-8 md:text-base">
               <Link to="/events">View Events</Link>
             </Button>
-            <Button size="lg" variant="outline" className="border-secondary-foreground/30 text-secondary-foreground hover:bg-secondary-foreground/10" asChild>
+            <Button size="lg" variant="outline" className="border-secondary-foreground/30 text-secondary-foreground hover:bg-secondary-foreground/10 h-9 px-4 text-sm md:h-11 md:px-8 md:text-base" asChild>
               <a href="https://www.roundrecap.com" target="_blank" rel="noopener noreferrer">View in Round Recap</a>
             </Button>
           </div>
