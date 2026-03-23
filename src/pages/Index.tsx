@@ -125,7 +125,7 @@ const Index = () => {
                         <span className="mr-2 text-muted-foreground">{p.rank}.</span>
                         {p.name}
                       </span>
-                      <span className="font-semibold">{p.points} pts</span>
+                      <span className="font-semibold">{p.points.toFixed(1)} pts</span>
                     </div>
                   ))
                 ) : (

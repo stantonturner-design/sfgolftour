@@ -81,7 +81,7 @@ const MobileLeaderboard = ({ players, eventNames }: Props) => {
                 <span className="text-sm text-muted-foreground">
                   {p.events} evt{p.events !== 1 ? "s" : ""}
                 </span>
-                <span className="font-bold text-lg">{p.points}</span>
+                <span className="font-bold text-lg">{p.points.toFixed(1)}</span>
                 {isExpanded ? (
                   <ChevronUp className="h-4 w-4 text-muted-foreground" />
                 ) : (

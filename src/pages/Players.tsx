@@ -94,7 +94,7 @@ const Players = () => {
                         {hasLink && <ExternalLink className="h-3.5 w-3.5 shrink-0 text-muted-foreground" />}
                       </div>
                       <p className="text-xs text-muted-foreground">
-                        Rank #{p.rank} · {p.points} pts
+                        Rank #{p.rank} · {p.points.toFixed(1)} pts
                       </p>
                       <div className="mt-2 flex flex-wrap gap-x-3 gap-y-1 text-xs text-muted-foreground">
                         <span>{p.events} events</span>
