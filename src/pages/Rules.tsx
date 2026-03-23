@@ -197,7 +197,7 @@ const Rules = () => (
             <h4 className="font-semibold text-foreground mb-1">Lost ball / out of bounds (local tour rule)</h4>
             <p>If a ball is not found, including out of bounds, SFGT uses a local rule to keep play moving.</p>
             <p className="mt-2">Drop within two club-lengths, no nearer the hole, from the nearest point where the ball is believed to have been lost or gone out of bounds. Add one penalty stroke.</p>
-            <p className="mt-2">If the original ball is found, it must be played as it lies.</p>
+            <p className="mt-2">If the original ball is found, you can play it as it lies.</p>
           </div>
           <div>
             <h4 className="font-semibold text-foreground mb-1">Putting / gimmes</h4>
