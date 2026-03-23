@@ -31,11 +31,49 @@ export type PlayerData = {
   roundRecapUrl: string;
 };
 
-export const EVENT_NAMES = ["Baylands", "Callippe", "Poppy Hills", "Presidio", "Corica"];
+export type CoricaResult = {
+  name: string;
+  slug: string;
+  grossScore: number | null;
+  netScore: number | null;
+  handicap: number | null;
+  grossRank: string;
+  netRank: string;
+  points: number;
+  eventRank: string;
+};
 
-export const SHEET_URL =
-  "https://docs.google.com/spreadsheets/d/e/2PACX-1vTFoFbbyxvSushAcAppZY8YEP-cDAXH5GhQCewq4QOgIW-WqIW7SDcHX4Xsz2UeP7tI4OYAjZTgQVOc/pub?gid=191837314&single=true&output=csv";
+export type HandicapData = {
+  name: string;
+  slug: string;
+  preseason: number | null;
+  corica: number | null;
+  coyoteCreek: number | null;
+  chardonnay: number | null;
+  poppyRidge: number | null;
+  presidio: number | null;
+};
 
+// 2026 season events
+export const EVENT_NAMES = ["Corica", "Coyote Creek", "Chardonnay", "Poppy Ridge", "Presidio"];
+
+const SHEET_BASE =
+  "https://docs.google.com/spreadsheets/d/e/2PACX-1vRuyF0EPQcm-z2Y3vAx4nPWoIQ3tnghemFJMVGmKQYUL49aLHLr9aLxZO7cryubxjGB-C4PNes_J35-/pub";
+
+export const SHEET_URL = `${SHEET_BASE}?gid=2060685145&single=true&output=csv`;
+export const TEE_SHEET_URL = `${SHEET_BASE}?gid=1479662039&single=true&output=csv`;
+export const HANDICAPS_URL = `${SHEET_BASE}?gid=1591080360&single=true&output=csv`;
+export const CORICA_URL = `${SHEET_BASE}?gid=397283659&single=true&output=csv`;
+
+/**
+ * Parse the 2026 Leaderboard tab.
+ * Column layout (0-indexed):
+ *  1:RANK  2:GOLFER  3:POINTS  4:EVENTS
+ *  6:Corica  7:Coyote Creek  8:Chardonnay  9:Poppy Ridge  10:Presidio
+ *  12:WINS  13:TOP5  14:TOP10
+ *  16:NET WINS  17:NET TOP5  18:NET TOP10
+ *  20:BIRDIES
+ */
 export function parsePlayerRows(rows: string[][]): PlayerData[] {
   const parsed: PlayerData[] = [];
   for (let i = 3; i < rows.length; i++) {
@@ -48,25 +86,88 @@ export function parsePlayerRows(rows: string[][]): PlayerData[] {
       name,
       slug: slugifyName(name),
       points: parseFloat(r[3]) || 0,
-      birdies: parseInt(r[4]) || 0,
-      events: parseInt(r[6]) || 0,
-      wins: parseInt(r[7]) || 0,
-      top5: parseInt(r[8]) || 0,
-      top10: parseInt(r[9]) || 0,
-      netWins: parseInt(r[11]) || 0,
-      netTop5: parseInt(r[12]) || 0,
-      netTop10: parseInt(r[13]) || 0,
+      events: parseInt(r[4]) || 0,
       eventPoints: [
-        parseFloat(r[15]) || 0,
-        parseFloat(r[16]) || 0,
-        parseFloat(r[17]) || 0,
-        parseFloat(r[18]) || 0,
-        parseFloat(r[19]) || 0,
+        parseFloat(r[6]) || 0,
+        parseFloat(r[7]) || 0,
+        parseFloat(r[8]) || 0,
+        parseFloat(r[9]) || 0,
+        parseFloat(r[10]) || 0,
       ],
-      roundRecapUrl: (r[10] || "").trim(),
+      wins: parseInt(r[12]) || 0,
+      top5: parseInt(r[13]) || 0,
+      top10: parseInt(r[14]) || 0,
+      netWins: parseInt(r[16]) || 0,
+      netTop5: parseInt(r[17]) || 0,
+      netTop10: parseInt(r[18]) || 0,
+      birdies: parseInt(r[20]) || 0,
+      roundRecapUrl: "", // Not in 2026 sheet
     });
   }
   parsed.sort((a, b) => b.points - a.points);
   parsed.forEach((p, i) => (p.rank = i + 1));
   return parsed;
+}
+
+/**
+ * Parse the Corica event results tab.
+ * Player rows start at row index 6 (after header/par rows).
+ * Col 1:Name  23:TOT(gross)  24:HCP  25:NET  26:GrossRank  27:NetRank  28:Points  29:EventRank
+ */
+export function parseCoricaResults(rows: string[][]): CoricaResult[] {
+  const results: CoricaResult[] = [];
+  for (let i = 6; i < rows.length; i++) {
+    const r = rows[i];
+    const name = (r[1] || "").trim();
+    if (!name) continue;
+    const grossStr = (r[23] || "").trim();
+    const hcpStr = (r[24] || "").trim();
+    const netStr = (r[25] || "").trim();
+    const grossRankStr = (r[26] || "").trim();
+    const netRankStr = (r[27] || "").trim();
+    const pointsStr = (r[28] || "").trim();
+    const eventRankStr = (r[29] || "").trim();
+
+    results.push({
+      name,
+      slug: slugifyName(name),
+      grossScore: grossStr ? parseInt(grossStr) || null : null,
+      netScore: netStr ? parseInt(netStr) || null : null,
+      handicap: hcpStr ? parseInt(hcpStr) || null : null,
+      grossRank: grossRankStr === "N/A" ? "—" : grossRankStr || "—",
+      netRank: netRankStr === "N/A" ? "—" : netRankStr || "—",
+      points: parseFloat(pointsStr) || 0,
+      eventRank: eventRankStr === "N/A" ? "—" : eventRankStr || "—",
+    });
+  }
+  return results;
+}
+
+/**
+ * Parse the Handicaps tab.
+ * Row 1 is header. Data starts at row index 2.
+ * Col 2:Name(full)  3:Preseason  8:Corica  9:Coyote Creek  10:Chardonnay  11:Poppy Ridge  12:Presidio
+ */
+export function parseHandicaps(rows: string[][]): HandicapData[] {
+  const data: HandicapData[] = [];
+  for (let i = 2; i < rows.length; i++) {
+    const r = rows[i];
+    const name = (r[2] || "").trim();
+    if (!name) continue;
+    const parseHcp = (val: string) => {
+      const v = parseFloat((val || "").trim());
+      return isNaN(v) ? null : v;
+    };
+    data.push({
+      name,
+      slug: slugifyName(name),
+      preseason: parseHcp(r[3]),
+      corica: parseHcp(r[8]),
+      coyoteCreek: parseHcp(r[9]),
+      chardonnay: parseHcp(r[10]),
+      poppyRidge: parseHcp(r[11]),
+      presidio: parseHcp(r[12]),
+    });
+  }
+  return data;
 }
