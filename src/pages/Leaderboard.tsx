@@ -105,103 +105,109 @@ const Leaderboard = () => {
       )}
 
       {!loading && !error && players.length > 0 && (
-        <div className="mt-6 overflow-x-auto rounded-lg border">
-          <Table>
-            <TableHeader>
-              {/* Section header row */}
-              <TableRow className="border-b-0">
-                <TableHead colSpan={4} className="bg-primary/10 text-center text-xs font-semibold uppercase tracking-wider text-primary border-r">
-                  Standings
-                </TableHead>
-                <TableHead colSpan={EVENT_NAMES.length} className="bg-accent/40 text-center text-xs font-semibold uppercase tracking-wider text-accent-foreground border-r">
-                  Event Points
-                </TableHead>
-                <TableHead colSpan={3} className="bg-secondary/40 border-r p-0">
-                  <div className="flex items-center justify-center gap-2 px-2 py-1">
-                    <ToggleGroup
-                      type="single"
-                      value={finishView}
-                      onValueChange={(v) => v && setFinishView(v)}
-                      variant="outline"
-                      size="sm"
+        <>
+          {/* Toggle positioned above table, aligned right over finishes section */}
+          <div className="mt-6 flex justify-end">
+            <div style={{ marginRight: '90px' }}>
+              <ToggleGroup
+                type="single"
+                value={finishView}
+                onValueChange={(v) => v && setFinishView(v)}
+                variant="outline"
+                size="sm"
+              >
+                <ToggleGroupItem value="event" className="text-xs h-7 px-3">
+                  Event Rank
+                </ToggleGroupItem>
+                <ToggleGroupItem value="net" className="text-xs h-7 px-3">
+                  Net Score
+                </ToggleGroupItem>
+              </ToggleGroup>
+            </div>
+          </div>
+
+          <div className="mt-2 overflow-x-auto rounded-lg border">
+            <Table>
+              <TableHeader>
+                {/* Section header row */}
+                <TableRow className="border-b-0">
+                  <TableHead colSpan={4} className="bg-secondary/15 text-center text-sm font-bold uppercase tracking-wider text-secondary-foreground border-r">
+                    Standings
+                  </TableHead>
+                  <TableHead colSpan={EVENT_NAMES.length} className="bg-secondary/15 text-center text-sm font-bold uppercase tracking-wider text-secondary-foreground border-r">
+                    Event Points
+                  </TableHead>
+                  <TableHead colSpan={3} className="bg-secondary/15 text-center text-sm font-bold uppercase tracking-wider text-secondary-foreground border-r">
+                    {finishView === "event" ? "Event Rank Finishes" : "Net Score Finishes"}
+                  </TableHead>
+                  <TableHead className="bg-secondary/15 text-center text-sm font-bold uppercase tracking-wider text-secondary-foreground">
+                    Season
+                  </TableHead>
+                </TableRow>
+                {/* Column header row */}
+                <TableRow className="bg-muted/60">
+                  <TableHead className="w-14 text-center">#</TableHead>
+                  <TableHead>Golfer</TableHead>
+                  <TableHead className="text-center">Points</TableHead>
+                  <TableHead className="text-center border-r">Events</TableHead>
+                  {EVENT_NAMES.map((e, i) => (
+                    <TableHead
+                      key={e}
+                      className={`text-center whitespace-nowrap ${i === EVENT_NAMES.length - 1 ? "border-r" : ""}`}
                     >
-                      <ToggleGroupItem value="event" className="text-[10px] h-6 px-2">
-                        Event Rank
-                      </ToggleGroupItem>
-                      <ToggleGroupItem value="net" className="text-[10px] h-6 px-2">
-                        Net Score
-                      </ToggleGroupItem>
-                    </ToggleGroup>
-                  </div>
-                </TableHead>
-                <TableHead className="bg-muted text-center text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-                  Season
-                </TableHead>
-              </TableRow>
-              {/* Column header row */}
-              <TableRow className="bg-muted/60">
-                {/* Section 1: Standings */}
-                <TableHead className="w-14 text-center">#</TableHead>
-                <TableHead>Golfer</TableHead>
-                <TableHead className="text-center">Points</TableHead>
-                <TableHead className="text-center border-r">Events</TableHead>
-                {/* Section 2: Event Points */}
-                {EVENT_NAMES.map((e, i) => (
-                  <TableHead
-                    key={e}
-                    className={`text-center whitespace-nowrap ${i === EVENT_NAMES.length - 1 ? "border-r" : ""}`}
-                  >
-                    {e}
+                      {e}
+                    </TableHead>
+                  ))}
+                  {finishHeaders.map((h, i) => (
+                    <TableHead
+                      key={h}
+                      className={`text-center whitespace-nowrap w-[90px] min-w-[90px] max-w-[90px] ${i === finishHeaders.length - 1 ? "border-r" : ""}`}
+                    >
+                      {h}
+                    </TableHead>
+                  ))}
+                  <TableHead className="text-center">
+                    <div>Birdies</div>
+                    <div className="text-[10px] font-normal text-muted-foreground">Total</div>
                   </TableHead>
-                ))}
-                {/* Section 3: Finish stats — fixed-width columns */}
-                {finishHeaders.map((h, i) => (
-                  <TableHead
-                    key={h}
-                    className={`text-center whitespace-nowrap w-[90px] min-w-[90px] max-w-[90px] ${i === finishHeaders.length - 1 ? "border-r" : ""}`}
-                  >
-                    {h}
-                  </TableHead>
-                ))}
-                {/* Birdies */}
-                <TableHead className="text-center">Birdies</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {players.map((p) => {
-                const finishVals = getFinishValues(p);
-                return (
-                  <TableRow
-                    key={p.rank}
-                    className={p.rank <= 3 ? "bg-primary/5 font-medium" : ""}
-                  >
-                    <TableCell className="text-center font-bold">{p.rank}</TableCell>
-                    <TableCell className="whitespace-nowrap">{p.name}</TableCell>
-                    <TableCell className="text-center font-semibold">{p.points}</TableCell>
-                    <TableCell className="text-center border-r">{p.events}</TableCell>
-                    {p.eventPoints.map((ep, i) => (
-                      <TableCell
-                        key={i}
-                        className={`text-center ${i === EVENT_NAMES.length - 1 ? "border-r" : ""}`}
-                      >
-                        {ep > 0 ? ep : "—"}
-                      </TableCell>
-                    ))}
-                    {finishVals.map((v, i) => (
-                      <TableCell
-                        key={i}
-                        className={`text-center w-[90px] min-w-[90px] max-w-[90px] ${i === finishHeaders.length - 1 ? "border-r" : ""}`}
-                      >
-                        {v}
-                      </TableCell>
-                    ))}
-                    <TableCell className="text-center">{p.birdies}</TableCell>
-                  </TableRow>
-                );
-              })}
-            </TableBody>
-          </Table>
-        </div>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {players.map((p) => {
+                  const finishVals = getFinishValues(p);
+                  return (
+                    <TableRow
+                      key={p.rank}
+                      className={p.rank <= 3 ? "bg-primary/5 font-medium" : ""}
+                    >
+                      <TableCell className="text-center font-bold">{p.rank}</TableCell>
+                      <TableCell className="whitespace-nowrap">{p.name}</TableCell>
+                      <TableCell className="text-center font-semibold">{p.points}</TableCell>
+                      <TableCell className="text-center border-r">{p.events}</TableCell>
+                      {p.eventPoints.map((ep, i) => (
+                        <TableCell
+                          key={i}
+                          className={`text-center ${i === EVENT_NAMES.length - 1 ? "border-r" : ""}`}
+                        >
+                          {ep > 0 ? ep : "—"}
+                        </TableCell>
+                      ))}
+                      {finishVals.map((v, i) => (
+                        <TableCell
+                          key={i}
+                          className={`text-center w-[90px] min-w-[90px] max-w-[90px] ${i === finishHeaders.length - 1 ? "border-r" : ""}`}
+                        >
+                          {v}
+                        </TableCell>
+                      ))}
+                      <TableCell className="text-center">{p.birdies}</TableCell>
+                    </TableRow>
+                  );
+                })}
+              </TableBody>
+            </Table>
+          </div>
+        </>
       )}
     </div>
   );
