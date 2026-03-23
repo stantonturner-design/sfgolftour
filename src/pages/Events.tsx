@@ -44,7 +44,18 @@ const EVENTS: EventData[] = [
   {
     name: "Coyote Creek",
     subtitle: "The Valley Course",
-    image: "/placeholder.svg",
+    image: coyoteImg,
+    payoutDate: "June 13",
+    anchorDay: "May 31",
+    prizes: [
+      { place: "Net 1", amount: "$TBD" },
+      { place: "Net 2", amount: "$TBD" },
+      { place: "Gross", amount: "$TBD" },
+    ],
+    teeSheet: "#",
+    handicaps: "#",
+    results: "#",
+  },
     payoutDate: "June 13",
     anchorDay: "May 31",
     prizes: [
