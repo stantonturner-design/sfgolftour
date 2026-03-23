@@ -141,7 +141,7 @@ const Leaderboard = () => {
                     {finishView === "event" ? "Event Rank Finishes" : "Net Score Finishes"}
                   </TableHead>
                   <TableHead className="bg-secondary/15 text-center text-sm font-bold uppercase tracking-wider text-secondary-foreground">
-                    Season
+                    BIRDIES
                   </TableHead>
                 </TableRow>
                 {/* Column header row */}
@@ -168,9 +168,9 @@ const Leaderboard = () => {
                 )}
                   <TableHead className="text-center">
                     <div>
-
-Total</div>
-                    <div className="text-[10px] font-normal text-muted-foreground">Total</div>
+                      {"\n"}
+                    </div>
+                    <div className="text-[10px] font-normal text-muted-foreground">{"\n"}</div>
                   </TableHead>
                 </TableRow>
               </TableHeader>
