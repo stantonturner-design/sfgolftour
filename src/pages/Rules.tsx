@@ -201,7 +201,7 @@ const Rules = () => (
           </div>
           <div>
             <h4 className="font-semibold text-foreground mb-1">Putting / gimmes</h4>
-            <p>Gimmes are permitted only within approximately 6 inches. Any putt outside that distance must be holed.</p>
+            <p>Gimmes are generally fine within a reasonable distance — use common sense and keep it fair. When in doubt, putt it out.</p>
           </div>
           <div>
             <h4 className="font-semibold text-foreground mb-1">Weather & incomplete rounds</h4>
