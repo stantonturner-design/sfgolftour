@@ -49,72 +49,72 @@ const Index = () => {
   return (
     <div>
       {/* Hero */}
-      <section className="relative overflow-hidden bg-secondary py-10 text-secondary-foreground md:py-32">
-        <div className="absolute inset-0 opacity-10">
-          <div className="h-full w-full bg-[radial-gradient(ellipse_at_top_right,hsl(var(--primary))_0%,transparent_60%)]" />
+      <section className="relative overflow-hidden bg-secondary py-8 text-secondary-foreground md:py-20">
+        <div className="absolute inset-0 opacity-[0.07]">
+          <div className="h-full w-full bg-[radial-gradient(ellipse_at_top_right,hsl(var(--accent))_0%,transparent_50%)]" />
         </div>
         <div className="container relative text-center">
-          <p className="mb-1.5 md:mb-3 font-semibold uppercase tracking-[0.2em] text-xs md:text-xl text-accent">EST. 2022</p>
-          <h1 className="text-3xl font-bold leading-tight text-primary-foreground font-sans bg-primary inline-block px-4 py-2 md:px-6 md:py-3 md:text-8xl">
+          <p className="mb-1 md:mb-2 font-semibold uppercase tracking-[0.25em] text-xs md:text-sm text-accent">EST. 2022</p>
+          <h1 className="text-2xl font-bold leading-tight text-primary-foreground font-sans bg-primary inline-block px-3 py-1.5 md:px-5 md:py-2.5 md:text-6xl">
             San Francisco
             <br />Golf Tour
           </h1>
-          <p className="mx-auto mt-3 md:mt-6 max-w-xl text-sm md:text-lg opacity-80 font-sans">
-            Competitive amateur golf across the finest courses in the Bay Area. Join the tour, compete in events, and track your journey to the top.
+          <p className="mx-auto mt-2 md:mt-4 max-w-lg text-xs md:text-base text-secondary-foreground/70 font-sans">
+            Competitive amateur golf across the finest courses in the Bay Area.
           </p>
-          <div className="mt-4 md:mt-8 flex flex-wrap justify-center gap-3 md:gap-4">
-            <Button size="lg" asChild className="h-9 px-4 text-sm md:h-11 md:px-8 md:text-base">
+          <div className="mt-3 md:mt-6 flex flex-wrap justify-center gap-2 md:gap-3">
+            <Button size="lg" asChild className="h-8 px-4 text-xs md:h-10 md:px-6 md:text-sm">
               <Link to="/events">View Events</Link>
             </Button>
-            <Button size="lg" variant="outline" className="border-secondary-foreground/30 text-secondary-foreground hover:bg-secondary-foreground/10 h-9 px-4 text-sm md:h-11 md:px-8 md:text-base" asChild>
-              <a href="https://www.roundrecap.com" target="_blank" rel="noopener noreferrer">View in Round Recap</a>
+            <Button size="lg" variant="outline" className="border-accent/40 text-accent hover:bg-accent/10 h-8 px-4 text-xs md:h-10 md:px-6 md:text-sm" asChild>
+              <a href="https://www.roundrecap.com" target="_blank" rel="noopener noreferrer">Round Recap</a>
             </Button>
           </div>
         </div>
       </section>
 
       {/* Featured info blocks */}
-      <section className="container -mt-10 relative z-10">
-        <div className="grid gap-5 md:grid-cols-5">
+      <section className="container -mt-8 md:-mt-12 relative z-10 mb-4">
+        <div className="grid gap-4 md:gap-5 md:grid-cols-5">
 
           {/* Current Event — featured panel (3 cols) */}
-          <div className="md:col-span-3 rounded-xl bg-secondary text-secondary-foreground overflow-hidden shadow-lg">
-            <div className="p-7 md:p-9 flex flex-col h-full">
-              <p className="text-xs font-semibold uppercase tracking-[0.15em] text-accent mb-1">Current Event</p>
-              <h3 className="text-2xl md:text-3xl font-bold leading-tight">{CURRENT_EVENT.name}</h3>
+          <div className="md:col-span-3 rounded-xl bg-accent text-accent-foreground overflow-hidden shadow-md border border-border">
+            <div className="p-5 md:p-8 flex flex-col h-full">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.15em] text-primary mb-1">Current Event</p>
+              <h3 className="text-xl md:text-2xl font-bold leading-tight">{CURRENT_EVENT.name}</h3>
 
-              <div className="mt-5 grid grid-cols-2 gap-x-6 gap-y-3 text-sm">
+              <div className="mt-4 grid grid-cols-2 gap-x-5 gap-y-2 text-sm">
                 <div>
-                  <p className="text-secondary-foreground/60 text-xs uppercase tracking-wider mb-0.5">Cash Prize Payout</p>
-                  <p className="font-semibold text-base flex items-center gap-1.5">
-                    <DollarSign className="h-4 w-4 text-accent" />
+                  <p className="text-muted-foreground text-[11px] uppercase tracking-wider mb-0.5">Cash Prize Payout</p>
+                  <p className="font-semibold text-sm flex items-center gap-1.5">
+                    <DollarSign className="h-3.5 w-3.5 text-primary" />
                     {CURRENT_EVENT.payoutDate}
                   </p>
                 </div>
                 <div>
-                  <p className="text-secondary-foreground/60 text-xs uppercase tracking-wider mb-0.5">Anchor Day</p>
-                  <p className="font-semibold text-base flex items-center gap-1.5">
-                    <Calendar className="h-4 w-4 text-accent" />
+                  <p className="text-muted-foreground text-[11px] uppercase tracking-wider mb-0.5">Anchor Day</p>
+                  <p className="font-semibold text-sm flex items-center gap-1.5">
+                    <Calendar className="h-3.5 w-3.5 text-primary" />
                     April 4
                   </p>
                 </div>
               </div>
 
-              <div className="mt-5 flex flex-wrap gap-2">
+              <div className="mt-4 flex flex-wrap gap-1.5">
                 {CURRENT_EVENT.prizes.map((p) => (
-                  <Badge key={p.place} className="bg-secondary-foreground/10 text-secondary-foreground border-secondary-foreground/20 text-sm font-semibold px-3 py-1">
+                  <Badge key={p.place} className="bg-primary/10 text-primary border-primary/20 text-xs font-semibold px-2.5 py-0.5">
                     {p.place}: {p.amount}
                   </Badge>
                 ))}
               </div>
 
-              <div className="mt-auto pt-6 flex flex-wrap gap-3">
-                <Button size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90" asChild>
+              <div className="mt-auto pt-5 flex flex-wrap gap-2">
+                <Button size="default" className="bg-primary text-primary-foreground hover:bg-primary/90" asChild>
                   <Link to="/events">
                     View Event <ArrowRight className="ml-1 h-4 w-4" />
                   </Link>
                 </Button>
-                <Button size="lg" variant="outline" className="border-secondary-foreground/25 text-secondary-foreground hover:bg-secondary-foreground/10" asChild>
+                <Button size="default" variant="outline" className="border-primary/30 text-primary hover:bg-primary/5" asChild>
                   <Link to={`/tee-sheet?event=${encodeURIComponent(CURRENT_EVENT.shortName)}`}>
                     <ClipboardList className="mr-1 h-4 w-4" /> Tee Sheet
                   </Link>
@@ -124,14 +124,14 @@ const Index = () => {
           </div>
 
           {/* Right column — two stacked panels (2 cols) */}
-          <div className="md:col-span-2 flex flex-col gap-5">
+          <div className="md:col-span-2 flex flex-col gap-4 md:gap-5">
 
             {/* Current Standings */}
-            <div className="flex-1 rounded-xl border border-border bg-card shadow-sm p-5 md:p-6">
-              <div className="flex items-center justify-between mb-3">
-                <div className="flex items-center gap-2">
-                  <Trophy className="h-4 w-4 text-accent" />
-                  <h3 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground">Standings</h3>
+            <div className="flex-1 rounded-xl border border-border bg-card shadow-sm p-4 md:p-5">
+              <div className="flex items-center justify-between mb-2.5">
+                <div className="flex items-center gap-1.5">
+                  <Trophy className="h-3.5 w-3.5 text-primary" />
+                  <h3 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Standings</h3>
                 </div>
                 <Button variant="link" size="sm" className="text-xs h-auto p-0" asChild>
                   <Link to="/leaderboard">
@@ -139,15 +139,15 @@ const Index = () => {
                   </Link>
                 </Button>
               </div>
-              <div className="space-y-1.5">
+              <div className="space-y-1">
                 {topPlayers.length > 0 ? (
                   topPlayers.map((p) => (
-                    <div key={p.rank} className="flex items-center justify-between py-2 px-3 rounded-lg bg-muted/40 text-sm">
+                    <div key={p.rank} className="flex items-center justify-between py-1.5 px-2.5 rounded-md bg-accent/50 text-sm">
                       <span className="font-medium">
-                        <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-primary/10 text-primary text-xs font-bold mr-2">{p.rank}</span>
+                        <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-primary/10 text-primary text-xs font-bold mr-1.5">{p.rank}</span>
                         {p.name}
                       </span>
-                      <span className="font-bold tabular-nums">{p.points.toFixed(1)}<span className="text-muted-foreground font-normal ml-0.5">pts</span></span>
+                      <span className="font-bold tabular-nums text-sm">{p.points.toFixed(1)}<span className="text-muted-foreground font-normal ml-0.5 text-xs">pts</span></span>
                     </div>
                   ))
                 ) : (
@@ -157,11 +157,11 @@ const Index = () => {
             </div>
 
             {/* Tour News */}
-            <div className="flex-1 rounded-xl border border-border bg-card shadow-sm p-5 md:p-6">
-              <div className="flex items-center justify-between mb-3">
-                <div className="flex items-center gap-2">
-                  <Newspaper className="h-4 w-4 text-accent" />
-                  <h3 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground">Tour News</h3>
+            <div className="flex-1 rounded-xl border border-border bg-card shadow-sm p-4 md:p-5">
+              <div className="flex items-center justify-between mb-2.5">
+                <div className="flex items-center gap-1.5">
+                  <Newspaper className="h-3.5 w-3.5 text-primary" />
+                  <h3 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Tour News</h3>
                 </div>
                 <Button variant="link" size="sm" className="text-xs h-auto p-0" asChild>
                   <Link to="/news">
@@ -169,20 +169,20 @@ const Index = () => {
                   </Link>
                 </Button>
               </div>
-              <div className="space-y-1">
+              <div className="divide-y divide-border">
                 {latestNews.slice(0, 3).map((article) => (
                   <Link
                     key={article.id}
                     to={`/news/${article.slug}`}
-                    className="flex items-start justify-between gap-3 py-2.5 px-3 rounded-lg transition-colors hover:bg-muted/50 group"
+                    className="flex items-start justify-between gap-2 py-2 transition-colors hover:bg-accent/30 group -mx-2 px-2 first:pt-0 last:pb-0 rounded-md"
                   >
                     <div className="min-w-0">
                       <p className="font-medium text-sm leading-snug group-hover:text-primary transition-colors">{article.title}</p>
-                      <p className="text-xs text-muted-foreground mt-0.5">
+                      <p className="text-[11px] text-muted-foreground mt-0.5">
                         {format(new Date(article.publishDate), "MMM d, yyyy")}
                       </p>
                     </div>
-                    <ArrowRight className="h-3.5 w-3.5 text-muted-foreground/40 group-hover:text-primary shrink-0 mt-1 transition-colors" />
+                    <ArrowRight className="h-3 w-3 text-muted-foreground/30 group-hover:text-primary shrink-0 mt-1 transition-colors" />
                   </Link>
                 ))}
               </div>
