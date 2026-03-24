@@ -1,4 +1,4 @@
-import { Info } from "lucide-react";
+import { Info, ScrollText } from "lucide-react";
 import {
   Accordion,
   AccordionContent,
