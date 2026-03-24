@@ -75,7 +75,7 @@ const Index = () => {
           <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
         </div>
 
-        <div className="container relative flex flex-col items-center text-center py-6 md:py-8">
+        <div className="container relative flex flex-col items-center text-center py-6 md:py-8 pb-10 md:pb-14">
           <p className="mb-2 md:mb-3 font-semibold uppercase tracking-[0.3em] text-[10px] md:text-[11px] text-primary-foreground/40">
             Est. 2022 · Bay Area
           </p>
