@@ -32,6 +32,7 @@ const Index = () => {
     .sort((a, b) => new Date(b.publishDate).getTime() - new Date(a.publishDate).getTime())
     .slice(0, 3);
   const [topPlayers, setTopPlayers] = useState<TopPlayer[]>([]);
+  const [netLeader, setNetLeader] = useState<{ name: string; score: number } | null>(null);
 
   useEffect(() => {
     fetch(SHEET_URL)
@@ -46,6 +47,18 @@ const Index = () => {
           parsed.push({ rank, name: r[2] || "", points: parseFloat(r[3]) || 0 });
         }
         setTopPlayers(parsed);
+      })
+      .catch(() => {});
+
+    fetch(CORICA_URL)
+      .then((res) => res.text())
+      .then((text) => {
+        const results = parseCoricaResults(parseCSV(text));
+        const withNet = results.filter((r) => r.netScore !== null);
+        if (withNet.length > 0) {
+          withNet.sort((a, b) => a.netScore! - b.netScore!);
+          setNetLeader({ name: withNet[0].name, score: withNet[0].netScore! });
+        }
       })
       .catch(() => {});
   }, []);
