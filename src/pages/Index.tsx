@@ -53,34 +53,35 @@ const Index = () => {
       <section className="relative overflow-hidden bg-secondary text-secondary-foreground">
         {/* Layered background effects */}
         <div className="absolute inset-0">
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,hsl(115_80%_25%/0.4)_0%,transparent_60%)]" />
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_left,hsl(39_75%_92%/0.06)_0%,transparent_50%)]" />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_60%_40%,hsl(115_80%_25%/0.5)_0%,transparent_50%)]" />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_80%,hsl(39_75%_92%/0.08)_0%,transparent_40%)]" />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_80%,hsl(115_60%_18%/0.3)_0%,transparent_35%)]" />
           <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
         </div>
 
-        <div className="container relative flex flex-col items-center text-center py-8 md:py-12">
-          <p className="mb-3 md:mb-4 font-semibold uppercase tracking-[0.3em] text-[10px] md:text-[11px] text-primary-foreground/50">
+        <div className="container relative flex flex-col items-center text-center py-6 md:py-8">
+          <p className="mb-2 md:mb-3 font-semibold uppercase tracking-[0.3em] text-[10px] md:text-[11px] text-primary-foreground/40">
             Est. 2022 · Bay Area
           </p>
           <div className="relative">
-            <div className="absolute -inset-4 md:-inset-8 rounded-full bg-primary/10 blur-2xl" />
+            <div className="absolute -inset-6 md:-inset-12 rounded-full bg-primary/15 blur-3xl" />
             <img
               src={sfgtLogo}
               alt="San Francisco Golf Tour"
-              className="relative h-20 w-auto md:h-36 object-contain drop-shadow-lg"
+              className="relative h-24 w-auto md:h-40 object-contain drop-shadow-[0_4px_24px_rgba(9,101,0,0.3)]"
             />
           </div>
-          <p className="mx-auto mt-3 md:mt-5 max-w-sm text-xs md:text-sm text-secondary-foreground/60 font-sans leading-relaxed tracking-wide">
+          <p className="mx-auto mt-2.5 md:mt-4 max-w-md text-xs md:text-sm text-secondary-foreground/55 font-sans leading-relaxed tracking-wide">
             Competitive amateur golf across the finest courses in the Bay Area.
           </p>
-          <div className="mt-4 md:mt-6 flex flex-wrap justify-center gap-2.5 md:gap-3">
-            <Button size="lg" asChild className="h-9 px-5 text-xs md:h-10 md:px-7 md:text-sm shadow-md shadow-primary/20">
+          <div className="mt-3.5 md:mt-5 flex flex-wrap justify-center gap-2.5 md:gap-3">
+            <Button size="lg" asChild className="h-9 px-6 text-xs md:h-10 md:px-8 md:text-sm shadow-lg shadow-primary/25 font-semibold">
               <Link to="/events">View Events</Link>
             </Button>
             <Button
               size="lg"
               variant="outline"
-              className="border-secondary-foreground/20 text-secondary-foreground/80 hover:bg-secondary-foreground/10 hover:text-secondary-foreground h-9 px-5 text-xs md:h-10 md:px-7 md:text-sm backdrop-blur-sm"
+              className="border-secondary-foreground/25 text-secondary-foreground bg-secondary-foreground/5 hover:bg-secondary-foreground/15 hover:text-secondary-foreground h-9 px-6 text-xs md:h-10 md:px-8 md:text-sm backdrop-blur-sm font-semibold"
               asChild
             >
               <a href="https://www.roundrecap.com" target="_blank" rel="noopener noreferrer">Round Recap</a>
