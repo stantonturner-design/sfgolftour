@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Calendar, Trophy, Newspaper, ArrowRight, DollarSign, ClipboardList } from "lucide-react";
+import { Calendar, Trophy, Newspaper, ArrowRight, DollarSign, ClipboardList, Anchor } from "lucide-react";
 import { newsArticles } from "@/data/newsArticles";
 import { Badge } from "@/components/ui/badge";
 import { parseCSV } from "@/lib/csv";
