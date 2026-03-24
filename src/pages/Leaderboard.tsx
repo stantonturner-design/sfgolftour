@@ -125,14 +125,14 @@ const Leaderboard = () => {
                       key={p.rank}
                       className={p.rank <= 3 ? "bg-primary/5 font-medium" : ""}
                     >
-                      <TableCell className="text-center font-bold">{p.rank}</TableCell>
-                      <TableCell className="whitespace-nowrap">{p.name}</TableCell>
-                      <TableCell className="text-center font-semibold">{p.points.toFixed(1)}</TableCell>
-                      <TableCell className="text-center border-r">{p.events}</TableCell>
+                      <TableCell className="text-center font-bold text-foreground">{p.rank}</TableCell>
+                      <TableCell className="whitespace-nowrap text-foreground font-medium">{p.name}</TableCell>
+                      <TableCell className="text-center font-semibold text-foreground">{p.points.toFixed(1)}</TableCell>
+                      <TableCell className="text-center border-r text-foreground/80">{p.events}</TableCell>
                       {p.eventPoints.map((ep, i) => (
                         <TableCell
                           key={i}
-                          className={`text-center ${i === EVENT_NAMES.length - 1 ? "border-r" : ""}`}
+                          className={`text-center text-foreground/80 ${i === EVENT_NAMES.length - 1 ? "border-r" : ""}`}
                         >
                           {ep > 0 ? ep.toFixed(1) : "—"}
                         </TableCell>
@@ -140,12 +140,12 @@ const Leaderboard = () => {
                       {finishVals.map((v, i) => (
                         <TableCell
                           key={i}
-                          className={`text-center w-[90px] min-w-[90px] max-w-[90px] ${i === finishHeaders.length - 1 ? "border-r" : ""}`}
+                          className={`text-center w-[90px] min-w-[90px] max-w-[90px] text-foreground/80 ${i === finishHeaders.length - 1 ? "border-r" : ""}`}
                         >
                           {v}
                         </TableCell>
                       ))}
-                      <TableCell className="text-center">{p.birdies}</TableCell>
+                      <TableCell className="text-center text-foreground/80">{p.birdies}</TableCell>
                     </TableRow>
                   );
                 })}
