@@ -10,11 +10,14 @@ import { format } from "date-fns";
 
 import { SHEET_URL } from "@/lib/playerUtils";
 import sfgtLogo from "@/assets/sfgt-logo.png";
+import coricaImg from "@/assets/courses/corica-north.jpg";
 
 const CURRENT_EVENT = {
   name: "Corica Park – North Course",
   shortName: "Corica",
   payoutDate: "May 2",
+  anchorDay: "April 4",
+  image: coricaImg,
   prizes: [
     { place: "Net 1", amount: "$300" },
     { place: "Net 2", amount: "$50" },
