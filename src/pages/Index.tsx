@@ -8,7 +8,7 @@ import { Badge } from "@/components/ui/badge";
 import { parseCSV } from "@/lib/csv";
 import { format } from "date-fns";
 
-import { SHEET_URL } from "@/lib/playerUtils";
+import { SHEET_URL, CORICA_URL, parseCoricaResults } from "@/lib/playerUtils";
 import sfgtLogo from "@/assets/sfgt-logo.png";
 import coricaImg from "@/assets/courses/corica-north.jpg";
 
@@ -32,6 +32,7 @@ const Index = () => {
     .sort((a, b) => new Date(b.publishDate).getTime() - new Date(a.publishDate).getTime())
     .slice(0, 3);
   const [topPlayers, setTopPlayers] = useState<TopPlayer[]>([]);
+  const [netLeader, setNetLeader] = useState<{ name: string; score: number } | null>(null);
 
   useEffect(() => {
     fetch(SHEET_URL)
@@ -46,6 +47,18 @@ const Index = () => {
           parsed.push({ rank, name: r[2] || "", points: parseFloat(r[3]) || 0 });
         }
         setTopPlayers(parsed);
+      })
+      .catch(() => {});
+
+    fetch(CORICA_URL)
+      .then((res) => res.text())
+      .then((text) => {
+        const results = parseCoricaResults(parseCSV(text));
+        const withNet = results.filter((r) => r.netScore !== null);
+        if (withNet.length > 0) {
+          withNet.sort((a, b) => a.netScore! - b.netScore!);
+          setNetLeader({ name: withNet[0].name, score: withNet[0].netScore! });
+        }
       })
       .catch(() => {});
   }, []);
@@ -77,19 +90,6 @@ const Index = () => {
           <p className="mx-auto mt-2.5 md:mt-4 max-w-md text-xs md:text-sm text-secondary-foreground/55 font-sans leading-relaxed tracking-wide">
             Competitive amateur golf across the finest courses in the Bay Area.
           </p>
-          <div className="mt-3.5 md:mt-5 flex flex-wrap justify-center gap-2.5 md:gap-3">
-            <Button size="lg" asChild className="h-9 px-6 text-xs md:h-10 md:px-8 md:text-sm shadow-lg shadow-primary/25 font-semibold">
-              <Link to="/events">View Events</Link>
-            </Button>
-            <Button
-              size="lg"
-              variant="outline"
-              className="border-secondary-foreground/25 text-secondary-foreground bg-secondary-foreground/5 hover:bg-secondary-foreground/15 hover:text-secondary-foreground h-9 px-6 text-xs md:h-10 md:px-8 md:text-sm backdrop-blur-sm font-semibold"
-              asChild
-            >
-              <a href="https://www.roundrecap.com" target="_blank" rel="noopener noreferrer">Round Recap</a>
-            </Button>
-          </div>
         </div>
       </section>
 
@@ -148,6 +148,18 @@ const Index = () => {
                     </Badge>
                   ))}
                 </div>
+
+                {netLeader && (
+                  <div className="mt-3 rounded-lg bg-primary/5 border border-primary/15 p-3 flex items-center gap-3">
+                    <div className="flex items-center justify-center h-8 w-8 rounded-full bg-primary/10">
+                      <Trophy className="h-4 w-4 text-primary" />
+                    </div>
+                    <div>
+                      <p className="text-[10px] uppercase tracking-wider font-semibold text-muted-foreground">Current Net Leader</p>
+                      <p className="font-bold text-sm">{netLeader.name} <span className="text-muted-foreground font-normal">· {netLeader.score}</span></p>
+                    </div>
+                  </div>
+                )}
 
                 <div className="mt-auto pt-5 flex flex-wrap gap-2.5">
                   <Button size="default" className="bg-primary text-primary-foreground hover:bg-primary/90 shadow-sm" asChild>
