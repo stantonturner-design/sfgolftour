@@ -87,9 +87,6 @@ const Index = () => {
               className="relative h-24 w-auto md:h-40 object-contain drop-shadow-[0_4px_24px_rgba(9,101,0,0.3)]"
             />
           </div>
-          <p className="mx-auto mt-2.5 md:mt-4 max-w-md text-xs md:text-sm text-secondary-foreground/55 font-sans leading-relaxed tracking-wide">
-            Competitive amateur golf across the finest courses in the Bay Area.
-          </p>
         </div>
       </section>
 
