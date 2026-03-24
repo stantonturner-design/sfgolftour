@@ -90,19 +90,6 @@ const Index = () => {
           <p className="mx-auto mt-2.5 md:mt-4 max-w-md text-xs md:text-sm text-secondary-foreground/55 font-sans leading-relaxed tracking-wide">
             Competitive amateur golf across the finest courses in the Bay Area.
           </p>
-          <div className="mt-3.5 md:mt-5 flex flex-wrap justify-center gap-2.5 md:gap-3">
-            <Button size="lg" asChild className="h-9 px-6 text-xs md:h-10 md:px-8 md:text-sm shadow-lg shadow-primary/25 font-semibold">
-              <Link to="/events">View Events</Link>
-            </Button>
-            <Button
-              size="lg"
-              variant="outline"
-              className="border-secondary-foreground/25 text-secondary-foreground bg-secondary-foreground/5 hover:bg-secondary-foreground/15 hover:text-secondary-foreground h-9 px-6 text-xs md:h-10 md:px-8 md:text-sm backdrop-blur-sm font-semibold"
-              asChild
-            >
-              <a href="https://www.roundrecap.com" target="_blank" rel="noopener noreferrer">Round Recap</a>
-            </Button>
-          </div>
         </div>
       </section>
 
