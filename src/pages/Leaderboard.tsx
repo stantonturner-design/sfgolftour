@@ -78,28 +78,28 @@ const Leaderboard = () => {
             <Table>
               <TableHeader>
                 <TableRow className="border-b-0">
-                  <TableHead colSpan={4} className="bg-secondary/15 text-center text-sm font-bold uppercase tracking-wider text-secondary-foreground border-r">
+                  <TableHead colSpan={4} className="bg-secondary text-center text-xs font-bold uppercase tracking-[0.15em] text-secondary-foreground/90 border-r border-secondary-foreground/10 py-2.5">
                     Standings
                   </TableHead>
-                  <TableHead colSpan={EVENT_NAMES.length} className="bg-secondary/15 text-center text-sm font-bold uppercase tracking-wider text-secondary-foreground border-r">
+                  <TableHead colSpan={EVENT_NAMES.length} className="bg-secondary text-center text-xs font-bold uppercase tracking-[0.15em] text-secondary-foreground/90 border-r border-secondary-foreground/10 py-2.5">
                     Event Points
                   </TableHead>
-                  <TableHead colSpan={3} className="bg-secondary/15 text-center text-sm font-bold uppercase tracking-wider text-secondary-foreground border-r">
+                  <TableHead colSpan={3} className="bg-secondary text-center text-xs font-bold uppercase tracking-[0.15em] text-secondary-foreground/90 border-r border-secondary-foreground/10 py-2.5">
                     {finishView === "event" ? "Event Rank Finishes" : "Net Score Finishes"}
                   </TableHead>
-                  <TableHead className="bg-secondary/15 text-center text-sm font-bold uppercase tracking-wider text-secondary-foreground">
+                  <TableHead className="bg-secondary text-center text-xs font-bold uppercase tracking-[0.15em] text-secondary-foreground/90 py-2.5">
                     BIRDIES
                   </TableHead>
                 </TableRow>
-                <TableRow className="bg-muted/60">
-                  <TableHead className="w-14 text-center">#</TableHead>
-                  <TableHead>Golfer</TableHead>
-                  <TableHead className="text-center">Points</TableHead>
-                  <TableHead className="text-center border-r">Events</TableHead>
+                <TableRow className="bg-muted">
+                  <TableHead className="w-14 text-center text-foreground/80 font-semibold">#</TableHead>
+                  <TableHead className="text-foreground/80 font-semibold">Golfer</TableHead>
+                  <TableHead className="text-center text-foreground/80 font-semibold">Points</TableHead>
+                  <TableHead className="text-center border-r text-foreground/80 font-semibold">Events</TableHead>
                   {EVENT_NAMES.map((e, i) => (
                     <TableHead
                       key={e}
-                      className={`text-center whitespace-nowrap ${i === EVENT_NAMES.length - 1 ? "border-r" : ""}`}
+                      className={`text-center whitespace-nowrap text-foreground/80 font-semibold ${i === EVENT_NAMES.length - 1 ? "border-r" : ""}`}
                     >
                       {e}
                     </TableHead>
@@ -107,14 +107,13 @@ const Leaderboard = () => {
                   {finishHeaders.map((h, i) => (
                     <TableHead
                       key={h}
-                      className={`text-center whitespace-nowrap w-[90px] min-w-[90px] max-w-[90px] ${i === finishHeaders.length - 1 ? "border-r" : ""}`}
+                      className={`text-center whitespace-nowrap w-[90px] min-w-[90px] max-w-[90px] text-foreground/80 font-semibold ${i === finishHeaders.length - 1 ? "border-r" : ""}`}
                     >
                       {h}
                     </TableHead>
                   ))}
-                  <TableHead className="text-center">
-                    <div>Total</div>
-                    <div className="text-[10px] font-normal text-muted-foreground">{"\n"}</div>
+                  <TableHead className="text-center text-foreground/80 font-semibold">
+                    Total
                   </TableHead>
                 </TableRow>
               </TableHeader>
