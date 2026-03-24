@@ -14,7 +14,10 @@ const News = () => {
   return (
     <div className="container py-12 md:py-16">
       <div className="mb-10">
-        <h1 className="font-display text-4xl font-bold">Tour News</h1>
+        <div className="flex items-center gap-3">
+          <Newspaper className="h-8 w-8 text-primary" />
+          <h1 className="font-display text-4xl font-bold">Tour News</h1>
+        </div>
         <p className="mt-2 text-muted-foreground">
           The latest updates and announcements from the SFGT.
         </p>
