@@ -9,6 +9,7 @@ import { parseCSV } from "@/lib/csv";
 import { format } from "date-fns";
 
 import { SHEET_URL } from "@/lib/playerUtils";
+import sfgtLogo from "@/assets/sfgt-logo.svg";
 
 const CURRENT_EVENT = {
   name: "Corica Park – North Course",
