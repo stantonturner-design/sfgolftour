@@ -8,7 +8,7 @@ import { Badge } from "@/components/ui/badge";
 import { parseCSV } from "@/lib/csv";
 import { format } from "date-fns";
 
-import { SHEET_URL } from "@/lib/playerUtils";
+import { SHEET_URL, CORICA_URL, parseCoricaResults } from "@/lib/playerUtils";
 import sfgtLogo from "@/assets/sfgt-logo.png";
 import coricaImg from "@/assets/courses/corica-north.jpg";
 
