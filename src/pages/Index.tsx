@@ -149,6 +149,18 @@ const Index = () => {
                   ))}
                 </div>
 
+                {netLeader && (
+                  <div className="mt-3 rounded-lg bg-primary/5 border border-primary/15 p-3 flex items-center gap-3">
+                    <div className="flex items-center justify-center h-8 w-8 rounded-full bg-primary/10">
+                      <Trophy className="h-4 w-4 text-primary" />
+                    </div>
+                    <div>
+                      <p className="text-[10px] uppercase tracking-wider font-semibold text-muted-foreground">Current Net Leader</p>
+                      <p className="font-bold text-sm">{netLeader.name} <span className="text-muted-foreground font-normal">· {netLeader.score}</span></p>
+                    </div>
+                  </div>
+                )}
+
                 <div className="mt-auto pt-5 flex flex-wrap gap-2.5">
                   <Button size="default" className="bg-primary text-primary-foreground hover:bg-primary/90 shadow-sm" asChild>
                     <Link to="/events">
