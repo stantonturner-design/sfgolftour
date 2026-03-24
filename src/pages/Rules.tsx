@@ -20,17 +20,18 @@ const Rules = () => (
       Quick reminder: event-specific payout dates, prize details, and tee sheet information are listed on each event page.
     </p>
 
-    {/* Key Tour Rules Callout */}
+    {/* Quick Tour Overview Callout */}
     <div className="mt-6 rounded-lg border border-primary/20 bg-primary/5 p-4 md:p-5">
       <div className="flex items-center gap-2 mb-2">
         <Info className="h-4 w-4 text-primary shrink-0" />
-        <span className="font-semibold text-sm md:text-base">Key Tour Rules</span>
+        <span className="font-semibold text-sm md:text-base">How SFGT Works</span>
       </div>
-      <ul className="space-y-1 text-sm text-muted-foreground list-disc list-inside">
-        <li>Declare your round before teeing off</li>
-        <li>Play with at least one SFGT member</li>
-        <li>Submit a clear scorecard after the round</li>
-        <li>Cash eligibility ends at the posted payout cutoff</li>
+      <ul className="space-y-1.5 text-sm text-muted-foreground list-disc list-inside">
+        <li>SFGT is a season-long tour made up of individual events.</li>
+        <li>Players may complete their official round on their own schedule during each event.</li>
+        <li>Before teeing off, you must declare which round will be your official tour round.</li>
+        <li>Official rounds must be played with at least one SFGT member and submitted with a clear scorecard.</li>
+        <li>Rounds submitted after the payout cutoff may still earn points, but not cash prizes.</li>
       </ul>
     </div>
 
