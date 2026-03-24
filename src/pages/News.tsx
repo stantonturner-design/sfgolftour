@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { newsArticles } from "@/data/newsArticles";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Calendar } from "lucide-react";
+import { Calendar, Newspaper } from "lucide-react";
 import { format } from "date-fns";
 
 const News = () => {
