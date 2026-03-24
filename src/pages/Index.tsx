@@ -246,6 +246,71 @@ const Index = () => {
         </div>
       </section>
 
+      {/* Player Spotlight + Round Recap */}
+      <section className="container my-6 md:my-8">
+        <div className="grid gap-4 md:gap-5 md:grid-cols-5">
+
+          {/* Player Spotlight */}
+          <div className="md:col-span-3 rounded-xl border border-border bg-card shadow-sm overflow-hidden">
+            <div className="p-5 md:p-7">
+              <div className="flex items-center gap-2 mb-4">
+                <div className="flex items-center justify-center h-6 w-6 rounded-md bg-primary/10">
+                  <User className="h-3.5 w-3.5 text-primary" />
+                </div>
+                <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-primary">Player Spotlight</p>
+              </div>
+
+              {topPlayers.length > 0 ? (
+                <Link to={`/players/${slugifyName(topPlayers[0].name)}`} className="group block">
+                  <div className="flex items-center gap-5">
+                    <div className="flex items-center justify-center h-16 w-16 rounded-full bg-primary/10 border-2 border-primary/20 shrink-0">
+                      <span className="text-xl font-bold text-primary">
+                        {topPlayers[0].name.split(" ").map(w => w[0]).join("").slice(0, 2)}
+                      </span>
+                    </div>
+                    <div className="min-w-0">
+                      <h3 className="text-lg md:text-xl font-bold leading-tight group-hover:text-primary transition-colors">
+                        {topPlayers[0].name}
+                      </h3>
+                      <p className="text-sm text-muted-foreground mt-1">
+                        Tour Points Leader · <span className="font-semibold text-foreground">{topPlayers[0].points.toFixed(1)} pts</span>
+                      </p>
+                      <p className="text-xs text-muted-foreground mt-1.5 flex items-center gap-1 group-hover:text-primary transition-colors">
+                        View Profile <ArrowRight className="h-3 w-3" />
+                      </p>
+                    </div>
+                  </div>
+                </Link>
+              ) : (
+                <p className="text-sm text-muted-foreground">Loading spotlight…</p>
+              )}
+            </div>
+          </div>
+
+          {/* Round Recap */}
+          <a
+            href="https://roundrecap.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="md:col-span-2 rounded-xl border border-border bg-card shadow-sm p-5 md:p-7 flex flex-col items-center justify-center text-center group hover:border-primary/30 transition-colors"
+          >
+            <div className="flex items-center justify-center h-14 w-14 rounded-xl bg-primary/10 border border-primary/20 mb-4 group-hover:bg-primary/15 transition-colors">
+              <span className="text-2xl font-black text-primary">R</span>
+            </div>
+            <h3 className="text-sm font-bold uppercase tracking-wider text-muted-foreground group-hover:text-primary transition-colors">
+              Round Recap
+            </h3>
+            <p className="text-xs text-muted-foreground mt-1.5 max-w-[200px]">
+              Full round stats, hole-by-hole breakdowns & more
+            </p>
+            <p className="text-xs text-primary mt-3 flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+              Open Round Recap <ExternalLink className="h-3 w-3" />
+            </p>
+          </a>
+
+        </div>
+      </section>
+
       {/* Latest News */}
       <section className="bg-muted/50 py-16 md:py-24">
         <div className="container">
