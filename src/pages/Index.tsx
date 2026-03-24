@@ -50,25 +50,39 @@ const Index = () => {
   return (
     <div>
       {/* Hero */}
-      <section className="relative overflow-hidden bg-secondary py-6 text-secondary-foreground md:py-16">
-        <div className="absolute inset-0 opacity-[0.07]">
-          <div className="h-full w-full bg-[radial-gradient(ellipse_at_top_right,hsl(var(--accent))_0%,transparent_50%)]" />
+      <section className="relative overflow-hidden bg-secondary text-secondary-foreground">
+        {/* Layered background effects */}
+        <div className="absolute inset-0">
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,hsl(115_80%_25%/0.4)_0%,transparent_60%)]" />
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_left,hsl(39_75%_92%/0.06)_0%,transparent_50%)]" />
+          <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
         </div>
-        <div className="container relative flex flex-col items-center text-center">
-          <p className="mb-2 md:mb-3 font-semibold uppercase tracking-[0.25em] text-[10px] md:text-xs text-accent">EST. 2022</p>
-          <img
-            src={sfgtLogo}
-            alt="San Francisco Golf Tour"
-            className="h-20 w-auto md:h-40 object-contain"
-          />
-          <p className="mx-auto mt-2 md:mt-4 max-w-md text-xs md:text-base text-secondary-foreground/70 font-sans">
+
+        <div className="container relative flex flex-col items-center text-center py-8 md:py-12">
+          <p className="mb-3 md:mb-4 font-semibold uppercase tracking-[0.3em] text-[10px] md:text-[11px] text-primary-foreground/50">
+            Est. 2022 · Bay Area
+          </p>
+          <div className="relative">
+            <div className="absolute -inset-4 md:-inset-8 rounded-full bg-primary/10 blur-2xl" />
+            <img
+              src={sfgtLogo}
+              alt="San Francisco Golf Tour"
+              className="relative h-20 w-auto md:h-36 object-contain drop-shadow-lg"
+            />
+          </div>
+          <p className="mx-auto mt-3 md:mt-5 max-w-sm text-xs md:text-sm text-secondary-foreground/60 font-sans leading-relaxed tracking-wide">
             Competitive amateur golf across the finest courses in the Bay Area.
           </p>
-          <div className="mt-3 md:mt-5 flex flex-wrap justify-center gap-2 md:gap-3">
-            <Button size="lg" asChild className="h-8 px-4 text-xs md:h-10 md:px-6 md:text-sm">
+          <div className="mt-4 md:mt-6 flex flex-wrap justify-center gap-2.5 md:gap-3">
+            <Button size="lg" asChild className="h-9 px-5 text-xs md:h-10 md:px-7 md:text-sm shadow-md shadow-primary/20">
               <Link to="/events">View Events</Link>
             </Button>
-            <Button size="lg" variant="outline" className="border-accent/40 text-accent hover:bg-accent/10 h-8 px-4 text-xs md:h-10 md:px-6 md:text-sm" asChild>
+            <Button
+              size="lg"
+              variant="outline"
+              className="border-secondary-foreground/20 text-secondary-foreground/80 hover:bg-secondary-foreground/10 hover:text-secondary-foreground h-9 px-5 text-xs md:h-10 md:px-7 md:text-sm backdrop-blur-sm"
+              asChild
+            >
               <a href="https://www.roundrecap.com" target="_blank" rel="noopener noreferrer">Round Recap</a>
             </Button>
           </div>
@@ -76,26 +90,35 @@ const Index = () => {
       </section>
 
       {/* Featured info blocks */}
-      <section className="container -mt-8 md:-mt-12 relative z-10 mb-4">
+      <section className="container -mt-6 md:-mt-10 relative z-10 mb-4">
         <div className="grid gap-4 md:gap-5 md:grid-cols-5">
 
           {/* Current Event — featured panel (3 cols) */}
-          <div className="md:col-span-3 rounded-xl bg-accent text-accent-foreground overflow-hidden shadow-md border border-border">
+          <div className="md:col-span-3 rounded-xl bg-accent text-accent-foreground overflow-hidden shadow-lg border border-border relative">
+            {/* Subtle decorative top accent bar */}
+            <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary via-primary/70 to-primary/30" />
+
             <div className="p-5 md:p-8 flex flex-col h-full">
-              <p className="text-[11px] font-semibold uppercase tracking-[0.15em] text-primary mb-1">Current Event</p>
+              <div className="flex items-center gap-2 mb-3">
+                <div className="flex items-center justify-center h-6 w-6 rounded-md bg-primary/10">
+                  <Calendar className="h-3.5 w-3.5 text-primary" />
+                </div>
+                <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-primary">Current Event</p>
+              </div>
+
               <h3 className="text-xl md:text-2xl font-bold leading-tight">{CURRENT_EVENT.name}</h3>
 
-              <div className="mt-4 grid grid-cols-2 gap-x-5 gap-y-2 text-sm">
-                <div>
-                  <p className="text-muted-foreground text-[11px] uppercase tracking-wider mb-0.5">Cash Prize Payout</p>
-                  <p className="font-semibold text-sm flex items-center gap-1.5">
+              <div className="mt-5 grid grid-cols-2 gap-4">
+                <div className="rounded-lg bg-card/60 border border-border/50 p-3">
+                  <p className="text-muted-foreground text-[10px] uppercase tracking-wider font-semibold mb-1">Cash Payout</p>
+                  <p className="font-bold text-sm flex items-center gap-1.5">
                     <DollarSign className="h-3.5 w-3.5 text-primary" />
                     {CURRENT_EVENT.payoutDate}
                   </p>
                 </div>
-                <div>
-                  <p className="text-muted-foreground text-[11px] uppercase tracking-wider mb-0.5">Anchor Day</p>
-                  <p className="font-semibold text-sm flex items-center gap-1.5">
+                <div className="rounded-lg bg-card/60 border border-border/50 p-3">
+                  <p className="text-muted-foreground text-[10px] uppercase tracking-wider font-semibold mb-1">Anchor Day</p>
+                  <p className="font-bold text-sm flex items-center gap-1.5">
                     <Calendar className="h-3.5 w-3.5 text-primary" />
                     April 4
                   </p>
@@ -110,8 +133,8 @@ const Index = () => {
                 ))}
               </div>
 
-              <div className="mt-auto pt-5 flex flex-wrap gap-2">
-                <Button size="default" className="bg-primary text-primary-foreground hover:bg-primary/90" asChild>
+              <div className="mt-auto pt-6 flex flex-wrap gap-2.5">
+                <Button size="default" className="bg-primary text-primary-foreground hover:bg-primary/90 shadow-sm" asChild>
                   <Link to="/events">
                     View Event <ArrowRight className="ml-1 h-4 w-4" />
                   </Link>
@@ -194,36 +217,12 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Player Spotlight */}
-      <section className="container py-16 md:py-24">
-        <div className="grid items-center gap-8 md:grid-cols-2">
-          <div>
-            <p className="text-sm font-semibold uppercase tracking-wider text-accent">Player Spotlight</p>
-            <h2 className="mt-2 text-3xl font-bold md:text-4xl font-sans">Featured Player</h2>
-            <p className="mt-4 text-muted-foreground">
-              Each month, we highlight an outstanding tour member. Check back soon to see who's making waves on the SFGT circuit.
-            </p>
-            <Button variant="outline" className="mt-6" asChild>
-              <Link to="/leaderboard">View All Players <ArrowRight className="ml-2 h-4 w-4" /></Link>
-            </Button>
-          </div>
-          <Card className="overflow-hidden">
-            <div className="flex h-64 items-center justify-center bg-muted">
-              <div className="text-center text-muted-foreground">
-                <Trophy className="mx-auto h-12 w-12 opacity-40" />
-                <p className="mt-3 text-sm">Spotlight coming soon</p>
-              </div>
-            </div>
-          </Card>
-        </div>
-      </section>
-
       {/* Latest News */}
       <section className="bg-muted/50 py-16 md:py-24">
         <div className="container">
           <div className="flex items-end justify-between">
             <div>
-              <p className="text-sm font-semibold uppercase tracking-wider text-accent">Latest</p>
+              <p className="text-sm font-semibold uppercase tracking-wider text-primary">Latest</p>
               <h2 className="mt-2 text-3xl font-bold font-sans">Tour News</h2>
             </div>
             <Button variant="link" asChild>
@@ -245,7 +244,7 @@ const Index = () => {
                     <p className="text-xs text-muted-foreground">
                       {format(new Date(article.publishDate), "MMM d, yyyy")}
                     </p>
-                    <h3 className="mt-1 font-display text-lg font-semibold leading-snug">
+                    <h3 className="mt-1 font-sans text-lg font-semibold leading-snug">
                       {article.title}
                     </h3>
                     <p className="mt-2 text-sm text-muted-foreground line-clamp-2">
