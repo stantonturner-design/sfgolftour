@@ -7,7 +7,7 @@ import {
 } from "@/components/ui/accordion";
 
 const Rules = () => (
-  <div className="container max-w-3xl py-10 md:py-16 px-4">
+  <div className="container max-w-3xl lg:max-w-5xl py-10 md:py-16 px-4">
     {/* Header */}
     <h1 className="font-display text-3xl md:text-4xl font-bold">SFGT Rules</h1>
     <p className="mt-2 text-muted-foreground text-sm md:text-base leading-relaxed max-w-2xl">
