@@ -99,55 +99,68 @@ const Index = () => {
 
           {/* Current Event — featured panel (3 cols) */}
           <div className="md:col-span-3 rounded-xl bg-accent text-accent-foreground overflow-hidden shadow-lg border border-border relative">
-            {/* Subtle decorative top accent bar */}
-            <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary via-primary/70 to-primary/30" />
+            {/* Top accent bar */}
+            <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary via-primary/70 to-primary/30 z-10" />
 
-            <div className="p-5 md:p-8 flex flex-col h-full">
-              <div className="flex items-center gap-2 mb-3">
-                <div className="flex items-center justify-center h-6 w-6 rounded-md bg-primary/10">
-                  <Calendar className="h-3.5 w-3.5 text-primary" />
-                </div>
-                <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-primary">Current Event</p>
+            <div className="flex flex-col md:flex-row h-full">
+              {/* Course image — right side on desktop, top on mobile */}
+              <div className="relative md:order-2 md:w-2/5 h-44 md:h-auto">
+                <img
+                  src={CURRENT_EVENT.image}
+                  alt={CURRENT_EVENT.name}
+                  className="absolute inset-0 h-full w-full object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t md:bg-gradient-to-r from-accent/60 via-transparent to-transparent" />
               </div>
 
-              <h3 className="text-xl md:text-2xl font-bold leading-tight">{CURRENT_EVENT.name}</h3>
-
-              <div className="mt-5 grid grid-cols-2 gap-4">
-                <div className="rounded-lg bg-card/60 border border-border/50 p-3">
-                  <p className="text-muted-foreground text-[10px] uppercase tracking-wider font-semibold mb-1">Cash Payout</p>
-                  <p className="font-bold text-sm flex items-center gap-1.5">
-                    <DollarSign className="h-3.5 w-3.5 text-primary" />
-                    {CURRENT_EVENT.payoutDate}
-                  </p>
-                </div>
-                <div className="rounded-lg bg-card/60 border border-border/50 p-3">
-                  <p className="text-muted-foreground text-[10px] uppercase tracking-wider font-semibold mb-1">Anchor Day</p>
-                  <p className="font-bold text-sm flex items-center gap-1.5">
+              {/* Content — left side */}
+              <div className="md:order-1 md:w-3/5 p-5 md:p-7 flex flex-col">
+                <div className="flex items-center gap-2 mb-3">
+                  <div className="flex items-center justify-center h-6 w-6 rounded-md bg-primary/10">
                     <Calendar className="h-3.5 w-3.5 text-primary" />
-                    April 4
-                  </p>
+                  </div>
+                  <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-primary">Current Event</p>
                 </div>
-              </div>
 
-              <div className="mt-4 flex flex-wrap gap-1.5">
-                {CURRENT_EVENT.prizes.map((p) => (
-                  <Badge key={p.place} className="bg-primary/10 text-primary border-primary/20 text-xs font-semibold px-2.5 py-0.5">
-                    {p.place}: {p.amount}
-                  </Badge>
-                ))}
-              </div>
+                <h3 className="text-xl md:text-2xl font-bold leading-tight">{CURRENT_EVENT.name}</h3>
 
-              <div className="mt-auto pt-6 flex flex-wrap gap-2.5">
-                <Button size="default" className="bg-primary text-primary-foreground hover:bg-primary/90 shadow-sm" asChild>
-                  <Link to="/events">
-                    View Event <ArrowRight className="ml-1 h-4 w-4" />
-                  </Link>
-                </Button>
-                <Button size="default" variant="outline" className="border-primary/30 text-primary hover:bg-primary/5" asChild>
-                  <Link to={`/tee-sheet?event=${encodeURIComponent(CURRENT_EVENT.shortName)}`}>
-                    <ClipboardList className="mr-1 h-4 w-4" /> Tee Sheet
-                  </Link>
-                </Button>
+                <div className="mt-4 grid grid-cols-2 gap-3">
+                  <div className="rounded-lg bg-card/60 border border-border/50 p-3">
+                    <p className="text-muted-foreground text-[10px] uppercase tracking-wider font-semibold mb-1">Cash Payout</p>
+                    <p className="font-bold text-sm flex items-center gap-1.5">
+                      <DollarSign className="h-3.5 w-3.5 text-primary" />
+                      {CURRENT_EVENT.payoutDate}
+                    </p>
+                  </div>
+                  <div className="rounded-lg bg-card/60 border border-border/50 p-3">
+                    <p className="text-muted-foreground text-[10px] uppercase tracking-wider font-semibold mb-1">Anchor Day</p>
+                    <p className="font-bold text-sm flex items-center gap-1.5">
+                      <Anchor className="h-3.5 w-3.5 text-primary" />
+                      {CURRENT_EVENT.anchorDay}
+                    </p>
+                  </div>
+                </div>
+
+                <div className="mt-3 flex flex-wrap gap-1.5">
+                  {CURRENT_EVENT.prizes.map((p) => (
+                    <Badge key={p.place} className="bg-primary/10 text-primary border-primary/20 text-xs font-semibold px-2.5 py-0.5">
+                      {p.place}: {p.amount}
+                    </Badge>
+                  ))}
+                </div>
+
+                <div className="mt-auto pt-5 flex flex-wrap gap-2.5">
+                  <Button size="default" className="bg-primary text-primary-foreground hover:bg-primary/90 shadow-sm" asChild>
+                    <Link to="/events">
+                      View Event <ArrowRight className="ml-1 h-4 w-4" />
+                    </Link>
+                  </Button>
+                  <Button size="default" variant="outline" className="border-primary/30 text-primary hover:bg-primary/5" asChild>
+                    <Link to={`/tee-sheet?event=${encodeURIComponent(CURRENT_EVENT.shortName)}`}>
+                      <ClipboardList className="mr-1 h-4 w-4" /> Tee Sheet
+                    </Link>
+                  </Button>
+                </div>
               </div>
             </div>
           </div>
