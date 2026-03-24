@@ -118,18 +118,18 @@ const MobileEventCard = ({ evt }: { evt: EventData }) => {
         )}
 
         {/* Buttons — equal width row */}
-        <div className="flex gap-2 pt-1">
-          <Button variant="outline" size="sm" className="flex-1 h-9 text-sm" asChild>
+        <div className="grid grid-cols-2 gap-2 pt-1">
+          <Button variant="outline" size="sm" className="h-9 text-sm" asChild>
             <Link to={`/tee-sheet?event=${encodeURIComponent(evt.name)}`}>
               <ClipboardList className="mr-1.5 h-4 w-4" /> Tee Sheet
             </Link>
           </Button>
-          <Button variant="outline" size="sm" className="flex-1 h-9 text-sm" asChild>
+          <Button variant="outline" size="sm" className="h-9 text-sm" asChild>
             <a href={evt.handicaps} target="_blank" rel="noopener noreferrer">
               <BarChart3 className="mr-1.5 h-4 w-4" /> Handicaps
             </a>
           </Button>
-          <Button size="sm" className="flex-1 h-9 text-sm" asChild>
+          <Button size="sm" className="col-span-2 h-9 text-sm" asChild>
             <a href={evt.results} target="_blank" rel="noopener noreferrer">
               <ExternalLink className="mr-1.5 h-4 w-4" /> Results
             </a>
