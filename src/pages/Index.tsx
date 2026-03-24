@@ -50,20 +50,21 @@ const Index = () => {
   return (
     <div>
       {/* Hero */}
-      <section className="relative overflow-hidden bg-secondary py-8 text-secondary-foreground md:py-20">
+      <section className="relative overflow-hidden bg-secondary py-6 text-secondary-foreground md:py-16">
         <div className="absolute inset-0 opacity-[0.07]">
           <div className="h-full w-full bg-[radial-gradient(ellipse_at_top_right,hsl(var(--accent))_0%,transparent_50%)]" />
         </div>
-        <div className="container relative text-center">
-          <p className="mb-1 md:mb-2 font-semibold uppercase tracking-[0.25em] text-xs md:text-sm text-accent">EST. 2022</p>
-          <h1 className="text-2xl font-bold leading-tight text-primary-foreground font-sans bg-primary inline-block px-3 py-1.5 md:px-5 md:py-2.5 md:text-6xl">
-            San Francisco
-            <br />Golf Tour
-          </h1>
-          <p className="mx-auto mt-2 md:mt-4 max-w-lg text-xs md:text-base text-secondary-foreground/70 font-sans">
+        <div className="container relative flex flex-col items-center text-center">
+          <p className="mb-2 md:mb-3 font-semibold uppercase tracking-[0.25em] text-[10px] md:text-xs text-accent">EST. 2022</p>
+          <img
+            src={sfgtLogo}
+            alt="San Francisco Golf Tour"
+            className="h-20 w-auto md:h-40 object-contain"
+          />
+          <p className="mx-auto mt-2 md:mt-4 max-w-md text-xs md:text-base text-secondary-foreground/70 font-sans">
             Competitive amateur golf across the finest courses in the Bay Area.
           </p>
-          <div className="mt-3 md:mt-6 flex flex-wrap justify-center gap-2 md:gap-3">
+          <div className="mt-3 md:mt-5 flex flex-wrap justify-center gap-2 md:gap-3">
             <Button size="lg" asChild className="h-8 px-4 text-xs md:h-10 md:px-6 md:text-sm">
               <Link to="/events">View Events</Link>
             </Button>
