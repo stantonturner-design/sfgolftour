@@ -50,14 +50,14 @@ const MobileEventCard = ({ evt }: { evt: EventData }) => {
               <span className="font-medium">TBD</span>
             </div>
           </div>
-          <div className="flex gap-2 pt-1">
-            <Button variant="outline" size="sm" className="flex-1 h-9 text-sm" disabled>
+          <div className="grid grid-cols-2 gap-2 pt-1">
+            <Button variant="outline" size="sm" className="h-9 text-sm" disabled>
               <ClipboardList className="mr-1.5 h-4 w-4" /> Tee Sheet
             </Button>
-            <Button variant="outline" size="sm" className="flex-1 h-9 text-sm" disabled>
+            <Button variant="outline" size="sm" className="h-9 text-sm" disabled>
               <BarChart3 className="mr-1.5 h-4 w-4" /> Handicaps
             </Button>
-            <Button size="sm" className="flex-1 h-9 text-sm" disabled>
+            <Button size="sm" className="col-span-2 h-9 text-sm" disabled>
               <ExternalLink className="mr-1.5 h-4 w-4" /> Results
             </Button>
           </div>
