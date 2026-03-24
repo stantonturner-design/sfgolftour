@@ -100,7 +100,7 @@ const Rules = () => (
           </div>
           <div>
             <h4 className="font-semibold text-foreground mb-1">4) Verification</h4>
-            <p>The Committee will verify the scorecard and calculate net scoring using the handicap on record.</p>
+            <p>The Committee will verify the scorecard and calculate the event points using the handicap on record.</p>
           </div>
           <div>
             <h4 className="font-semibold text-foreground mb-1">One official round per event</h4>
