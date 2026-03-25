@@ -194,7 +194,7 @@ const TeeSheet = () => {
 
       {/* Tee time cards grouped by date in accordion */}
       {groupedByDate.length > 0 && (
-        <Accordion type="multiple" defaultValue={groupedByDate.map((g) => g.date)} className="space-y-3">
+        <Accordion type="multiple" defaultValue={[]} className="space-y-3">
           {groupedByDate.map((group) => (
             <AccordionItem key={group.date} value={group.date} className="border rounded-xl overflow-hidden bg-card">
               <AccordionTrigger className="px-4 md:px-5 py-4 hover:no-underline hover:bg-accent/30">
