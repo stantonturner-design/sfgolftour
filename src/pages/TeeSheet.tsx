@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { useSearchParams, Link } from "react-router-dom";
 import { ClipboardList, ArrowLeft, Clock, Users, CalendarDays, Anchor } from "lucide-react";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -162,60 +163,63 @@ const TeeSheet = () => {
         <p className="text-muted-foreground">No tee sheet data available for this event.</p>
       )}
 
-      {/* Tee time cards grouped by date */}
-      {groupedByDate.map((group) => (
-        <div key={group.date} className="mb-8 last:mb-0">
-          {/* Date header — only show if multiple dates */}
-          {!singleDate && (
-            <div className="flex items-center gap-2 mb-4">
-              <CalendarDays className="h-4 w-4 text-primary" />
-              <h2 className="text-sm font-bold uppercase tracking-wider text-foreground">
-                {group.day}, {group.date}
-              </h2>
-            </div>
-          )}
-
-          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-            {group.times.map((tt, idx) => (
-              <Card key={idx} className="overflow-hidden">
-                {/* Card header strip */}
-                <div className="flex items-center justify-between px-4 py-3 bg-secondary/60 border-b border-border">
-                  <div className="flex items-center gap-2">
-                    <Clock className="h-4 w-4 text-primary" />
-                    <span className="text-base font-bold text-foreground">{tt.time}</span>
+      {/* Tee time cards grouped by date in accordion */}
+      {groupedByDate.length > 0 && (
+        <Accordion type="multiple" defaultValue={groupedByDate.map((g) => g.date)} className="space-y-3">
+          {groupedByDate.map((group) => (
+            <AccordionItem key={group.date} value={group.date} className="border rounded-xl overflow-hidden bg-card">
+              <AccordionTrigger className="px-4 md:px-5 py-4 hover:no-underline hover:bg-accent/30">
+                <div className="flex items-center gap-3 text-left">
+                  <div className="flex items-center justify-center h-8 w-8 rounded-lg bg-primary/10">
+                    <CalendarDays className="h-4 w-4 text-primary" />
                   </div>
-                  {singleDate && (
-                    <span className="text-xs text-muted-foreground">
-                      {tt.day}, {tt.date}
+                  <div>
+                    <span className="text-base font-bold text-foreground">
+                      {group.day}, {group.date}
                     </span>
-                  )}
-                  <Badge variant="secondary" className="text-xs font-semibold">
-                    {tt.players.length} players
-                  </Badge>
+                    <span className="ml-2 text-sm text-muted-foreground">
+                      · {group.times.length} {group.times.length === 1 ? "group" : "groups"}
+                    </span>
+                  </div>
                 </div>
-
-                {/* Player roster */}
-                <CardContent className="p-0">
-                  {tt.players.map((player, pIdx) => (
-                    <Link
-                      key={player}
-                      to={`/player/${slugifyName(player)}`}
-                      className={`flex items-center gap-3 px-4 py-2.5 text-sm font-medium text-foreground hover:bg-accent/40 transition-colors ${
-                        pIdx < tt.players.length - 1 ? "border-b border-border/50" : ""
-                      }`}
-                    >
-                      <span className="flex items-center justify-center h-6 w-6 rounded-full bg-primary/10 text-xs font-bold text-primary shrink-0">
-                        {pIdx + 1}
-                      </span>
-                      {player}
-                    </Link>
+              </AccordionTrigger>
+              <AccordionContent className="px-4 md:px-5 pb-4 pt-1">
+                <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+                  {group.times.map((tt, idx) => (
+                    <Card key={idx} className="overflow-hidden">
+                      <div className="flex items-center justify-between px-4 py-3 bg-secondary/60 border-b border-border">
+                        <div className="flex items-center gap-2">
+                          <Clock className="h-4 w-4 text-primary" />
+                          <span className="text-base font-bold text-foreground">{tt.time}</span>
+                        </div>
+                        <Badge variant="secondary" className="text-xs font-semibold">
+                          {tt.players.length} players
+                        </Badge>
+                      </div>
+                      <CardContent className="p-0">
+                        {tt.players.map((player, pIdx) => (
+                          <Link
+                            key={player}
+                            to={`/player/${slugifyName(player)}`}
+                            className={`flex items-center gap-3 px-4 py-2.5 text-sm font-medium text-foreground hover:bg-accent/40 transition-colors ${
+                              pIdx < tt.players.length - 1 ? "border-b border-border/50" : ""
+                            }`}
+                          >
+                            <span className="flex items-center justify-center h-6 w-6 rounded-full bg-primary/10 text-xs font-bold text-primary shrink-0">
+                              {pIdx + 1}
+                            </span>
+                            {player}
+                          </Link>
+                        ))}
+                      </CardContent>
+                    </Card>
                   ))}
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
-      ))}
+                </div>
+              </AccordionContent>
+            </AccordionItem>
+          ))}
+        </Accordion>
+      )}
     </div>
   );
 };
