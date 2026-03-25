@@ -1,12 +1,13 @@
 import { useEffect, useMemo, useState } from "react";
 import { useSearchParams, Link } from "react-router-dom";
-import { ClipboardList, ArrowLeft, Clock, Users, CalendarDays, Anchor } from "lucide-react";
+import { ClipboardList, ArrowLeft, Clock, Users, CalendarDays, Anchor, UserX } from "lucide-react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { parseCSV } from "@/lib/csv";
-import { slugifyName, TEE_SHEET_URL } from "@/lib/playerUtils";
+import { slugifyName, parsePlayerRows, SHEET_URL, TEE_SHEET_URL } from "@/lib/playerUtils";
 
 // Map event names to section headers in the sheet
 const EVENT_SECTION_MAP: Record<string, string[]> = {
