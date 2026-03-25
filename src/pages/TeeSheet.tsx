@@ -38,16 +38,22 @@ const TeeSheet = () => {
   const [searchParams] = useSearchParams();
   const eventName = searchParams.get("event") || "";
   const [teeTimes, setTeeTimes] = useState<TeeTime[]>([]);
+  const [allPlayerNames, setAllPlayerNames] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [showUnscheduled, setShowUnscheduled] = useState(false);
 
   const meta = EVENT_META[eventName] || { subtitle: "", anchorDay: "" };
 
   useEffect(() => {
-    fetch(TEE_SHEET_URL)
-      .then((r) => r.text())
-      .then((text) => {
-        const rows = parseCSV(text);
+    // Fetch tee sheet and full roster in parallel
+    Promise.all([
+      fetch(TEE_SHEET_URL).then((r) => r.text()),
+      fetch(SHEET_URL).then((r) => r.text()),
+    ])
+      .then(([teeText, rosterText]) => {
+        // Parse tee sheet
+        const rows = parseCSV(teeText);
         const sectionNames = EVENT_SECTION_MAP[eventName] || [eventName];
 
         let sectionStart = -1;
@@ -61,34 +67,37 @@ const TeeSheet = () => {
 
         if (sectionStart === -1) {
           setTeeTimes([]);
-          return;
+        } else {
+          const parsed: TeeTime[] = [];
+          for (let i = sectionStart + 1; i < rows.length; i++) {
+            const row = rows[i];
+            if (!row) break;
+
+            const firstCell = row[0]?.trim() || "";
+            if (!firstCell && !row[1]?.trim() && !row[2]?.trim()) break;
+            if (firstCell === "Date" || firstCell === "Legend:") continue;
+            if (row[3]?.trim()?.includes("AERATION")) continue;
+
+            const players = [row[3], row[4], row[5], row[6]]
+              .map((p) => p?.trim() || "")
+              .filter((p) => p && p !== "Booked" && p !== "Open");
+
+            if (players.length === 0) continue;
+
+            parsed.push({
+              date: firstCell,
+              day: row[1]?.trim() || "",
+              time: row[2]?.trim() || "",
+              players,
+            });
+          }
+          setTeeTimes(parsed);
         }
 
-        const parsed: TeeTime[] = [];
-        for (let i = sectionStart + 1; i < rows.length; i++) {
-          const row = rows[i];
-          if (!row) break;
-
-          const firstCell = row[0]?.trim() || "";
-          if (!firstCell && !row[1]?.trim() && !row[2]?.trim()) break;
-          if (firstCell === "Date" || firstCell === "Legend:") continue;
-          if (row[3]?.trim()?.includes("AERATION")) continue;
-
-          const players = [row[3], row[4], row[5], row[6]]
-            .map((p) => p?.trim() || "")
-            .filter((p) => p && p !== "Booked" && p !== "Open");
-
-          if (players.length === 0) continue;
-
-          parsed.push({
-            date: firstCell,
-            day: row[1]?.trim() || "",
-            time: row[2]?.trim() || "",
-            players,
-          });
-        }
-
-        setTeeTimes(parsed);
+        // Parse full roster
+        const rosterRows = parseCSV(rosterText);
+        const allPlayers = parsePlayerRows(rosterRows);
+        setAllPlayerNames(allPlayers.map((p) => p.name));
       })
       .catch(() => setError("Unable to load tee sheet data."))
       .finally(() => setLoading(false));
