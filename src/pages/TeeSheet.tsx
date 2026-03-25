@@ -165,12 +165,21 @@ const TeeSheet = () => {
             )}
             <div className="flex items-center gap-1.5">
               <Users className="h-3.5 w-3.5 text-primary" />
-              <span><span className="font-semibold text-foreground">{totalPlayers}</span> players</span>
+              <span><span className="font-semibold text-foreground">{totalPlayers}</span> scheduled</span>
             </div>
             <div className="flex items-center gap-1.5">
               <CalendarDays className="h-3.5 w-3.5 text-primary" />
               <span><span className="font-semibold text-foreground">{teeTimes.length}</span> groups</span>
             </div>
+            {unscheduledPlayers.length > 0 && (
+              <button
+                onClick={() => setShowUnscheduled(true)}
+                className="flex items-center gap-1.5 hover:text-foreground transition-colors"
+              >
+                <UserX className="h-3.5 w-3.5 text-destructive" />
+                <span><span className="font-semibold text-destructive">{unscheduledPlayers.length}</span> not scheduled</span>
+              </button>
+            )}
           </div>
         )}
       </div>
