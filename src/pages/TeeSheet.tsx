@@ -118,10 +118,19 @@ const TeeSheet = () => {
     return groups;
   }, [teeTimes]);
 
-  const totalPlayers = useMemo(
-    () => new Set(teeTimes.flatMap((tt) => tt.players)).size,
+  const scheduledNames = useMemo(
+    () => new Set(teeTimes.flatMap((tt) => tt.players)),
     [teeTimes]
   );
+
+  const totalPlayers = scheduledNames.size;
+
+  const unscheduledPlayers = useMemo(() => {
+    if (allPlayerNames.length === 0) return [];
+    return allPlayerNames
+      .filter((name) => !scheduledNames.has(name))
+      .sort((a, b) => a.localeCompare(b));
+  }, [allPlayerNames, scheduledNames]);
 
   const singleDate = groupedByDate.length === 1;
 
