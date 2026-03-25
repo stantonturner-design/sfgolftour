@@ -1,12 +1,13 @@
 import { useEffect, useMemo, useState } from "react";
 import { useSearchParams, Link } from "react-router-dom";
-import { ClipboardList, ArrowLeft, Clock, Users, CalendarDays, Anchor } from "lucide-react";
+import { ClipboardList, ArrowLeft, Clock, Users, CalendarDays, Anchor, UserX } from "lucide-react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { parseCSV } from "@/lib/csv";
-import { slugifyName, TEE_SHEET_URL } from "@/lib/playerUtils";
+import { slugifyName, parsePlayerRows, SHEET_URL, TEE_SHEET_URL } from "@/lib/playerUtils";
 
 // Map event names to section headers in the sheet
 const EVENT_SECTION_MAP: Record<string, string[]> = {
@@ -37,16 +38,22 @@ const TeeSheet = () => {
   const [searchParams] = useSearchParams();
   const eventName = searchParams.get("event") || "";
   const [teeTimes, setTeeTimes] = useState<TeeTime[]>([]);
+  const [allPlayerNames, setAllPlayerNames] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [showUnscheduled, setShowUnscheduled] = useState(false);
 
   const meta = EVENT_META[eventName] || { subtitle: "", anchorDay: "" };
 
   useEffect(() => {
-    fetch(TEE_SHEET_URL)
-      .then((r) => r.text())
-      .then((text) => {
-        const rows = parseCSV(text);
+    // Fetch tee sheet and full roster in parallel
+    Promise.all([
+      fetch(TEE_SHEET_URL).then((r) => r.text()),
+      fetch(SHEET_URL).then((r) => r.text()),
+    ])
+      .then(([teeText, rosterText]) => {
+        // Parse tee sheet
+        const rows = parseCSV(teeText);
         const sectionNames = EVENT_SECTION_MAP[eventName] || [eventName];
 
         let sectionStart = -1;
@@ -60,34 +67,37 @@ const TeeSheet = () => {
 
         if (sectionStart === -1) {
           setTeeTimes([]);
-          return;
+        } else {
+          const parsed: TeeTime[] = [];
+          for (let i = sectionStart + 1; i < rows.length; i++) {
+            const row = rows[i];
+            if (!row) break;
+
+            const firstCell = row[0]?.trim() || "";
+            if (!firstCell && !row[1]?.trim() && !row[2]?.trim()) break;
+            if (firstCell === "Date" || firstCell === "Legend:") continue;
+            if (row[3]?.trim()?.includes("AERATION")) continue;
+
+            const players = [row[3], row[4], row[5], row[6]]
+              .map((p) => p?.trim() || "")
+              .filter((p) => p && p !== "Booked" && p !== "Open");
+
+            if (players.length === 0) continue;
+
+            parsed.push({
+              date: firstCell,
+              day: row[1]?.trim() || "",
+              time: row[2]?.trim() || "",
+              players,
+            });
+          }
+          setTeeTimes(parsed);
         }
 
-        const parsed: TeeTime[] = [];
-        for (let i = sectionStart + 1; i < rows.length; i++) {
-          const row = rows[i];
-          if (!row) break;
-
-          const firstCell = row[0]?.trim() || "";
-          if (!firstCell && !row[1]?.trim() && !row[2]?.trim()) break;
-          if (firstCell === "Date" || firstCell === "Legend:") continue;
-          if (row[3]?.trim()?.includes("AERATION")) continue;
-
-          const players = [row[3], row[4], row[5], row[6]]
-            .map((p) => p?.trim() || "")
-            .filter((p) => p && p !== "Booked" && p !== "Open");
-
-          if (players.length === 0) continue;
-
-          parsed.push({
-            date: firstCell,
-            day: row[1]?.trim() || "",
-            time: row[2]?.trim() || "",
-            players,
-          });
-        }
-
-        setTeeTimes(parsed);
+        // Parse full roster
+        const rosterRows = parseCSV(rosterText);
+        const allPlayers = parsePlayerRows(rosterRows);
+        setAllPlayerNames(allPlayers.map((p) => p.name));
       })
       .catch(() => setError("Unable to load tee sheet data."))
       .finally(() => setLoading(false));
@@ -108,10 +118,19 @@ const TeeSheet = () => {
     return groups;
   }, [teeTimes]);
 
-  const totalPlayers = useMemo(
-    () => new Set(teeTimes.flatMap((tt) => tt.players)).size,
+  const scheduledNames = useMemo(
+    () => new Set(teeTimes.flatMap((tt) => tt.players)),
     [teeTimes]
   );
+
+  const totalPlayers = scheduledNames.size;
+
+  const unscheduledPlayers = useMemo(() => {
+    if (allPlayerNames.length === 0) return [];
+    return allPlayerNames
+      .filter((name) => !scheduledNames.has(name))
+      .sort((a, b) => a.localeCompare(b));
+  }, [allPlayerNames, scheduledNames]);
 
   const singleDate = groupedByDate.length === 1;
 
@@ -146,12 +165,21 @@ const TeeSheet = () => {
             )}
             <div className="flex items-center gap-1.5">
               <Users className="h-3.5 w-3.5 text-primary" />
-              <span><span className="font-semibold text-foreground">{totalPlayers}</span> players</span>
+              <span><span className="font-semibold text-foreground">{totalPlayers}</span> scheduled</span>
             </div>
             <div className="flex items-center gap-1.5">
               <CalendarDays className="h-3.5 w-3.5 text-primary" />
               <span><span className="font-semibold text-foreground">{teeTimes.length}</span> groups</span>
             </div>
+            {unscheduledPlayers.length > 0 && (
+              <button
+                onClick={() => setShowUnscheduled(true)}
+                className="flex items-center gap-1.5 hover:text-foreground transition-colors"
+              >
+                <UserX className="h-3.5 w-3.5 text-destructive" />
+                <span><span className="font-semibold text-destructive">{unscheduledPlayers.length}</span> not scheduled</span>
+              </button>
+            )}
           </div>
         )}
       </div>
@@ -220,6 +248,36 @@ const TeeSheet = () => {
           ))}
         </Accordion>
       )}
+
+      {/* Unscheduled players modal */}
+      <Dialog open={showUnscheduled} onOpenChange={setShowUnscheduled}>
+        <DialogContent className="max-w-md max-h-[80vh]">
+          <DialogHeader>
+            <DialogTitle className="flex items-center gap-2">
+              <UserX className="h-5 w-5 text-destructive" />
+              Not Yet Scheduled
+            </DialogTitle>
+            <DialogDescription>
+              {unscheduledPlayers.length} player{unscheduledPlayers.length !== 1 ? "s" : ""} still need to schedule their round for {eventName}.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="divide-y divide-border overflow-y-auto max-h-[50vh] -mx-1 px-1">
+            {unscheduledPlayers.map((name) => (
+              <Link
+                key={name}
+                to={`/player/${slugifyName(name)}`}
+                onClick={() => setShowUnscheduled(false)}
+                className="flex items-center gap-3 py-2.5 px-2 text-sm font-medium text-foreground hover:bg-accent/40 rounded-md transition-colors"
+              >
+                <span className="flex items-center justify-center h-7 w-7 rounded-full bg-destructive/10 text-xs font-bold text-destructive shrink-0">
+                  {name.split(" ").map((w) => w[0]).join("").toUpperCase().slice(0, 2)}
+                </span>
+                {name}
+              </Link>
+            ))}
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
