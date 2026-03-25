@@ -208,14 +208,11 @@ const Index = () => {
             </div>
 
             {/* Tour News */}
-            <div className="flex-1 rounded-xl border border-primary/15 bg-accent/50 shadow-sm p-4 md:p-5 relative overflow-hidden">
-              <div className="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-primary/40 via-primary/20 to-transparent" />
-              <div className="flex items-center justify-between mb-3">
-                <div className="flex items-center gap-2">
-                  <div className="flex items-center justify-center h-6 w-6 rounded-md bg-primary/10">
-                    <Newspaper className="h-3.5 w-3.5 text-primary" />
-                  </div>
-                  <h3 className="text-[11px] font-bold uppercase tracking-[0.2em] text-primary">Tour News</h3>
+            <div className="flex-1 rounded-xl border border-border bg-card shadow-sm p-4 md:p-5">
+              <div className="flex items-center justify-between mb-2.5">
+                <div className="flex items-center gap-1.5">
+                  <Newspaper className="h-3.5 w-3.5 text-primary" />
+                  <h3 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Tour News</h3>
                 </div>
                 <Button variant="link" size="sm" className="text-xs h-auto p-0" asChild>
                   <Link to="/news">
@@ -223,15 +220,15 @@ const Index = () => {
                   </Link>
                 </Button>
               </div>
-              <div className="space-y-1">
+              <div className="divide-y divide-border">
                 {latestNews.slice(0, 3).map((article) => (
                   <Link
                     key={article.id}
                     to={`/news/${article.slug}`}
-                    className="flex items-start justify-between gap-2 py-2 px-2.5 transition-colors hover:bg-card/80 group rounded-lg border border-transparent hover:border-border/50"
+                    className="flex items-start justify-between gap-2 py-2 transition-colors hover:bg-accent/30 group -mx-2 px-2 first:pt-0 last:pb-0 rounded-md"
                   >
                     <div className="min-w-0">
-                      <p className="font-semibold text-sm leading-snug group-hover:text-primary transition-colors">{article.title}</p>
+                      <p className="font-medium text-sm leading-snug group-hover:text-primary transition-colors">{article.title}</p>
                       <p className="text-[11px] text-muted-foreground mt-0.5">
                         {format(new Date(article.publishDate), "MMM d, yyyy")}
                       </p>
