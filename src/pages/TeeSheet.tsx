@@ -248,6 +248,36 @@ const TeeSheet = () => {
           ))}
         </Accordion>
       )}
+
+      {/* Unscheduled players modal */}
+      <Dialog open={showUnscheduled} onOpenChange={setShowUnscheduled}>
+        <DialogContent className="max-w-md max-h-[80vh]">
+          <DialogHeader>
+            <DialogTitle className="flex items-center gap-2">
+              <UserX className="h-5 w-5 text-destructive" />
+              Not Yet Scheduled
+            </DialogTitle>
+            <DialogDescription>
+              {unscheduledPlayers.length} player{unscheduledPlayers.length !== 1 ? "s" : ""} still need to schedule their round for {eventName}.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="divide-y divide-border overflow-y-auto max-h-[50vh] -mx-1 px-1">
+            {unscheduledPlayers.map((name) => (
+              <Link
+                key={name}
+                to={`/player/${slugifyName(name)}`}
+                onClick={() => setShowUnscheduled(false)}
+                className="flex items-center gap-3 py-2.5 px-2 text-sm font-medium text-foreground hover:bg-accent/40 rounded-md transition-colors"
+              >
+                <span className="flex items-center justify-center h-7 w-7 rounded-full bg-destructive/10 text-xs font-bold text-destructive shrink-0">
+                  {name.split(" ").map((w) => w[0]).join("").toUpperCase().slice(0, 2)}
+                </span>
+                {name}
+              </Link>
+            ))}
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
