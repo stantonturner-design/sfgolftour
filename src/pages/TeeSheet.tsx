@@ -174,10 +174,11 @@ const TeeSheet = () => {
             {unscheduledPlayers.length > 0 && (
               <button
                 onClick={() => setShowUnscheduled(true)}
-                className="flex items-center gap-1.5 hover:text-foreground transition-colors"
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-destructive/30 bg-destructive/5 hover:bg-destructive/10 transition-colors cursor-pointer"
               >
                 <UserX className="h-3.5 w-3.5 text-destructive" />
-                <span><span className="font-semibold text-destructive">{unscheduledPlayers.length}</span> not scheduled</span>
+                <span className="text-destructive font-semibold">{unscheduledPlayers.length} not scheduled</span>
+                <span className="text-destructive/60 text-xs">→</span>
               </button>
             )}
           </div>
