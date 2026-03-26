@@ -98,8 +98,8 @@ const PlayerProfile = () => {
         netScore: corica.netScore,
         handicap: hcp,
         points: corica.points,
-        grossFinish: corica.grossRank,
-        netFinish: corica.netRank,
+        grossPoints: null,
+        netPoints: null,
       };
     }
 
@@ -112,7 +112,7 @@ const PlayerProfile = () => {
 
     return {
       played, grossScore: null, netScore: null, handicap: eventHcp,
-      points: pts, grossFinish: "—", netFinish: "—",
+      points: pts, grossPoints: null, netPoints: null,
     };
   };
 
