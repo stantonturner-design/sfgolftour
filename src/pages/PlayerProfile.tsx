@@ -217,13 +217,13 @@ const PlayerProfile = () => {
               <Table>
                 <TableHeader>
                   <TableRow className="bg-muted/60">
-                    <TableHead>Round</TableHead>
+                    <TableHead>Event</TableHead>
                     <TableHead className="text-center">Handicap</TableHead>
                     <TableHead className="text-center">Gross Score</TableHead>
                     <TableHead className="text-center">Net Score</TableHead>
-                    <TableHead className="text-center">Points</TableHead>
-                    <TableHead className="text-center">Gross Finish</TableHead>
-                    <TableHead className="text-center">Net Finish</TableHead>
+                    <TableHead className="text-center">Total Points</TableHead>
+                    <TableHead className="text-center">Gross Points</TableHead>
+                    <TableHead className="text-center">Net Points</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -245,10 +245,10 @@ const PlayerProfile = () => {
                           {d.played ? d.points.toFixed(1) : "—"}
                         </TableCell>
                         <TableCell className="text-center text-muted-foreground">
-                          {d.played ? d.grossFinish : "—"}
+                          {d.grossPoints !== null ? d.grossPoints.toFixed(1) : "—"}
                         </TableCell>
                         <TableCell className="text-center text-muted-foreground">
-                          {d.played ? d.netFinish : "—"}
+                          {d.netPoints !== null ? d.netPoints.toFixed(1) : "—"}
                         </TableCell>
                       </TableRow>
                     );
