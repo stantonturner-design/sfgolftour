@@ -120,23 +120,23 @@ const PlayerProfile = () => {
   const allEventData = PROFILE_EVENTS.map((e) => ({ name: e, ...getEventData(e) }));
   const playedEvents = allEventData.filter((e) => e.played);
 
-  const bestGrossFinish = playedEvents.reduce<string>("—", (best, e) => {
+  const bestGrossFinish = playedEvents.reduce((best: string, e) => {
     if (e.grossFinish === "—") return best;
     const num = parseInt(e.grossFinish);
     const bestNum = parseInt(best);
     if (isNaN(num)) return best;
     if (best === "—" || isNaN(bestNum) || num < bestNum) return e.grossFinish;
     return best;
-  });
+  }, "—");
 
-  const bestNetFinish = playedEvents.reduce<string>("—", (best, e) => {
+  const bestNetFinish = playedEvents.reduce((best: string, e) => {
     if (e.netFinish === "—") return best;
     const num = parseInt(e.netFinish);
     const bestNum = parseInt(best);
     if (isNaN(num)) return best;
     if (best === "—" || isNaN(bestNum) || num < bestNum) return e.netFinish;
     return best;
-  });
+  }, "—");
 
   const bestEvent = playedEvents.length > 0
     ? playedEvents.reduce((a, b) => (b.points > a.points ? b : a)).name
