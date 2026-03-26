@@ -65,24 +65,21 @@ const Leaderboard = () => {
                   <TableHead colSpan={EVENT_NAMES.length} className="bg-secondary text-center text-xs font-bold uppercase tracking-[0.15em] text-secondary-foreground/90 border-r border-secondary-foreground/10 py-2.5">
                     Event Points
                   </TableHead>
-                  <TableHead colSpan={3} className="bg-secondary text-center text-secondary-foreground/90 border-r border-secondary-foreground/10 py-1.5">
-                    <div className="flex flex-col items-center gap-1">
-                      <span className="text-[10px] font-semibold uppercase tracking-wider text-secondary-foreground/60">Finishes View</span>
-                      <ToggleGroup
-                        type="single"
-                        value={finishView}
-                        onValueChange={(v) => v && setFinishView(v)}
-                        variant="outline"
-                        size="sm"
-                      >
-                        <ToggleGroupItem value="event" className="text-[10px] h-5 px-2 bg-secondary-foreground/5 border-secondary-foreground/20 data-[state=on]:bg-primary data-[state=on]:text-primary-foreground">
-                          Event Rank
-                        </ToggleGroupItem>
-                        <ToggleGroupItem value="net" className="text-[10px] h-5 px-2 bg-secondary-foreground/5 border-secondary-foreground/20 data-[state=on]:bg-primary data-[state=on]:text-primary-foreground">
-                          Net Score
-                        </ToggleGroupItem>
-                      </ToggleGroup>
-                    </div>
+                  <TableHead colSpan={3} className="bg-secondary text-center text-secondary-foreground/90 border-r border-secondary-foreground/10 py-2">
+                    <ToggleGroup
+                      type="single"
+                      value={finishView}
+                      onValueChange={(v) => v && setFinishView(v)}
+                      variant="outline"
+                      size="sm"
+                    >
+                      <ToggleGroupItem value="event" className="text-[10px] h-5 px-2 bg-secondary-foreground/5 border-secondary-foreground/20 data-[state=on]:bg-primary data-[state=on]:text-primary-foreground">
+                        Event Rank
+                      </ToggleGroupItem>
+                      <ToggleGroupItem value="net" className="text-[10px] h-5 px-2 bg-secondary-foreground/5 border-secondary-foreground/20 data-[state=on]:bg-primary data-[state=on]:text-primary-foreground">
+                        Net Score
+                      </ToggleGroupItem>
+                    </ToggleGroup>
                   </TableHead>
                   <TableHead className="bg-secondary text-center text-xs font-bold uppercase tracking-[0.15em] text-secondary-foreground/90 py-2.5">
                     BIRDIES
