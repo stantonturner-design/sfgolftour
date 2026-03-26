@@ -24,34 +24,21 @@ interface Props {
 
 const MobileLeaderboard = ({ players, eventNames }: Props) => {
   const [expandedRank, setExpandedRank] = useState<number | null>(null);
-  const [finishView, setFinishView] = useState<string>("event");
+  const [cardFinishViews, setCardFinishViews] = useState<Record<number, string>>({});
 
   const toggle = (rank: number) =>
     setExpandedRank((prev) => (prev === rank ? null : rank));
 
+  const getFinishView = (rank: number) => cardFinishViews[rank] || "event";
+  const setFinishView = (rank: number, v: string) =>
+    setCardFinishViews((prev) => ({ ...prev, [rank]: v }));
+
   return (
     <div className="mt-6 space-y-3">
-      {/* Toggle */}
-      <div className="flex justify-center">
-        <ToggleGroup
-          type="single"
-          value={finishView}
-          onValueChange={(v) => v && setFinishView(v)}
-          variant="outline"
-          size="sm"
-        >
-          <ToggleGroupItem value="event" className="text-xs h-7 px-3">
-            Event Rank
-          </ToggleGroupItem>
-          <ToggleGroupItem value="net" className="text-xs h-7 px-3">
-            Net Score
-          </ToggleGroupItem>
-        </ToggleGroup>
-      </div>
-
       {/* Player cards */}
       {players.map((p) => {
         const isExpanded = expandedRank === p.rank;
+        const finishView = getFinishView(p.rank);
         const finishLabels =
           finishView === "event"
             ? ["Wins", "Top 5", "Top 10"]
@@ -110,13 +97,29 @@ const MobileLeaderboard = ({ players, eventNames }: Props) => {
                   </div>
                 </div>
 
-                {/* Finishes */}
+                {/* Finishes with in-card toggle */}
                 <div>
-                  <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-1.5">
-                    {finishView === "event"
-                      ? "Event Rank Finishes"
-                      : "Net Score Finishes"}
-                  </p>
+                  <div className="flex items-center justify-between mb-1.5">
+                    <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+                      {finishView === "event"
+                        ? "Event Rank Finishes"
+                        : "Net Score Finishes"}
+                    </p>
+                    <ToggleGroup
+                      type="single"
+                      value={finishView}
+                      onValueChange={(v) => v && setFinishView(p.rank, v)}
+                      variant="outline"
+                      size="sm"
+                    >
+                      <ToggleGroupItem value="event" className="text-[10px] h-5 px-2">
+                        Event Rank
+                      </ToggleGroupItem>
+                      <ToggleGroupItem value="net" className="text-[10px] h-5 px-2">
+                        Net Score
+                      </ToggleGroupItem>
+                    </ToggleGroup>
+                  </div>
                   <div className="grid grid-cols-3 gap-2 text-center">
                     {finishLabels.map((label, i) => (
                       <div key={label}>
