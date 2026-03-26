@@ -52,7 +52,7 @@ const MobileLeaderboard = ({ players, eventNames }: Props) => {
           <div
             key={p.rank}
             className={`rounded-lg border overflow-hidden ${
-              p.rank <= 3 ? "border-primary/30 bg-primary/5" : p.rank > 24 ? "bg-card opacity-60" : "bg-card"
+              p.rank <= 3 ? "border-primary/30 bg-primary/5" : p.rank > 24 ? "bg-muted/40" : "bg-card"
             }`}
           >
             {/* Summary row */}
