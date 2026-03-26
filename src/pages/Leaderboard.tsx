@@ -9,7 +9,6 @@ import { parseCSV } from "@/lib/csv";
 import { useIsMobile } from "@/hooks/use-mobile";
 import MobileLeaderboard from "@/components/leaderboard/MobileLeaderboard";
 import {
-  SHEET_URL, EVENT_NAMES, parsePlayerRows, type PlayerData,
   SHEET_URL, EVENT_NAMES, parsePlayerRows, slugifyName, type PlayerData,
 } from "@/lib/playerUtils";
 
