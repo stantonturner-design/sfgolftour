@@ -327,24 +327,24 @@ const MobileEventResults = ({
               <div className="font-semibold">{d.handicap !== null ? d.handicap : "—"}</div>
             </div>
             <div>
-              <div className="text-muted-foreground text-xs">Gross</div>
+              <div className="text-muted-foreground text-xs">Gross Score</div>
               <div className="font-semibold">{d.grossScore !== null ? d.grossScore : "—"}</div>
             </div>
             <div>
-              <div className="text-muted-foreground text-xs">Net</div>
+              <div className="text-muted-foreground text-xs">Net Score</div>
               <div className="font-semibold">{d.netScore !== null ? d.netScore : "—"}</div>
             </div>
             <div>
-              <div className="text-muted-foreground text-xs">Points</div>
+              <div className="text-muted-foreground text-xs">Total Points</div>
               <div className="font-semibold">{d.played ? d.points.toFixed(1) : "—"}</div>
             </div>
             <div>
-              <div className="text-muted-foreground text-xs">Gross Finish</div>
-              <div className="font-semibold">{d.played ? d.grossFinish : "—"}</div>
+              <div className="text-muted-foreground text-xs">Gross Points</div>
+              <div className="font-semibold">{d.grossPoints !== null ? d.grossPoints.toFixed(1) : "—"}</div>
             </div>
             <div>
-              <div className="text-muted-foreground text-xs">Net Finish</div>
-              <div className="font-semibold">{d.played ? d.netFinish : "—"}</div>
+              <div className="text-muted-foreground text-xs">Net Points</div>
+              <div className="font-semibold">{d.netPoints !== null ? d.netPoints.toFixed(1) : "—"}</div>
             </div>
           </div>
         </div>
