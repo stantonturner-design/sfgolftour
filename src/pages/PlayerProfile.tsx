@@ -272,26 +272,14 @@ const PlayerProfile = () => {
                   { label: "Best Event", value: String(bestEvent) },
                   { label: "Current Handicap", value: String(currentHandicap) },
                   { label: "GHIN #", value: "—" },
-                ].map((row) => (
+                  { label: "Years on Tour", value: "—" },
+                 ].map((row) => (
                   <div key={row.label} className="flex justify-between text-sm">
                     <span className="text-muted-foreground">{row.label}</span>
                     <span className="font-semibold">{row.value}</span>
                   </div>
                 ))}
               </div>
-
-              {player.roundRecapUrl && player.roundRecapUrl !== "0" ? (
-                <Button asChild className="w-full mt-4" size="sm">
-                  <a href={player.roundRecapUrl} target="_blank" rel="noopener noreferrer">
-                    View Round Recap
-                    <ExternalLink className="h-3.5 w-3.5 ml-1.5" />
-                  </a>
-                </Button>
-              ) : (
-                <Button className="w-full mt-4" size="sm" disabled>
-                  Round Recap Unavailable
-                </Button>
-              )}
             </CardContent>
           </Card>
         </div>
