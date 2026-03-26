@@ -22,8 +22,8 @@ type EventRowData = {
   netScore: number | null;
   handicap: number | null;
   points: number;
-  grossFinish: string;
-  netFinish: string;
+  grossPoints: number | null;
+  netPoints: number | null;
 };
 
 const PlayerProfile = () => {
@@ -98,8 +98,8 @@ const PlayerProfile = () => {
         netScore: corica.netScore,
         handicap: hcp,
         points: corica.points,
-        grossFinish: corica.grossRank,
-        netFinish: corica.netRank,
+        grossPoints: null,
+        netPoints: null,
       };
     }
 
@@ -112,7 +112,7 @@ const PlayerProfile = () => {
 
     return {
       played, grossScore: null, netScore: null, handicap: eventHcp,
-      points: pts, grossFinish: "—", netFinish: "—",
+      points: pts, grossPoints: null, netPoints: null,
     };
   };
 
@@ -120,30 +120,20 @@ const PlayerProfile = () => {
   const allEventData = PROFILE_EVENTS.map((e) => ({ name: e, ...getEventData(e) }));
   const playedEvents = allEventData.filter((e) => e.played);
 
-  const bestGrossFinish = playedEvents.reduce((best: string, e) => {
-    if (e.grossFinish === "—") return best;
-    const num = parseInt(e.grossFinish);
-    const bestNum = parseInt(best);
-    if (isNaN(num)) return best;
-    if (best === "—" || isNaN(bestNum) || num < bestNum) return e.grossFinish;
+  const bestGrossScore = playedEvents.reduce((best: number | null, e) => {
+    if (e.grossScore === null) return best;
+    if (best === null || e.grossScore < best) return e.grossScore;
     return best;
-  }, "—");
+  }, null);
 
-  const bestNetFinish = playedEvents.reduce((best: string, e) => {
-    if (e.netFinish === "—") return best;
-    const num = parseInt(e.netFinish);
-    const bestNum = parseInt(best);
-    if (isNaN(num)) return best;
-    if (best === "—" || isNaN(bestNum) || num < bestNum) return e.netFinish;
+  const bestNetScore = playedEvents.reduce((best: number | null, e) => {
+    if (e.netScore === null) return best;
+    if (best === null || e.netScore < best) return e.netScore;
     return best;
-  }, "—");
+  }, null);
 
   const bestEvent = playedEvents.length > 0
     ? playedEvents.reduce((a, b) => (b.points > a.points ? b : a)).name
-    : "—";
-
-  const mostRecentEvent = playedEvents.length > 0
-    ? playedEvents[playedEvents.length - 1].name
     : "—";
 
   const currentHandicap = (() => {
@@ -227,13 +217,13 @@ const PlayerProfile = () => {
               <Table>
                 <TableHeader>
                   <TableRow className="bg-muted/60">
-                    <TableHead>Round</TableHead>
+                    <TableHead>Event</TableHead>
                     <TableHead className="text-center">Handicap</TableHead>
                     <TableHead className="text-center">Gross Score</TableHead>
                     <TableHead className="text-center">Net Score</TableHead>
-                    <TableHead className="text-center">Points</TableHead>
-                    <TableHead className="text-center">Gross Finish</TableHead>
-                    <TableHead className="text-center">Net Finish</TableHead>
+                    <TableHead className="text-center">Total Points</TableHead>
+                    <TableHead className="text-center">Gross Points</TableHead>
+                    <TableHead className="text-center">Net Points</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -255,10 +245,10 @@ const PlayerProfile = () => {
                           {d.played ? d.points.toFixed(1) : "—"}
                         </TableCell>
                         <TableCell className="text-center text-muted-foreground">
-                          {d.played ? d.grossFinish : "—"}
+                          {d.grossPoints !== null ? d.grossPoints.toFixed(1) : "—"}
                         </TableCell>
                         <TableCell className="text-center text-muted-foreground">
-                          {d.played ? d.netFinish : "—"}
+                          {d.netPoints !== null ? d.netPoints.toFixed(1) : "—"}
                         </TableCell>
                       </TableRow>
                     );
@@ -283,11 +273,11 @@ const PlayerProfile = () => {
               </h3>
               <div className="space-y-3">
                 {[
-                  { label: "Best Finish", value: String(bestGrossFinish) },
-                  { label: "Best Net Finish", value: String(bestNetFinish) },
+                  { label: "Best Finish", value: bestGrossScore !== null ? String(bestGrossScore) : "—" },
+                  { label: "Best Net Score", value: bestNetScore !== null ? String(bestNetScore) : "—" },
                   { label: "Best Event", value: String(bestEvent) },
-                  { label: "Most Recent Event", value: String(mostRecentEvent) },
                   { label: "Current Handicap", value: String(currentHandicap) },
+                  { label: "GHIN #", value: "—" },
                 ].map((row) => (
                   <div key={row.label} className="flex justify-between text-sm">
                     <span className="text-muted-foreground">{row.label}</span>
@@ -337,24 +327,24 @@ const MobileEventResults = ({
               <div className="font-semibold">{d.handicap !== null ? d.handicap : "—"}</div>
             </div>
             <div>
-              <div className="text-muted-foreground text-xs">Gross</div>
+              <div className="text-muted-foreground text-xs">Gross Score</div>
               <div className="font-semibold">{d.grossScore !== null ? d.grossScore : "—"}</div>
             </div>
             <div>
-              <div className="text-muted-foreground text-xs">Net</div>
+              <div className="text-muted-foreground text-xs">Net Score</div>
               <div className="font-semibold">{d.netScore !== null ? d.netScore : "—"}</div>
             </div>
             <div>
-              <div className="text-muted-foreground text-xs">Points</div>
+              <div className="text-muted-foreground text-xs">Total Points</div>
               <div className="font-semibold">{d.played ? d.points.toFixed(1) : "—"}</div>
             </div>
             <div>
-              <div className="text-muted-foreground text-xs">Gross Finish</div>
-              <div className="font-semibold">{d.played ? d.grossFinish : "—"}</div>
+              <div className="text-muted-foreground text-xs">Gross Points</div>
+              <div className="font-semibold">{d.grossPoints !== null ? d.grossPoints.toFixed(1) : "—"}</div>
             </div>
             <div>
-              <div className="text-muted-foreground text-xs">Net Finish</div>
-              <div className="font-semibold">{d.played ? d.netFinish : "—"}</div>
+              <div className="text-muted-foreground text-xs">Net Points</div>
+              <div className="font-semibold">{d.netPoints !== null ? d.netPoints.toFixed(1) : "—"}</div>
             </div>
           </div>
         </div>
