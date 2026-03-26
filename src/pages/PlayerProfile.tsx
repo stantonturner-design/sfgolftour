@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { useParams, Link } from "react-router-dom";
-import { ArrowLeft, ExternalLink, Trophy, Target, Award } from "lucide-react";
+import { ArrowLeft, ExternalLink, Trophy, Target, Award, Star, Calendar } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import {
@@ -15,6 +15,16 @@ import {
 } from "@/lib/playerUtils";
 
 const PROFILE_EVENTS = ["Corica", "Coyote Creek", "Chardonnay", "Poppy Ridge", "Presidio", "Finale"];
+
+type EventRowData = {
+  played: boolean;
+  grossScore: number | null;
+  netScore: number | null;
+  handicap: number | null;
+  points: number;
+  grossFinish: string;
+  netFinish: string;
+};
 
 const PlayerProfile = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -60,7 +70,6 @@ const PlayerProfile = () => {
     );
   }
 
-  // Find Corica result and handicap for this player
   const corica = coricaResults.find((c) => c.slug === player.slug);
   const hcpData = handicaps.find((h) => h.slug === player.slug);
 
@@ -73,21 +82,14 @@ const PlayerProfile = () => {
     { label: "Net Top 10", value: player.netTop10 },
   ];
 
-  // Map event index for eventPoints: Corica=0, Coyote Creek=1, Chardonnay=2, Poppy Ridge=3, Presidio=4
-  const getEventData = (eventName: string) => {
+  const getEventData = (eventName: string): EventRowData => {
     const eventIdx: Record<string, number> = {
-      Corica: 0,
-      "Coyote Creek": 1,
-      Chardonnay: 2,
-      "Poppy Ridge": 3,
-      Presidio: 4,
+      Corica: 0, "Coyote Creek": 1, Chardonnay: 2, "Poppy Ridge": 3, Presidio: 4,
     };
-
     const idx = eventIdx[eventName];
     const pts = idx !== undefined ? (player.eventPoints[idx] || 0) : 0;
     const played = pts > 0;
 
-    // For Corica, we have detailed results
     if (eventName === "Corica" && corica) {
       const hcp = corica.handicap ?? (hcpData?.corica ?? null);
       return {
@@ -96,31 +98,63 @@ const PlayerProfile = () => {
         netScore: corica.netScore,
         handicap: hcp,
         points: corica.points,
-        finish: corica.grossRank,
+        grossFinish: corica.grossRank,
         netFinish: corica.netRank,
       };
     }
 
-    // For other events, use handicap data if available
     const hcpMap: Record<string, keyof HandicapData> = {
-      "Coyote Creek": "coyoteCreek",
-      Chardonnay: "chardonnay",
-      "Poppy Ridge": "poppyRidge",
-      Presidio: "presidio",
+      "Coyote Creek": "coyoteCreek", Chardonnay: "chardonnay",
+      "Poppy Ridge": "poppyRidge", Presidio: "presidio",
     };
     const hcpKey = hcpMap[eventName];
     const eventHcp = hcpKey && hcpData ? (hcpData[hcpKey] as number | null) : null;
 
     return {
-      played,
-      grossScore: null as number | null,
-      netScore: null as number | null,
-      handicap: eventHcp,
-      points: pts,
-      finish: "—",
-      netFinish: "—",
+      played, grossScore: null, netScore: null, handicap: eventHcp,
+      points: pts, grossFinish: "—", netFinish: "—",
     };
   };
+
+  // Compute snapshot stats
+  const allEventData = PROFILE_EVENTS.map((e) => ({ name: e, ...getEventData(e) }));
+  const playedEvents = allEventData.filter((e) => e.played);
+
+  const bestGrossFinish = playedEvents.reduce((best: string, e) => {
+    if (e.grossFinish === "—") return best;
+    const num = parseInt(e.grossFinish);
+    const bestNum = parseInt(best);
+    if (isNaN(num)) return best;
+    if (best === "—" || isNaN(bestNum) || num < bestNum) return e.grossFinish;
+    return best;
+  }, "—");
+
+  const bestNetFinish = playedEvents.reduce((best: string, e) => {
+    if (e.netFinish === "—") return best;
+    const num = parseInt(e.netFinish);
+    const bestNum = parseInt(best);
+    if (isNaN(num)) return best;
+    if (best === "—" || isNaN(bestNum) || num < bestNum) return e.netFinish;
+    return best;
+  }, "—");
+
+  const bestEvent = playedEvents.length > 0
+    ? playedEvents.reduce((a, b) => (b.points > a.points ? b : a)).name
+    : "—";
+
+  const mostRecentEvent = playedEvents.length > 0
+    ? playedEvents[playedEvents.length - 1].name
+    : "—";
+
+  const currentHandicap = (() => {
+    if (!hcpData) return "—";
+    const keys: (keyof HandicapData)[] = ["presidio", "poppyRidge", "chardonnay", "coyoteCreek", "corica", "preseason"];
+    for (const k of keys) {
+      const v = hcpData[k];
+      if (v !== null && v !== undefined && typeof v === "number") return v;
+    }
+    return "—";
+  })();
 
   return (
     <div className="container py-8 md:py-12">
@@ -193,12 +227,12 @@ const PlayerProfile = () => {
               <Table>
                 <TableHeader>
                   <TableRow className="bg-muted/60">
-                    <TableHead>Event</TableHead>
+                    <TableHead>Round</TableHead>
+                    <TableHead className="text-center">Handicap</TableHead>
                     <TableHead className="text-center">Gross Score</TableHead>
                     <TableHead className="text-center">Net Score</TableHead>
-                    <TableHead className="text-center">Handicap</TableHead>
                     <TableHead className="text-center">Points</TableHead>
-                    <TableHead className="text-center">Finish</TableHead>
+                    <TableHead className="text-center">Gross Finish</TableHead>
                     <TableHead className="text-center">Net Finish</TableHead>
                   </TableRow>
                 </TableHeader>
@@ -209,19 +243,19 @@ const PlayerProfile = () => {
                       <TableRow key={event}>
                         <TableCell className="font-medium whitespace-nowrap">{event}</TableCell>
                         <TableCell className="text-center text-muted-foreground">
+                          {d.handicap !== null ? d.handicap : "—"}
+                        </TableCell>
+                        <TableCell className="text-center text-muted-foreground">
                           {d.grossScore !== null ? d.grossScore : "—"}
                         </TableCell>
                         <TableCell className="text-center text-muted-foreground">
                           {d.netScore !== null ? d.netScore : "—"}
                         </TableCell>
-                        <TableCell className="text-center text-muted-foreground">
-                          {d.handicap !== null ? d.handicap : "—"}
-                        </TableCell>
                         <TableCell className="text-center font-semibold">
                           {d.played ? d.points.toFixed(1) : "—"}
                         </TableCell>
                         <TableCell className="text-center text-muted-foreground">
-                          {d.played ? d.finish : "—"}
+                          {d.played ? d.grossFinish : "—"}
                         </TableCell>
                         <TableCell className="text-center text-muted-foreground">
                           {d.played ? d.netFinish : "—"}
@@ -239,19 +273,21 @@ const PlayerProfile = () => {
           </p>
         </div>
 
-        {/* RIGHT — Summary sidebar */}
+        {/* RIGHT — Player Snapshot */}
         <div className={isMobile ? "order-first" : ""}>
           <Card className="sticky top-24">
             <CardContent className="p-6 space-y-4">
-              <h3 className="font-display text-lg font-bold">Season Summary</h3>
+              <h3 className="font-display text-lg font-bold flex items-center gap-2">
+                <Star className="h-4 w-4 text-primary" />
+                Player Snapshot
+              </h3>
               <div className="space-y-3">
                 {[
-                  { label: "Rank", value: `#${player.rank}` },
-                  { label: "Points", value: player.points.toFixed(1) },
-                  { label: "Events", value: player.events },
-                  { label: "Wins", value: player.wins },
-                  { label: "Birdies", value: player.birdies },
-                  { label: "Handicap", value: hcpData?.preseason !== null && hcpData?.preseason !== undefined ? hcpData.preseason : "—" },
+                  { label: "Best Finish", value: String(bestGrossFinish) },
+                  { label: "Best Net Finish", value: String(bestNetFinish) },
+                  { label: "Best Event", value: String(bestEvent) },
+                  { label: "Most Recent Event", value: String(mostRecentEvent) },
+                  { label: "Current Handicap", value: String(currentHandicap) },
                 ].map((row) => (
                   <div key={row.label} className="flex justify-between text-sm">
                     <span className="text-muted-foreground">{row.label}</span>
@@ -260,12 +296,16 @@ const PlayerProfile = () => {
                 ))}
               </div>
 
-              {player.roundRecapUrl && player.roundRecapUrl !== "0" && (
+              {player.roundRecapUrl && player.roundRecapUrl !== "0" ? (
                 <Button asChild className="w-full mt-4" size="sm">
                   <a href={player.roundRecapUrl} target="_blank" rel="noopener noreferrer">
-                    View Full Stats in Round Recap
+                    View Round Recap
                     <ExternalLink className="h-3.5 w-3.5 ml-1.5" />
                   </a>
+                </Button>
+              ) : (
+                <Button className="w-full mt-4" size="sm" disabled>
+                  Round Recap Unavailable
                 </Button>
               )}
             </CardContent>
@@ -276,19 +316,11 @@ const PlayerProfile = () => {
   );
 };
 
-/* Mobile event results */
+/* Mobile event results — updated column order */
 const MobileEventResults = ({
   getEventData,
 }: {
-  getEventData: (e: string) => {
-    played: boolean;
-    grossScore: number | null;
-    netScore: number | null;
-    handicap: number | null;
-    points: number;
-    finish: string;
-    netFinish: string;
-  };
+  getEventData: (e: string) => EventRowData;
 }) => (
   <div className="space-y-3">
     {PROFILE_EVENTS.map((event) => {
@@ -301,8 +333,8 @@ const MobileEventResults = ({
           <div className="font-semibold text-base mb-2">{event}</div>
           <div className="grid grid-cols-3 gap-y-2 gap-x-4 text-sm">
             <div>
-              <div className="text-muted-foreground text-xs">Points</div>
-              <div className="font-semibold">{d.played ? d.points.toFixed(1) : "—"}</div>
+              <div className="text-muted-foreground text-xs">Handicap</div>
+              <div className="font-semibold">{d.handicap !== null ? d.handicap : "—"}</div>
             </div>
             <div>
               <div className="text-muted-foreground text-xs">Gross</div>
@@ -313,12 +345,12 @@ const MobileEventResults = ({
               <div className="font-semibold">{d.netScore !== null ? d.netScore : "—"}</div>
             </div>
             <div>
-              <div className="text-muted-foreground text-xs">Handicap</div>
-              <div className="font-semibold">{d.handicap !== null ? d.handicap : "—"}</div>
+              <div className="text-muted-foreground text-xs">Points</div>
+              <div className="font-semibold">{d.played ? d.points.toFixed(1) : "—"}</div>
             </div>
             <div>
-              <div className="text-muted-foreground text-xs">Finish</div>
-              <div className="font-semibold">{d.played ? d.finish : "—"}</div>
+              <div className="text-muted-foreground text-xs">Gross Finish</div>
+              <div className="font-semibold">{d.played ? d.grossFinish : "—"}</div>
             </div>
             <div>
               <div className="text-muted-foreground text-xs">Net Finish</div>
