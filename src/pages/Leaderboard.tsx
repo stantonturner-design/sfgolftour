@@ -123,7 +123,11 @@ const Leaderboard = () => {
                       className={p.rank > 24 ? "bg-muted/40" : ""}
                     >
                       <TableCell className="text-center font-bold text-foreground">{p.rank}</TableCell>
-                      <TableCell className="whitespace-nowrap text-foreground font-medium">{p.name}</TableCell>
+                      <TableCell className="whitespace-nowrap font-medium">
+                        <Link to={`/players/${slugifyName(p.name)}`} className="text-foreground hover:text-primary transition-colors">
+                          {p.name}
+                        </Link>
+                      </TableCell>
                       <TableCell className="text-center font-semibold text-foreground">{p.points.toFixed(1)}</TableCell>
                       <TableCell className="text-center border-r text-foreground/80">{p.events}</TableCell>
                       {p.eventPoints.map((ep, i) => (
