@@ -1,6 +1,7 @@
 import { useEffect, useState, useMemo } from "react";
 import { useParams, Link } from "react-router-dom";
-import { ArrowLeft, ExternalLink, Trophy, Target, Award, Star, Calendar } from "lucide-react";
+import { ArrowLeft, ExternalLink, Trophy, Target, Award, Star } from "lucide-react";
+import roundRecapLogo from "@/assets/round-recap-logo.png";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import {
@@ -158,20 +159,13 @@ const PlayerProfile = () => {
 
       {/* HERO SECTION */}
       <div className="rounded-xl bg-secondary text-secondary-foreground p-6 md:p-10 relative">
-        {player.roundRecapUrl && player.roundRecapUrl !== "0" && (
-          <Button asChild size="lg" className="absolute top-4 right-4 md:top-6 md:right-6">
-            <a href={player.roundRecapUrl} target="_blank" rel="noopener noreferrer">
-              Round Recap
-              <ExternalLink className="h-4 w-4 ml-1.5" />
-            </a>
-          </Button>
-        )}
-        {(!player.roundRecapUrl || player.roundRecapUrl === "0") && (
-          <Button size="lg" className="absolute top-4 right-4 md:top-6 md:right-6" disabled>
+        <Button asChild size="lg" className="absolute top-4 right-4 md:top-6 md:right-6">
+          <a href={player.roundRecapUrl && player.roundRecapUrl !== "0" ? player.roundRecapUrl : "#"} target="_blank" rel="noopener noreferrer">
+            <img src={roundRecapLogo} alt="Round Recap" className="h-5 w-5" />
             Round Recap
             <ExternalLink className="h-4 w-4 ml-1.5" />
-          </Button>
-        )}
+          </a>
+        </Button>
         <div className="flex flex-col md:flex-row md:items-center gap-6">
           <div className="flex h-20 w-20 md:h-28 md:w-28 shrink-0 items-center justify-center rounded-full bg-primary text-primary-foreground font-bold text-2xl md:text-4xl">
             {getInitials(player.name)}
@@ -278,26 +272,14 @@ const PlayerProfile = () => {
                   { label: "Best Event", value: String(bestEvent) },
                   { label: "Current Handicap", value: String(currentHandicap) },
                   { label: "GHIN #", value: "—" },
-                ].map((row) => (
+                  { label: "Years on Tour", value: "—" },
+                 ].map((row) => (
                   <div key={row.label} className="flex justify-between text-sm">
                     <span className="text-muted-foreground">{row.label}</span>
                     <span className="font-semibold">{row.value}</span>
                   </div>
                 ))}
               </div>
-
-              {player.roundRecapUrl && player.roundRecapUrl !== "0" ? (
-                <Button asChild className="w-full mt-4" size="sm">
-                  <a href={player.roundRecapUrl} target="_blank" rel="noopener noreferrer">
-                    View Round Recap
-                    <ExternalLink className="h-3.5 w-3.5 ml-1.5" />
-                  </a>
-                </Button>
-              ) : (
-                <Button className="w-full mt-4" size="sm" disabled>
-                  Round Recap Unavailable
-                </Button>
-              )}
             </CardContent>
           </Card>
         </div>
