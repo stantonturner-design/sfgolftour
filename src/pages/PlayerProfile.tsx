@@ -120,30 +120,20 @@ const PlayerProfile = () => {
   const allEventData = PROFILE_EVENTS.map((e) => ({ name: e, ...getEventData(e) }));
   const playedEvents = allEventData.filter((e) => e.played);
 
-  const bestGrossFinish = playedEvents.reduce((best: string, e) => {
-    if (e.grossFinish === "—") return best;
-    const num = parseInt(e.grossFinish);
-    const bestNum = parseInt(best);
-    if (isNaN(num)) return best;
-    if (best === "—" || isNaN(bestNum) || num < bestNum) return e.grossFinish;
+  const bestGrossScore = playedEvents.reduce((best: number | null, e) => {
+    if (e.grossScore === null) return best;
+    if (best === null || e.grossScore < best) return e.grossScore;
     return best;
-  }, "—");
+  }, null);
 
-  const bestNetFinish = playedEvents.reduce((best: string, e) => {
-    if (e.netFinish === "—") return best;
-    const num = parseInt(e.netFinish);
-    const bestNum = parseInt(best);
-    if (isNaN(num)) return best;
-    if (best === "—" || isNaN(bestNum) || num < bestNum) return e.netFinish;
+  const bestNetScore = playedEvents.reduce((best: number | null, e) => {
+    if (e.netScore === null) return best;
+    if (best === null || e.netScore < best) return e.netScore;
     return best;
-  }, "—");
+  }, null);
 
   const bestEvent = playedEvents.length > 0
     ? playedEvents.reduce((a, b) => (b.points > a.points ? b : a)).name
-    : "—";
-
-  const mostRecentEvent = playedEvents.length > 0
-    ? playedEvents[playedEvents.length - 1].name
     : "—";
 
   const currentHandicap = (() => {
