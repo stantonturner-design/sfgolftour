@@ -1,6 +1,8 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
+import { slugifyName } from "@/lib/playerUtils";
 
 type Player = {
   rank: number;
@@ -63,7 +65,9 @@ const MobileLeaderboard = ({ players, eventNames }: Props) => {
               <span className="text-lg font-bold text-muted-foreground w-7 text-center shrink-0">
                 {p.rank}
               </span>
-              <span className="flex-1 font-semibold truncate">{p.name}</span>
+              <Link to={`/players/${slugifyName(p.name)}`} className="flex-1 font-semibold truncate hover:text-primary transition-colors" onClick={(e) => e.stopPropagation()}>
+                {p.name}
+              </Link>
               <span className="text-right shrink-0 flex items-center gap-3">
                 <span className="text-sm text-muted-foreground">
                   {p.events} evt{p.events !== 1 ? "s" : ""}
