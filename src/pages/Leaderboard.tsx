@@ -118,7 +118,7 @@ const Leaderboard = () => {
                   return (
                     <TableRow
                       key={p.rank}
-                      className={p.rank <= 3 ? "bg-primary/5 font-medium" : ""}
+                      className={p.rank <= 3 ? "bg-primary/5 font-medium" : p.rank > 24 ? "opacity-60" : ""}
                     >
                       <TableCell className="text-center font-bold text-foreground">{p.rank}</TableCell>
                       <TableCell className="whitespace-nowrap text-foreground font-medium">{p.name}</TableCell>
