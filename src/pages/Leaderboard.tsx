@@ -43,7 +43,7 @@ const Leaderboard = () => {
         <h1 className="font-display text-4xl font-bold">Leaderboard &amp; Standings</h1>
       </div>
       <p className="mt-2 text-muted-foreground">
-        Season-long standings and per-event results — powered by the live Google Sheet.
+        Follow the season-long standings, per-event results, and birdie totals in one place.
       </p>
 
       {loading && <p className="mt-12 text-center text-muted-foreground">Loading standings…</p>}
