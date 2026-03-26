@@ -11,6 +11,7 @@ import { format } from "date-fns";
 import { SHEET_URL, CORICA_URL, parseCoricaResults, slugifyName } from "@/lib/playerUtils";
 import sfgtLogo from "@/assets/sfgt-logo.png";
 import coricaImg from "@/assets/courses/corica-north.jpg";
+import roundRecapLogo from "@/assets/round-recap-logo.png";
 
 const CURRENT_EVENT = {
   name: "Corica Park – North Course",
@@ -291,8 +292,8 @@ const Index = () => {
             rel="noopener noreferrer"
             className="md:col-span-2 rounded-xl border border-border bg-card shadow-sm p-5 md:p-7 flex flex-col items-center justify-center text-center group hover:border-primary/30 transition-colors"
           >
-            <div className="flex items-center justify-center h-14 w-14 rounded-xl bg-primary/10 border border-primary/20 mb-4 group-hover:bg-primary/15 transition-colors">
-              <span className="text-2xl font-black text-primary">R</span>
+            <div className="flex items-center justify-center h-14 w-14 rounded-xl overflow-hidden mb-4">
+              <img src={roundRecapLogo} alt="Round Recap" className="h-12 w-12 object-contain" />
             </div>
             <h3 className="text-sm font-bold uppercase tracking-wider text-muted-foreground group-hover:text-primary transition-colors">
               Round Recap
