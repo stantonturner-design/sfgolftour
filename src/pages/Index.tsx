@@ -11,6 +11,7 @@ import { format } from "date-fns";
 import { SHEET_URL, CORICA_URL, parseCoricaResults, slugifyName } from "@/lib/playerUtils";
 import sfgtLogo from "@/assets/sfgt-logo.png";
 import coricaImg from "@/assets/courses/corica-north.jpg";
+import roundRecapLogo from "@/assets/round-recap-logo.png";
 
 const CURRENT_EVENT = {
   name: "Corica Park – North Course",
