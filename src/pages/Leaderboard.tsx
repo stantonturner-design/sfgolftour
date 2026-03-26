@@ -43,7 +43,7 @@ const Leaderboard = () => {
         <h1 className="font-display text-4xl font-bold">Leaderboard &amp; Standings</h1>
       </div>
       <p className="mt-2 text-muted-foreground">
-        Season-long standings and per-event results — powered by the live Google Sheet.
+        Follow the season-long standings, per-event results, and birdie totals in one place.
       </p>
 
       {loading && <p className="mt-12 text-center text-muted-foreground">Loading standings…</p>}
@@ -118,7 +118,7 @@ const Leaderboard = () => {
                   return (
                     <TableRow
                       key={p.rank}
-                      className={p.rank <= 3 ? "bg-primary/5 font-medium" : ""}
+                      className={p.rank <= 3 ? "bg-primary/5 font-medium" : p.rank > 24 ? "opacity-60" : ""}
                     >
                       <TableCell className="text-center font-bold text-foreground">{p.rank}</TableCell>
                       <TableCell className="whitespace-nowrap text-foreground font-medium">{p.name}</TableCell>
