@@ -283,11 +283,11 @@ const PlayerProfile = () => {
               </h3>
               <div className="space-y-3">
                 {[
-                  { label: "Best Finish", value: bestGrossFinish },
-                  { label: "Best Net Finish", value: bestNetFinish },
-                  { label: "Best Event", value: bestEvent },
-                  { label: "Most Recent Event", value: mostRecentEvent },
-                  { label: "Current Handicap", value: currentHandicap },
+                  { label: "Best Finish", value: String(bestGrossFinish) },
+                  { label: "Best Net Finish", value: String(bestNetFinish) },
+                  { label: "Best Event", value: String(bestEvent) },
+                  { label: "Most Recent Event", value: String(mostRecentEvent) },
+                  { label: "Current Handicap", value: String(currentHandicap) },
                 ].map((row) => (
                   <div key={row.label} className="flex justify-between text-sm">
                     <span className="text-muted-foreground">{row.label}</span>
