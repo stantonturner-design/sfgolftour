@@ -55,26 +55,7 @@ const Leaderboard = () => {
 
       {!loading && !error && players.length > 0 && !isMobile && (
         <>
-          <div className="mt-6 flex justify-end">
-            <div style={{ marginRight: '90px' }}>
-              <ToggleGroup
-                type="single"
-                value={finishView}
-                onValueChange={(v) => v && setFinishView(v)}
-                variant="outline"
-                size="sm"
-              >
-                <ToggleGroupItem value="event" className="text-xs h-7 px-3">
-                  Event Rank
-                </ToggleGroupItem>
-                <ToggleGroupItem value="net" className="text-xs h-7 px-3">
-                  Net Score
-                </ToggleGroupItem>
-              </ToggleGroup>
-            </div>
-          </div>
-
-          <div className="mt-2 overflow-x-auto rounded-lg border">
+          <div className="mt-6 overflow-x-auto rounded-lg border">
             <Table>
               <TableHeader>
                 <TableRow className="border-b-0">
