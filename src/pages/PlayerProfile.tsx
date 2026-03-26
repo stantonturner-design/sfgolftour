@@ -22,8 +22,8 @@ type EventRowData = {
   netScore: number | null;
   handicap: number | null;
   points: number;
-  grossFinish: string;
-  netFinish: string;
+  grossPoints: number | null;
+  netPoints: number | null;
 };
 
 const PlayerProfile = () => {
