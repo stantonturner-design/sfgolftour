@@ -65,19 +65,20 @@ const Leaderboard = () => {
                   <TableHead colSpan={EVENT_NAMES.length} className="bg-secondary text-center text-xs font-bold uppercase tracking-[0.15em] text-secondary-foreground/90 border-r border-secondary-foreground/10 py-2.5">
                     Event Points
                   </TableHead>
-                  <TableHead colSpan={3} className="bg-secondary text-center text-secondary-foreground/90 border-r border-secondary-foreground/10 py-2">
+                  <TableHead colSpan={3} className="bg-secondary text-center text-secondary-foreground/90 border-r border-secondary-foreground/10 py-2.5 min-w-[280px]">
                     <ToggleGroup
                       type="single"
                       value={finishView}
                       onValueChange={(v) => v && setFinishView(v)}
                       variant="outline"
                       size="sm"
+                      className="gap-0"
                     >
-                      <ToggleGroupItem value="event" className="text-[10px] h-5 px-2 bg-secondary-foreground/5 border-secondary-foreground/20 data-[state=on]:bg-primary data-[state=on]:text-primary-foreground">
-                        Event Rank
+                      <ToggleGroupItem value="event" className="text-xs h-7 px-3 rounded-r-none border-r-0 bg-secondary-foreground/5 border-secondary-foreground/20 data-[state=on]:bg-primary data-[state=on]:text-primary-foreground data-[state=on]:border-primary font-semibold">
+                        Event Rank Finishes
                       </ToggleGroupItem>
-                      <ToggleGroupItem value="net" className="text-[10px] h-5 px-2 bg-secondary-foreground/5 border-secondary-foreground/20 data-[state=on]:bg-primary data-[state=on]:text-primary-foreground">
-                        Net Score
+                      <ToggleGroupItem value="net" className="text-xs h-7 px-3 rounded-l-none bg-secondary-foreground/5 border-secondary-foreground/20 data-[state=on]:bg-primary data-[state=on]:text-primary-foreground data-[state=on]:border-primary font-semibold">
+                        Net Score Finishes
                       </ToggleGroupItem>
                     </ToggleGroup>
                   </TableHead>

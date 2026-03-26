@@ -99,24 +99,22 @@ const MobileLeaderboard = ({ players, eventNames }: Props) => {
 
                 {/* Finishes with in-card toggle */}
                 <div>
-                  <div className="flex items-center gap-2 mb-2">
+                  <div className="flex justify-center mb-2">
                     <ToggleGroup
                       type="single"
                       value={finishView}
                       onValueChange={(v) => v && setFinishView(p.rank, v)}
                       variant="outline"
                       size="sm"
+                      className="gap-0 w-full"
                     >
-                      <ToggleGroupItem value="event" className="text-[10px] h-5 px-2">
-                        Event Rank
+                      <ToggleGroupItem value="event" className="text-xs h-8 flex-1 rounded-r-none border-r-0 data-[state=on]:bg-primary data-[state=on]:text-primary-foreground data-[state=on]:border-primary font-semibold">
+                        Event Rank Finishes
                       </ToggleGroupItem>
-                      <ToggleGroupItem value="net" className="text-[10px] h-5 px-2">
-                        Net Score
+                      <ToggleGroupItem value="net" className="text-xs h-8 flex-1 rounded-l-none data-[state=on]:bg-primary data-[state=on]:text-primary-foreground data-[state=on]:border-primary font-semibold">
+                        Net Score Finishes
                       </ToggleGroupItem>
                     </ToggleGroup>
-                    <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-                      Finishes
-                    </span>
                   </div>
                   <div className="grid grid-cols-3 gap-2 text-center">
                     {finishLabels.map((label, i) => (
