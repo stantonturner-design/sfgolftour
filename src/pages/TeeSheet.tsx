@@ -233,9 +233,19 @@ const TeeSheet = () => {
           <span className="text-xs font-bold uppercase tracking-[0.2em] text-primary">Tee Sheet</span>
         </div>
         <h1 className="font-display text-3xl md:text-4xl font-bold text-foreground">{eventName}</h1>
-        {meta.subtitle && (
-          <p className="text-base text-muted-foreground mt-0.5">{meta.subtitle}</p>
-        )}
+        <div className="flex flex-wrap items-center gap-3 mt-1">
+          {meta.subtitle && (
+            <p className="text-base text-muted-foreground">{meta.subtitle}</p>
+          )}
+          {meta.courseUrl && (
+            <Button variant="outline" size="sm" asChild className="gap-1.5">
+              <a href={meta.courseUrl} target="_blank" rel="noopener noreferrer">
+                <ExternalLink className="h-3.5 w-3.5" />
+                Course Website
+              </a>
+            </Button>
+          )}
+        </div>
 
         {/* Stats bar */}
         {!loading && !error && teeTimes.length > 0 && (
