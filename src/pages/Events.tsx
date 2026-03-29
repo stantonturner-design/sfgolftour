@@ -1,4 +1,4 @@
-import { Calendar, ExternalLink, ClipboardList, Trophy, DollarSign, BarChart3, Anchor, Lock } from "lucide-react";
+import { Calendar, ExternalLink, ClipboardList, Trophy, DollarSign, BarChart3, Anchor, Lock, Globe } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -23,6 +23,7 @@ interface EventData {
   teeSheet: string;
   handicaps: string;
   results: string;
+  courseUrl?: string;
   note?: string;
   isFinale?: boolean;
 }
@@ -40,8 +41,9 @@ const EVENTS: EventData[] = [
       { place: "Gross", amount: "$50" },
     ],
     teeSheet: "#",
-    handicaps: "#",
-    results: "#",
+    handicaps: "",
+    results: "",
+    courseUrl: "https://www.coricapark.com/north-course",
   },
   {
     name: "Coyote Creek",
@@ -55,8 +57,9 @@ const EVENTS: EventData[] = [
       { place: "Gross", amount: "$TBD" },
     ],
     teeSheet: "#",
-    handicaps: "#",
-    results: "#",
+    handicaps: "",
+    results: "",
+    courseUrl: "https://www.coyotecreekgolf.com",
   },
   {
     name: "Chardonnay",
@@ -70,8 +73,9 @@ const EVENTS: EventData[] = [
       { place: "Gross", amount: "$TBD" },
     ],
     teeSheet: "#",
-    handicaps: "#",
-    results: "#",
+    handicaps: "",
+    results: "",
+    courseUrl: "https://www.chardonnaygolfclub.com",
   },
   {
     name: "Poppy Ridge",
@@ -85,8 +89,9 @@ const EVENTS: EventData[] = [
       { place: "Gross", amount: "$TBD" },
     ],
     teeSheet: "#",
-    handicaps: "#",
-    results: "#",
+    handicaps: "",
+    results: "",
+    courseUrl: "https://www.poppyridgegolf.com",
   },
   {
     name: "Presidio",
@@ -100,8 +105,9 @@ const EVENTS: EventData[] = [
       { place: "Gross", amount: "$TBD" },
     ],
     teeSheet: "#",
-    handicaps: "#",
-    results: "#",
+    handicaps: "",
+    results: "",
+    courseUrl: "https://www.presidiogolf.com",
   },
   {
     name: "Finale",
@@ -111,8 +117,8 @@ const EVENTS: EventData[] = [
     anchorDay: "TBD",
     prizes: [],
     teeSheet: "#",
-    handicaps: "#",
-    results: "#",
+    handicaps: "",
+    results: "",
     isFinale: true,
   },
 ];
@@ -213,22 +219,41 @@ const EventCard = ({ evt }: { evt: EventData }) => {
         )}
 
         {/* Action buttons */}
-        <div className="mt-auto pt-2 flex gap-2.5">
+        <div className="mt-auto pt-2 flex flex-wrap gap-2.5">
           <Button variant="outline" size="sm" className="h-9 px-4 text-sm" asChild>
             <Link to={`/tee-sheet?event=${encodeURIComponent(evt.name)}`}>
               <ClipboardList className="mr-1.5 h-4 w-4" /> Tee Sheet
             </Link>
           </Button>
-          <Button variant="outline" size="sm" className="h-9 px-4 text-sm" asChild>
-            <a href={evt.handicaps} target="_blank" rel="noopener noreferrer">
+          {evt.handicaps ? (
+            <Button variant="outline" size="sm" className="h-9 px-4 text-sm" asChild>
+              <a href={evt.handicaps} target="_blank" rel="noopener noreferrer">
+                <BarChart3 className="mr-1.5 h-4 w-4" /> Handicaps
+              </a>
+            </Button>
+          ) : (
+            <Button variant="outline" size="sm" className="h-9 px-4 text-sm" disabled>
               <BarChart3 className="mr-1.5 h-4 w-4" /> Handicaps
-            </a>
-          </Button>
-          <Button size="sm" className="h-9 px-4 text-sm" asChild>
-            <a href={evt.results} target="_blank" rel="noopener noreferrer">
+            </Button>
+          )}
+          {evt.results ? (
+            <Button size="sm" className="h-9 px-4 text-sm" asChild>
+              <a href={evt.results} target="_blank" rel="noopener noreferrer">
+                <ExternalLink className="mr-1.5 h-4 w-4" /> Results
+              </a>
+            </Button>
+          ) : (
+            <Button size="sm" className="h-9 px-4 text-sm" disabled>
               <ExternalLink className="mr-1.5 h-4 w-4" /> Results
-            </a>
-          </Button>
+            </Button>
+          )}
+          {evt.courseUrl && (
+            <Button variant="ghost" size="sm" className="h-9 px-4 text-sm text-muted-foreground" asChild>
+              <a href={evt.courseUrl} target="_blank" rel="noopener noreferrer">
+                <Globe className="mr-1.5 h-4 w-4" /> Course Website
+              </a>
+            </Button>
+          )}
         </div>
       </div>
     </Card>

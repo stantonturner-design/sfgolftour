@@ -32,6 +32,7 @@ interface TeeTime {
   day: string;
   time: string;
   players: string[];
+  openSpots: number;
 }
 
 const TeeSheet = () => {
@@ -78,17 +79,18 @@ const TeeSheet = () => {
             if (firstCell === "Date" || firstCell === "Legend:") continue;
             if (row[3]?.trim()?.includes("AERATION")) continue;
 
-            const players = [row[3], row[4], row[5], row[6]]
-              .map((p) => p?.trim() || "")
-              .filter((p) => p && p !== "Booked" && p !== "Open");
+            const slots = [row[3], row[4], row[5], row[6]].map((p) => p?.trim() || "");
+            const players = slots.filter((p) => p && p !== "Booked" && p !== "Open");
+            const openSpots = slots.filter((p) => p === "Open").length;
 
-            if (players.length === 0) continue;
+            if (players.length === 0 && openSpots === 0) continue;
 
             parsed.push({
               date: firstCell,
               day: row[1]?.trim() || "",
               time: row[2]?.trim() || "",
               players,
+              openSpots,
             });
           }
           setTeeTimes(parsed);
@@ -105,15 +107,30 @@ const TeeSheet = () => {
 
   // Group tee times by date for smarter display
   const groupedByDate = useMemo(() => {
-    const groups: { date: string; day: string; times: TeeTime[] }[] = [];
+    const groups: { date: string; day: string; times: TeeTime[]; totalOpen: number }[] = [];
     for (const tt of teeTimes) {
       const key = `${tt.date}|${tt.day}`;
       const last = groups[groups.length - 1];
       if (last && `${last.date}|${last.day}` === key) {
         last.times.push(tt);
+        last.totalOpen += tt.openSpots;
       } else {
-        groups.push({ date: tt.date, day: tt.day, times: [tt] });
+        groups.push({ date: tt.date, day: tt.day, times: [tt], totalOpen: tt.openSpots });
       }
+    }
+    // Sort: days with open spots first, then chronologically within each section
+    groups.sort((a, b) => {
+      const aHasOpen = a.totalOpen > 0 ? 0 : 1;
+      const bHasOpen = b.totalOpen > 0 ? 0 : 1;
+      return aHasOpen - bHasOpen;
+    });
+    // Within each group, sort times: open spots first, then chronologically
+    for (const g of groups) {
+      g.times.sort((a, b) => {
+        const aHasOpen = a.openSpots > 0 ? 0 : 1;
+        const bHasOpen = b.openSpots > 0 ? 0 : 1;
+        return aHasOpen - bHasOpen;
+      });
     }
     return groups;
   }, [teeTimes]);
@@ -202,13 +219,22 @@ const TeeSheet = () => {
                   <div className="flex items-center justify-center h-8 w-8 rounded-lg bg-primary/10">
                     <CalendarDays className="h-4 w-4 text-primary" />
                   </div>
-                  <div>
+                  <div className="flex items-center gap-2 flex-wrap">
                     <span className="text-base font-bold text-foreground">
                       {group.day}, {group.date}
                     </span>
-                    <span className="ml-2 text-sm text-muted-foreground">
+                    <span className="text-sm text-muted-foreground">
                       · {group.times.length} {group.times.length === 1 ? "group" : "groups"}
                     </span>
+                    {group.totalOpen > 0 ? (
+                      <Badge variant="secondary" className="bg-green-500/10 text-green-700 dark:text-green-400 border-green-500/20 text-xs font-semibold">
+                        {group.totalOpen} {group.totalOpen === 1 ? "spot" : "spots"} open
+                      </Badge>
+                    ) : (
+                      <Badge variant="secondary" className="text-xs font-semibold text-muted-foreground">
+                        Full
+                      </Badge>
+                    )}
                   </div>
                 </div>
               </AccordionTrigger>
@@ -216,15 +242,22 @@ const TeeSheet = () => {
                 <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
                   {group.times.map((tt, idx) => (
                     <Card key={idx} className="overflow-hidden">
-                      <div className="flex items-center justify-between px-4 py-3 bg-secondary/60 border-b border-border">
-                        <div className="flex items-center gap-2">
-                          <Clock className="h-4 w-4 text-primary" />
-                          <span className="text-base font-bold text-foreground">{tt.time}</span>
-                        </div>
-                        <Badge variant="secondary" className="text-xs font-semibold">
-                          {tt.players.length} players
-                        </Badge>
-                      </div>
+                        <div className="flex items-center justify-between px-4 py-3 bg-secondary/60 border-b border-border">
+                         <div className="flex items-center gap-2">
+                           <Clock className="h-4 w-4 text-primary" />
+                           <span className="text-base font-bold text-foreground">{tt.time}</span>
+                         </div>
+                         <div className="flex items-center gap-1.5">
+                           <Badge variant="secondary" className="text-xs font-semibold">
+                             {tt.players.length} players
+                           </Badge>
+                           {tt.openSpots > 0 && (
+                             <Badge variant="secondary" className="bg-green-500/10 text-green-700 dark:text-green-400 border-green-500/20 text-xs font-semibold">
+                               {tt.openSpots} open
+                             </Badge>
+                           )}
+                         </div>
+                       </div>
                       <CardContent className="p-0">
                         {tt.players.map((player, pIdx) => (
                           <Link
