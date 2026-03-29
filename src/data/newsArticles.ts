@@ -16,6 +16,46 @@ export interface NewsArticle {
 
 export const newsArticles: NewsArticle[] = [
   {
+    id: "5",
+    slug: "new-sfgt-tour-hub-live",
+    title: "The New SFGT Tour Hub Is Live",
+    excerpt:
+      "The San Francisco Golf Tour has a new home. The SFGT Tour Hub is now live, giving players one place to follow standings, events, tee sheets, news, and direct links into Round Recap for deeper stats and performance tracking.",
+    coverImage: seasonImg,
+    publishDate: "2026-03-29T12:00:00Z",
+    category: "Tour News",
+    body: `
+      <p>The San Francisco Golf Tour officially has a new home.</p>
+      <p>Today, we're excited to launch the new <strong>SFGT Tour Hub</strong> — a central place for players to follow the 2026 season, keep up with events, and stay connected to everything happening across the tour.</p>
+      <p>The goal with the Hub is simple: make the tour easier to follow, easier to navigate, and more fun to be a part of week to week. Instead of information living in scattered places, players can now go to one spot to check standings, browse events, view tee sheets, read updates, and follow the story of the season as it unfolds.</p>
+
+      <h2>What's now live</h2>
+      <ul>
+        <li><strong>Season leaderboard</strong> with current standings and player rankings</li>
+        <li><strong>Player pages</strong> with individual tour snapshots and season results</li>
+        <li><strong>Event pages</strong> for each stop on the 2026 schedule</li>
+        <li><strong>Tee sheets</strong> that make it easier to see who's in and where open spots remain</li>
+        <li><strong>Tour news</strong> so major updates, announcements, and event moments have a permanent home</li>
+        <li><strong>Rules and structure</strong> available in one clean, easy-to-reference place</li>
+      </ul>
+
+      <h2>Built to work with Round Recap</h2>
+      <p>One of the biggest additions to the new Hub is its connection to <strong>Round Recap</strong>.</p>
+      <p>Round Recap brings a much deeper layer of stats, scoring detail, and player performance tracking to the SFGT experience. While the Tour Hub serves as the front door for the season, Round Recap gives players access to the numbers behind it — from round-by-round results to player-specific stat pages and a broader view of performance over time.</p>
+      <p>Together, the two platforms give the tour something it has never fully had before: a true digital home base paired with a real data engine behind the competition.</p>
+
+      <h2>Why this matters</h2>
+      <p>The SFGT has continued to grow, and with that growth comes a need for a better experience around the tour itself. This launch is about more than just having a website. It's about giving the season a stronger identity, making the competition easier to follow, and creating a better experience for everyone playing in it.</p>
+      <p>Whether you want to check the latest standings, find your next event, see who's on the tee sheet, or dive into Round Recap for a deeper look at the numbers, the new setup is designed to make all of it feel more connected.</p>
+
+      <h2>This is just the beginning</h2>
+      <p>The new Tour Hub is live now, but it is still only the start.</p>
+      <p>More refinements, added functionality, and better integrations will continue rolling out as the season moves forward. The vision is to keep building a tour experience that feels organized, modern, competitive, and worthy of the players who make the SFGT what it is.</p>
+      <p>We're excited to get it out into the world and even more excited to keep improving it.</p>
+      <p><strong>The 2026 season has its home. The SFGT Tour Hub is live.</strong></p>
+    `,
+  },
+  {
     id: "1",
     slug: "2026-enhancements-announced",
     title: "2026 Enhancements Announced",
