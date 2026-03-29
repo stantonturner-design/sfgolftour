@@ -107,7 +107,7 @@ const TeeSheet = () => {
   const [showUnscheduled, setShowUnscheduled] = useState(false);
   const [activeView, setActiveView] = useState<"upcoming" | "completed">("upcoming");
 
-  const meta = EVENT_META[eventName] || { subtitle: "", anchorDay: "" };
+  const meta = EVENT_META[eventName] || { subtitle: "", anchorDay: "", courseUrl: "" };
 
   useEffect(() => {
     Promise.all([
