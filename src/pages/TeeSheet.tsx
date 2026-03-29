@@ -315,7 +315,7 @@ const TeeSheet = () => {
           {/* Tee time accordion */}
           <Accordion
             type="multiple"
-            defaultValue={activeView === "upcoming" ? upcomingGroups.slice(0, 3).map((g) => g.date) : []}
+            defaultValue={[]}
             key={activeView}
             className="space-y-3"
           >
