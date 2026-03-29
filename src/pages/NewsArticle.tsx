@@ -63,7 +63,15 @@ const NewsArticle = () => {
             {article.excerpt}
           </p>
           <div
-            className="prose prose-lg max-w-none prose-headings:font-display prose-headings:font-bold prose-h3:text-xl prose-p:text-foreground/85 prose-li:text-foreground/85 prose-strong:text-foreground"
+            className="prose prose-lg max-w-none
+              prose-headings:font-display prose-headings:font-bold prose-headings:tracking-tight
+              prose-h2:text-2xl prose-h2:mt-10 prose-h2:mb-4
+              prose-h3:text-xl prose-h3:mt-8 prose-h3:mb-3
+              prose-p:text-foreground/85 prose-p:leading-relaxed prose-p:mb-5
+              prose-li:text-foreground/85 prose-li:my-1.5
+              prose-ul:my-6 prose-ul:pl-5 prose-ol:my-6 prose-ol:pl-5
+              prose-strong:text-foreground
+              prose-blockquote:border-primary prose-blockquote:text-muted-foreground prose-blockquote:not-italic"
             dangerouslySetInnerHTML={{ __html: article.body }}
           />
           <div className="mt-12 border-t pt-6">
