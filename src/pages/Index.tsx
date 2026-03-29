@@ -299,20 +299,20 @@ const Index = () => {
             href={rrHomePageUrl || "https://roundrecap.com"}
             target="_blank"
             rel="noopener noreferrer"
-            className="md:col-span-2 rounded-xl border border-border bg-card shadow-sm p-5 md:p-7 flex flex-col items-center justify-center text-center group hover:border-primary/30 transition-colors"
+            className="md:col-span-2 rounded-xl border border-border bg-card shadow-sm p-6 md:p-8 flex flex-col items-center justify-center text-center group hover:border-primary/30 hover:shadow-md transition-all"
           >
-            <div className="flex items-center justify-center h-20 w-20 mb-4">
-              <img src={roundRecapLogo} alt="Round Recap" className="h-20 w-20 object-contain" />
+            <div className="flex items-center justify-center mb-3">
+              <img src={roundRecapLogo} alt="Round Recap" className="h-32 w-32 md:h-40 md:w-40 object-contain drop-shadow-md" />
             </div>
-            <h3 className="text-sm font-bold uppercase tracking-wider text-muted-foreground group-hover:text-primary transition-colors">
+            <h3 className="text-lg md:text-xl font-bold uppercase tracking-widest text-foreground group-hover:text-primary transition-colors">
               Round Recap
             </h3>
-            <p className="text-xs text-muted-foreground mt-1.5 max-w-[200px]">
+            <p className="text-sm text-muted-foreground mt-2 max-w-[260px]">
               Full round stats, hole-by-hole breakdowns & more
             </p>
-            <p className="text-xs text-primary mt-3 flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
-              Open Round Recap <ExternalLink className="h-3 w-3" />
-            </p>
+            <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-primary opacity-80 group-hover:opacity-100 transition-opacity">
+              Open Round Recap <ExternalLink className="h-3.5 w-3.5" />
+            </span>
           </a>
 
         </div>
