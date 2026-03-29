@@ -79,17 +79,18 @@ const TeeSheet = () => {
             if (firstCell === "Date" || firstCell === "Legend:") continue;
             if (row[3]?.trim()?.includes("AERATION")) continue;
 
-            const players = [row[3], row[4], row[5], row[6]]
-              .map((p) => p?.trim() || "")
-              .filter((p) => p && p !== "Booked" && p !== "Open");
+            const slots = [row[3], row[4], row[5], row[6]].map((p) => p?.trim() || "");
+            const players = slots.filter((p) => p && p !== "Booked" && p !== "Open");
+            const openSpots = slots.filter((p) => p === "Open").length;
 
-            if (players.length === 0) continue;
+            if (players.length === 0 && openSpots === 0) continue;
 
             parsed.push({
               date: firstCell,
               day: row[1]?.trim() || "",
               time: row[2]?.trim() || "",
               players,
+              openSpots,
             });
           }
           setTeeTimes(parsed);
