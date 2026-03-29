@@ -34,6 +34,7 @@ const Index = () => {
     .slice(0, 3);
   const [topPlayers, setTopPlayers] = useState<TopPlayer[]>([]);
   const [netLeader, setNetLeader] = useState<{ name: string; score: number } | null>(null);
+  const [rrHomePageUrl, setRrHomePageUrl] = useState<string | null>(null);
 
   useEffect(() => {
     fetch(SHEET_URL)
