@@ -14,6 +14,7 @@ interface EventData {
   teeSheet: string;
   handicaps: string;
   results: string;
+  courseUrl?: string;
   note?: string;
   isFinale?: boolean;
 }
