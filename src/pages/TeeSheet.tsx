@@ -242,13 +242,22 @@ const TeeSheet = () => {
                 <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
                   {group.times.map((tt, idx) => (
                     <Card key={idx} className="overflow-hidden">
-                      <div className="flex items-center justify-between px-4 py-3 bg-secondary/60 border-b border-border">
-                        <div className="flex items-center gap-2">
-                          <Clock className="h-4 w-4 text-primary" />
-                          <span className="text-base font-bold text-foreground">{tt.time}</span>
-                        </div>
-                        <Badge variant="secondary" className="text-xs font-semibold">
-                          {tt.players.length} players
+                        <div className="flex items-center justify-between px-4 py-3 bg-secondary/60 border-b border-border">
+                         <div className="flex items-center gap-2">
+                           <Clock className="h-4 w-4 text-primary" />
+                           <span className="text-base font-bold text-foreground">{tt.time}</span>
+                         </div>
+                         <div className="flex items-center gap-1.5">
+                           <Badge variant="secondary" className="text-xs font-semibold">
+                             {tt.players.length} players
+                           </Badge>
+                           {tt.openSpots > 0 && (
+                             <Badge variant="secondary" className="bg-green-500/10 text-green-700 dark:text-green-400 border-green-500/20 text-xs font-semibold">
+                               {tt.openSpots} open
+                             </Badge>
+                           )}
+                         </div>
+                       </div>
                         </Badge>
                       </div>
                       <CardContent className="p-0">
