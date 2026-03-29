@@ -219,13 +219,22 @@ const TeeSheet = () => {
                   <div className="flex items-center justify-center h-8 w-8 rounded-lg bg-primary/10">
                     <CalendarDays className="h-4 w-4 text-primary" />
                   </div>
-                  <div>
+                  <div className="flex items-center gap-2 flex-wrap">
                     <span className="text-base font-bold text-foreground">
                       {group.day}, {group.date}
                     </span>
-                    <span className="ml-2 text-sm text-muted-foreground">
+                    <span className="text-sm text-muted-foreground">
                       · {group.times.length} {group.times.length === 1 ? "group" : "groups"}
                     </span>
+                    {group.totalOpen > 0 ? (
+                      <Badge variant="secondary" className="bg-green-500/10 text-green-700 dark:text-green-400 border-green-500/20 text-xs font-semibold">
+                        {group.totalOpen} {group.totalOpen === 1 ? "spot" : "spots"} open
+                      </Badge>
+                    ) : (
+                      <Badge variant="secondary" className="text-xs font-semibold text-muted-foreground">
+                        Full
+                      </Badge>
+                    )}
                   </div>
                 </div>
               </AccordionTrigger>
