@@ -42,8 +42,8 @@ const EVENTS: EventData[] = [
     ],
     teeSheet: "#",
     handicaps: "",
-    results: "",
-    courseUrl: "https://www.coricapark.com/north-course",
+    results: "https://app.roundrecap.com/rounds/2df0ef64-663e-4ea0-9c11-b8d3623af707",
+    courseUrl: "https://www.coricapark.com/",
   },
   {
     name: "Coyote Creek",
@@ -59,7 +59,7 @@ const EVENTS: EventData[] = [
     teeSheet: "#",
     handicaps: "",
     results: "",
-    courseUrl: "https://www.coyotecreekgolf.com",
+    courseUrl: "https://coyotecreekgolf.com/",
   },
   {
     name: "Chardonnay",
@@ -75,7 +75,7 @@ const EVENTS: EventData[] = [
     teeSheet: "#",
     handicaps: "",
     results: "",
-    courseUrl: "https://www.chardonnaygolfclub.com",
+    courseUrl: "https://www.chardonnaygolfclub.com/",
   },
   {
     name: "Poppy Ridge",
@@ -91,7 +91,7 @@ const EVENTS: EventData[] = [
     teeSheet: "#",
     handicaps: "",
     results: "",
-    courseUrl: "https://www.poppyridgegolf.com",
+    courseUrl: "https://poppyridgegolf.ncga.org/",
   },
   {
     name: "Presidio",
@@ -107,7 +107,7 @@ const EVENTS: EventData[] = [
     teeSheet: "#",
     handicaps: "",
     results: "",
-    courseUrl: "https://www.presidiogolf.com",
+    courseUrl: "https://www.presidiogolf.com/",
   },
   {
     name: "Finale",
