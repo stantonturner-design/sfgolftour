@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { useSearchParams, Link } from "react-router-dom";
-import { ClipboardList, ArrowLeft, Clock, Users, CalendarDays, Anchor, UserX, CheckCircle2 } from "lucide-react";
+import { ClipboardList, ArrowLeft, Clock, Users, CalendarDays, Anchor, UserX, CheckCircle2, ExternalLink } from "lucide-react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -17,12 +17,12 @@ const EVENT_SECTION_MAP: Record<string, string[]> = {
   Presidio: ["Presidio"],
 };
 
-const EVENT_META: Record<string, { subtitle: string; anchorDay: string }> = {
-  Corica: { subtitle: "The North Course", anchorDay: "April 4" },
-  "Coyote Creek": { subtitle: "The Valley Course", anchorDay: "May 31" },
-  Chardonnay: { subtitle: "", anchorDay: "July 11" },
-  "Poppy Ridge": { subtitle: "", anchorDay: "TBD" },
-  Presidio: { subtitle: "", anchorDay: "TBD" },
+const EVENT_META: Record<string, { subtitle: string; anchorDay: string; courseUrl: string }> = {
+  Corica: { subtitle: "The North Course", anchorDay: "April 4", courseUrl: "https://www.coricapark.com/" },
+  "Coyote Creek": { subtitle: "The Valley Course", anchorDay: "May 31", courseUrl: "https://coyotecreekgolf.com/" },
+  Chardonnay: { subtitle: "", anchorDay: "July 11", courseUrl: "https://www.chardonnaygolfclub.com/" },
+  "Poppy Ridge": { subtitle: "", anchorDay: "TBD", courseUrl: "https://poppyridgegolf.ncga.org/" },
+  Presidio: { subtitle: "", anchorDay: "TBD", courseUrl: "https://www.presidiogolf.com/" },
 };
 
 interface TeeTime {
@@ -107,7 +107,7 @@ const TeeSheet = () => {
   const [showUnscheduled, setShowUnscheduled] = useState(false);
   const [activeView, setActiveView] = useState<"upcoming" | "completed">("upcoming");
 
-  const meta = EVENT_META[eventName] || { subtitle: "", anchorDay: "" };
+  const meta = EVENT_META[eventName] || { subtitle: "", anchorDay: "", courseUrl: "" };
 
   useEffect(() => {
     Promise.all([
@@ -233,9 +233,19 @@ const TeeSheet = () => {
           <span className="text-xs font-bold uppercase tracking-[0.2em] text-primary">Tee Sheet</span>
         </div>
         <h1 className="font-display text-3xl md:text-4xl font-bold text-foreground">{eventName}</h1>
-        {meta.subtitle && (
-          <p className="text-base text-muted-foreground mt-0.5">{meta.subtitle}</p>
-        )}
+        <div className="flex flex-wrap items-center gap-3 mt-1">
+          {meta.subtitle && (
+            <p className="text-base text-muted-foreground">{meta.subtitle}</p>
+          )}
+          {meta.courseUrl && (
+            <Button variant="outline" size="sm" asChild className="gap-1.5">
+              <a href={meta.courseUrl} target="_blank" rel="noopener noreferrer">
+                <ExternalLink className="h-3.5 w-3.5" />
+                Course Website
+              </a>
+            </Button>
+          )}
+        </div>
 
         {/* Stats bar */}
         {!loading && !error && teeTimes.length > 0 && (
