@@ -161,7 +161,37 @@ export function normalizeSheetName(name: string): string {
  * Col 1:Name(Last,First)  2:RoundRecapUrl  4:Preseason
  * 5:Corica  6:CoyoteCreek  7:Chardonnay  8:PoppyRidge  9:Presidio
  */
+export function fixRoundRecapUrl(url: string, groupUuid: string | null): string | null {
+  if (!url || !url.startsWith("http")) return null;
+  // Fix broken /g/<slug> URLs → /groups/<uuid> with player query params preserved
+  try {
+    const parsed = new URL(url);
+    if (parsed.pathname.startsWith("/g/") && groupUuid) {
+      const playerParam = parsed.searchParams.get("player");
+      const tab = parsed.searchParams.get("tab");
+      const fixedUrl = new URL(`/groups/${groupUuid}`, parsed.origin);
+      if (tab) fixedUrl.searchParams.set("tab", tab);
+      if (playerParam) fixedUrl.searchParams.set("player", playerParam);
+      if (import.meta.env.DEV) {
+        console.log(`[RR] Fixed URL: ${url} → ${fixedUrl.toString()}`);
+      }
+      return fixedUrl.toString();
+    }
+    return url;
+  } catch {
+    return null;
+  }
+}
+
 export function parseHandicaps(rows: string[][]): HandicapData[] {
+  // First, extract the group UUID from the RR Home Page row
+  const rrHomeUrl = parseRRHomePageUrl(rows);
+  let groupUuid: string | null = null;
+  if (rrHomeUrl) {
+    const match = rrHomeUrl.match(/\/groups\/([a-f0-9-]+)/);
+    if (match) groupUuid = match[1];
+  }
+
   const data: HandicapData[] = [];
   for (let i = 2; i < rows.length; i++) {
     const r = rows[i];
@@ -176,7 +206,7 @@ export function parseHandicaps(rows: string[][]): HandicapData[] {
     data.push({
       name,
       slug: slugifyName(name),
-      roundRecapUrl: rrUrl.startsWith("http") ? rrUrl : null,
+      roundRecapUrl: fixRoundRecapUrl(rrUrl, groupUuid),
       preseason: parseHcp(r[4]),
       corica: parseHcp(r[5]),
       coyoteCreek: parseHcp(r[6]),
