@@ -296,7 +296,7 @@ const Index = () => {
 
           {/* Round Recap */}
           <a
-            href="https://roundrecap.com"
+            href={rrHomePageUrl || "https://roundrecap.com"}
             target="_blank"
             rel="noopener noreferrer"
             className="md:col-span-2 rounded-xl border border-border bg-card shadow-sm p-5 md:p-7 flex flex-col items-center justify-center text-center group hover:border-primary/30 transition-colors"
