@@ -8,7 +8,7 @@ import { Badge } from "@/components/ui/badge";
 import { parseCSV } from "@/lib/csv";
 import { format } from "date-fns";
 
-import { SHEET_URL, CORICA_URL, parseCoricaResults, slugifyName } from "@/lib/playerUtils";
+import { SHEET_URL, CORICA_URL, HANDICAPS_URL, parseCoricaResults, parseRRHomePageUrl, slugifyName } from "@/lib/playerUtils";
 import sfgtLogo from "@/assets/sfgt-logo.png";
 import coricaImg from "@/assets/courses/corica-north.jpg";
 import roundRecapLogo from "@/assets/round-recap-logo.png";
@@ -34,6 +34,7 @@ const Index = () => {
     .slice(0, 3);
   const [topPlayers, setTopPlayers] = useState<TopPlayer[]>([]);
   const [netLeader, setNetLeader] = useState<{ name: string; score: number } | null>(null);
+  const [rrHomePageUrl, setRrHomePageUrl] = useState<string | null>(null);
 
   useEffect(() => {
     fetch(SHEET_URL)
@@ -60,6 +61,14 @@ const Index = () => {
           withNet.sort((a, b) => a.netScore! - b.netScore!);
           setNetLeader({ name: withNet[0].name, score: withNet[0].netScore! });
         }
+      })
+      .catch(() => {});
+
+    fetch(HANDICAPS_URL)
+      .then((res) => res.text())
+      .then((text) => {
+        const url = parseRRHomePageUrl(parseCSV(text));
+        if (url) setRrHomePageUrl(url);
       })
       .catch(() => {});
   }, []);
@@ -287,7 +296,7 @@ const Index = () => {
 
           {/* Round Recap */}
           <a
-            href="https://roundrecap.com"
+            href={rrHomePageUrl || "https://roundrecap.com"}
             target="_blank"
             rel="noopener noreferrer"
             className="md:col-span-2 rounded-xl border border-border bg-card shadow-sm p-5 md:p-7 flex flex-col items-center justify-center text-center group hover:border-primary/30 transition-colors"

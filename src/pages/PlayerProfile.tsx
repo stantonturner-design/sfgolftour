@@ -159,13 +159,15 @@ const PlayerProfile = () => {
 
       {/* HERO SECTION */}
       <div className="rounded-xl bg-secondary text-secondary-foreground p-6 md:p-10 relative">
-        <Button asChild size="lg" className="absolute top-4 right-4 md:top-6 md:right-6">
-          <a href={player.roundRecapUrl && player.roundRecapUrl !== "0" ? player.roundRecapUrl : "#"} target="_blank" rel="noopener noreferrer">
-            <img src={roundRecapLogo} alt="Round Recap" className="h-5 w-5" />
-            Round Recap
-            <ExternalLink className="h-4 w-4 ml-1.5" />
-          </a>
-        </Button>
+        {hcpData?.roundRecapUrl && (
+          <Button asChild size="lg" className="absolute top-4 right-4 md:top-6 md:right-6">
+            <a href={hcpData.roundRecapUrl} target="_blank" rel="noopener noreferrer">
+              <img src={roundRecapLogo} alt="Round Recap" className="h-5 w-5" />
+              Round Recap
+              <ExternalLink className="h-4 w-4 ml-1.5" />
+            </a>
+          </Button>
+        )}
         <div className="flex flex-col md:flex-row md:items-center gap-6">
           <div className="flex h-20 w-20 md:h-28 md:w-28 shrink-0 items-center justify-center rounded-full bg-primary text-primary-foreground font-bold text-2xl md:text-4xl">
             {getInitials(player.name)}
