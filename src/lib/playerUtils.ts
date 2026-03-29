@@ -46,6 +46,7 @@ export type CoricaResult = {
 export type HandicapData = {
   name: string;
   slug: string;
+  roundRecapUrl: string | null;
   preseason: number | null;
   corica: number | null;
   coyoteCreek: number | null;
