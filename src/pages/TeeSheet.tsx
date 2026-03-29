@@ -107,15 +107,30 @@ const TeeSheet = () => {
 
   // Group tee times by date for smarter display
   const groupedByDate = useMemo(() => {
-    const groups: { date: string; day: string; times: TeeTime[] }[] = [];
+    const groups: { date: string; day: string; times: TeeTime[]; totalOpen: number }[] = [];
     for (const tt of teeTimes) {
       const key = `${tt.date}|${tt.day}`;
       const last = groups[groups.length - 1];
       if (last && `${last.date}|${last.day}` === key) {
         last.times.push(tt);
+        last.totalOpen += tt.openSpots;
       } else {
-        groups.push({ date: tt.date, day: tt.day, times: [tt] });
+        groups.push({ date: tt.date, day: tt.day, times: [tt], totalOpen: tt.openSpots });
       }
+    }
+    // Sort: days with open spots first, then chronologically within each section
+    groups.sort((a, b) => {
+      const aHasOpen = a.totalOpen > 0 ? 0 : 1;
+      const bHasOpen = b.totalOpen > 0 ? 0 : 1;
+      return aHasOpen - bHasOpen;
+    });
+    // Within each group, sort times: open spots first, then chronologically
+    for (const g of groups) {
+      g.times.sort((a, b) => {
+        const aHasOpen = a.openSpots > 0 ? 0 : 1;
+        const bHasOpen = b.openSpots > 0 ? 0 : 1;
+        return aHasOpen - bHasOpen;
+      });
     }
     return groups;
   }, [teeTimes]);
