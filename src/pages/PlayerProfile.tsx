@@ -160,13 +160,27 @@ const PlayerProfile = () => {
       {/* HERO SECTION */}
       <div className="rounded-xl bg-secondary text-secondary-foreground p-6 md:p-10 relative">
         {hcpData?.roundRecapUrl && (
-          <Button asChild size="lg" className="absolute top-4 right-4 md:top-6 md:right-6">
-            <a href={hcpData.roundRecapUrl} target="_blank" rel="noopener noreferrer">
-              <img src={roundRecapLogo} alt="Round Recap" className="h-5 w-5" />
-              Round Recap
-              <ExternalLink className="h-4 w-4 ml-1.5" />
+          <>
+            {/* Mobile: icon-only button */}
+            <a
+              href={hcpData.roundRecapUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Open Round Recap profile"
+              title="Open Round Recap profile"
+              className="absolute top-4 right-4 md:hidden inline-flex items-center justify-center h-10 w-10 rounded-lg bg-[hsl(142,60%,40%)] hover:bg-[hsl(142,60%,35%)] text-white shadow-md transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+            >
+              <img src={roundRecapLogo} alt="" className="h-5 w-5" />
             </a>
-          </Button>
+            {/* Desktop: full button */}
+            <Button asChild size="lg" className="absolute top-6 right-6 hidden md:inline-flex items-center gap-2">
+              <a href={hcpData.roundRecapUrl} target="_blank" rel="noopener noreferrer" aria-label="Open Round Recap profile">
+                <img src={roundRecapLogo} alt="" className="h-5 w-5" />
+                Round Recap
+                <ExternalLink className="h-4 w-4" />
+              </a>
+            </Button>
+          </>
         )}
         <div className="flex flex-col md:flex-row md:items-center gap-6">
           <div className="flex h-20 w-20 md:h-28 md:w-28 shrink-0 items-center justify-center rounded-full bg-primary text-primary-foreground font-bold text-2xl md:text-4xl">
