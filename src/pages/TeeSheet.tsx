@@ -258,8 +258,6 @@ const TeeSheet = () => {
                            )}
                          </div>
                        </div>
-                        </Badge>
-                      </div>
                       <CardContent className="p-0">
                         {tt.players.map((player, pIdx) => (
                           <Link
