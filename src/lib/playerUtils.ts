@@ -146,16 +146,29 @@ export function parseCoricaResults(rows: string[][]): CoricaResult[] {
 }
 
 /**
- * Parse the Handicaps tab.
- * Row 1 is header. Data starts at row index 2.
- * Col 2:Name(full)  3:Preseason  8:Corica  9:Coyote Creek  10:Chardonnay  11:Poppy Ridge  12:Presidio
+ * Normalize "Last, First" → "First Last".
+ */
+export function normalizeSheetName(name: string): string {
+  const parts = name.split(",").map((s) => s.trim());
+  if (parts.length === 2 && parts[0] && parts[1]) {
+    return `${parts[1]} ${parts[0]}`;
+  }
+  return name;
+}
+
+/**
+ * Parse the Handicaps tab (with proper quoted-CSV support).
+ * Col 1:Name(Last,First)  2:RoundRecapUrl  4:Preseason
+ * 5:Corica  6:CoyoteCreek  7:Chardonnay  8:PoppyRidge  9:Presidio
  */
 export function parseHandicaps(rows: string[][]): HandicapData[] {
   const data: HandicapData[] = [];
   for (let i = 2; i < rows.length; i++) {
     const r = rows[i];
-    const name = (r[2] || "").trim();
-    if (!name) continue;
+    const rawName = (r[1] || "").trim();
+    if (!rawName || rawName === "RR Home Page") continue;
+    const name = normalizeSheetName(rawName);
+    const rrUrl = (r[2] || "").trim();
     const parseHcp = (val: string) => {
       const v = parseFloat((val || "").trim());
       return isNaN(v) ? null : v;
@@ -163,13 +176,29 @@ export function parseHandicaps(rows: string[][]): HandicapData[] {
     data.push({
       name,
       slug: slugifyName(name),
-      preseason: parseHcp(r[3]),
-      corica: parseHcp(r[8]),
-      coyoteCreek: parseHcp(r[9]),
-      chardonnay: parseHcp(r[10]),
-      poppyRidge: parseHcp(r[11]),
-      presidio: parseHcp(r[12]),
+      roundRecapUrl: rrUrl.startsWith("http") ? rrUrl : null,
+      preseason: parseHcp(r[4]),
+      corica: parseHcp(r[5]),
+      coyoteCreek: parseHcp(r[6]),
+      chardonnay: parseHcp(r[7]),
+      poppyRidge: parseHcp(r[8]),
+      presidio: parseHcp(r[9]),
     });
   }
   return data;
+}
+
+/**
+ * Extract the RR Home Page URL from the Handicaps tab.
+ * Scans for a row where column 1 contains "RR Home Page".
+ */
+export function parseRRHomePageUrl(rows: string[][]): string | null {
+  for (let i = 0; i < rows.length; i++) {
+    const label = (rows[i][1] || "").trim();
+    if (label === "RR Home Page") {
+      const url = (rows[i][2] || "").trim();
+      return url.startsWith("http") ? url : null;
+    }
+  }
+  return null;
 }
