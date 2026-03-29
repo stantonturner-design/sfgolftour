@@ -63,6 +63,14 @@ const Index = () => {
         }
       })
       .catch(() => {});
+
+    fetch(HANDICAPS_URL)
+      .then((res) => res.text())
+      .then((text) => {
+        const url = parseRRHomePageUrl(parseCSV(text));
+        if (url) setRrHomePageUrl(url);
+      })
+      .catch(() => {});
   }, []);
 
   return (
