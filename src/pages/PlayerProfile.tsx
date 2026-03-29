@@ -92,9 +92,10 @@ const PlayerProfile = () => {
     const played = pts > 0;
 
     if (eventName === "Corica" && corica) {
-      const hcp = corica.handicap ?? (hcpData?.corica ?? null);
+      const coricaPlayed = corica.grossScore !== null || corica.points > 0;
+      const hcp = coricaPlayed ? (corica.handicap ?? (hcpData?.corica ?? null)) : null;
       return {
-        played: corica.grossScore !== null || corica.points > 0,
+        played: coricaPlayed,
         grossScore: corica.grossScore,
         netScore: corica.netScore,
         handicap: hcp,
