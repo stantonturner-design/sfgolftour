@@ -112,7 +112,7 @@ const PlayerProfile = () => {
     const eventHcp = hcpKey && hcpData ? (hcpData[hcpKey] as number | null) : null;
 
     return {
-      played, grossScore: null, netScore: null, handicap: eventHcp,
+      played, grossScore: null, netScore: null, handicap: played ? eventHcp : null,
       points: pts, grossPoints: null, netPoints: null,
     };
   };
