@@ -17,12 +17,12 @@ const EVENT_SECTION_MAP: Record<string, string[]> = {
   Presidio: ["Presidio"],
 };
 
-const EVENT_META: Record<string, { subtitle: string; anchorDay: string }> = {
-  Corica: { subtitle: "The North Course", anchorDay: "April 4" },
-  "Coyote Creek": { subtitle: "The Valley Course", anchorDay: "May 31" },
-  Chardonnay: { subtitle: "", anchorDay: "July 11" },
-  "Poppy Ridge": { subtitle: "", anchorDay: "TBD" },
-  Presidio: { subtitle: "", anchorDay: "TBD" },
+const EVENT_META: Record<string, { subtitle: string; anchorDay: string; courseUrl: string }> = {
+  Corica: { subtitle: "The North Course", anchorDay: "April 4", courseUrl: "https://www.coricapark.com/" },
+  "Coyote Creek": { subtitle: "The Valley Course", anchorDay: "May 31", courseUrl: "https://coyotecreekgolf.com/" },
+  Chardonnay: { subtitle: "", anchorDay: "July 11", courseUrl: "https://www.chardonnaygolfclub.com/" },
+  "Poppy Ridge": { subtitle: "", anchorDay: "TBD", courseUrl: "https://poppyridgegolf.ncga.org/" },
+  Presidio: { subtitle: "", anchorDay: "TBD", courseUrl: "https://www.presidiogolf.com/" },
 };
 
 interface TeeTime {
