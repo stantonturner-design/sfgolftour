@@ -32,6 +32,7 @@ interface TeeTime {
   day: string;
   time: string;
   players: string[];
+  openSpots: number;
 }
 
 const TeeSheet = () => {
