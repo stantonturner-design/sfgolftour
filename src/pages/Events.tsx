@@ -254,7 +254,6 @@ const EventCard = ({ evt }: { evt: EventData }) => {
               </a>
             </Button>
           )}
-          </Button>
         </div>
       </div>
     </Card>
