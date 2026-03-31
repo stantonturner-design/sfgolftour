@@ -264,8 +264,8 @@ const Index = () => {
             rel="noopener noreferrer"
             className="order-1 md:order-2 md:col-span-2 rounded-xl border border-border bg-card shadow-sm p-5 md:p-8 flex flex-col items-center justify-center text-center group hover:border-primary/30 hover:shadow-md transition-all"
           >
-            <div className="flex items-center justify-center mb-2 md:mb-3">
-              <img src={roundRecapLogo} alt="Round Recap" className="h-20 w-20 md:h-40 md:w-40 object-contain drop-shadow-md" />
+            <div className="flex items-center justify-center mb-1 md:mb-3">
+              <img src={roundRecapLogo} alt="Round Recap" className="h-32 w-32 md:h-40 md:w-40 object-contain drop-shadow-md" />
             </div>
             <h3 className="hidden md:block text-xl font-bold uppercase tracking-widest text-foreground group-hover:text-primary transition-colors">
               Round Recap
