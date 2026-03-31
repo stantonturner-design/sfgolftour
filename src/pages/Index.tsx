@@ -253,12 +253,33 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Player Spotlight + Round Recap */}
+      {/* Round Recap + Player Spotlight */}
       <section className="container my-6 md:my-8">
         <div className="grid gap-4 md:gap-5 md:grid-cols-5">
 
-          {/* Player Spotlight */}
-          <div className="md:col-span-3 rounded-xl border border-border bg-card shadow-sm overflow-hidden">
+          {/* Round Recap — first on mobile (order-1), second on desktop (md:order-2) */}
+          <a
+            href={rrHomePageUrl || "https://roundrecap.com"}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="order-1 md:order-2 md:col-span-2 rounded-xl border border-border bg-card shadow-sm p-5 md:p-8 flex flex-col items-center justify-center text-center group hover:border-primary/30 hover:shadow-md transition-all"
+          >
+            <div className="flex items-center justify-center mb-2 md:mb-3">
+              <img src={roundRecapLogo} alt="Round Recap" className="h-20 w-20 md:h-40 md:w-40 object-contain drop-shadow-md" />
+            </div>
+            <h3 className="hidden md:block text-xl font-bold uppercase tracking-widest text-foreground group-hover:text-primary transition-colors">
+              Round Recap
+            </h3>
+            <p className="text-sm text-muted-foreground mt-1.5 md:mt-2 max-w-[260px]">
+              Full round stats, hole-by-hole breakdowns & more
+            </p>
+            <span className="mt-3 md:mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-primary opacity-80 group-hover:opacity-100 transition-opacity">
+              Open Round Recap <ExternalLink className="h-3.5 w-3.5" />
+            </span>
+          </a>
+
+          {/* Player Spotlight — second on mobile (order-2), first on desktop (md:order-1) */}
+          <div className="order-2 md:order-1 md:col-span-3 rounded-xl border border-border bg-card shadow-sm overflow-hidden">
             <div className="p-5 md:p-7">
               <div className="flex items-center gap-2 mb-4">
                 <div className="flex items-center justify-center h-6 w-6 rounded-md bg-primary/10">
@@ -293,27 +314,6 @@ const Index = () => {
               )}
             </div>
           </div>
-
-          {/* Round Recap */}
-          <a
-            href={rrHomePageUrl || "https://roundrecap.com"}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="md:col-span-2 rounded-xl border border-border bg-card shadow-sm p-6 md:p-8 flex flex-col items-center justify-center text-center group hover:border-primary/30 hover:shadow-md transition-all"
-          >
-            <div className="flex items-center justify-center mb-3">
-              <img src={roundRecapLogo} alt="Round Recap" className="h-32 w-32 md:h-40 md:w-40 object-contain drop-shadow-md" />
-            </div>
-            <h3 className="text-lg md:text-xl font-bold uppercase tracking-widest text-foreground group-hover:text-primary transition-colors">
-              Round Recap
-            </h3>
-            <p className="text-sm text-muted-foreground mt-2 max-w-[260px]">
-              Full round stats, hole-by-hole breakdowns & more
-            </p>
-            <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-primary opacity-80 group-hover:opacity-100 transition-opacity">
-              Open Round Recap <ExternalLink className="h-3.5 w-3.5" />
-            </span>
-          </a>
 
         </div>
       </section>

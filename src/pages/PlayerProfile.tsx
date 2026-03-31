@@ -162,16 +162,17 @@ const PlayerProfile = () => {
       <div className="rounded-xl bg-secondary text-secondary-foreground p-6 md:p-10 relative">
         {hcpData?.roundRecapUrl && (
           <>
-            {/* Mobile: icon-only button */}
+            {/* Mobile: pill button with logo + text */}
             <a
               href={hcpData.roundRecapUrl}
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Open Round Recap profile"
-              title="Open Round Recap profile"
-              className="absolute top-4 right-4 md:hidden inline-flex items-center justify-center h-10 w-10 rounded-lg bg-[hsl(142,60%,40%)] hover:bg-[hsl(142,60%,35%)] text-white shadow-md transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+              className="absolute top-4 right-4 md:hidden inline-flex items-center gap-1.5 rounded-full bg-primary text-primary-foreground px-3 py-1.5 text-xs font-semibold shadow-md hover:bg-primary/90 transition-colors"
             >
-              <img src={roundRecapLogo} alt="" className="h-5 w-5" />
+              <img src={roundRecapLogo} alt="" className="h-4 w-4" />
+              Round Recap
+              <ExternalLink className="h-3 w-3" />
             </a>
             {/* Desktop: full button */}
             <Button asChild size="lg" className="absolute top-6 right-6 hidden md:inline-flex items-center gap-2">
