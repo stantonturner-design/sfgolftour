@@ -34,6 +34,7 @@ export const newsArticles: NewsArticle[] = [
       <p>Event 1 also gave the tour its first real look at what the expanded 2026 format can feel like. With the entry moving from $50 to $75, the prize pool is bigger, the payouts are more meaningful, and the leaderboard has a little more bite. The new structure rewards the top net finishers, the low gross player, and adds more ways for players to stay engaged across the season.</p>
       <p>Corica North was also the first stop in a year built around making the SFGT feel more connected. The first Anchor Day of the 2026 season was a success, and the Round Recap partnership has already seen tremendous user traffic, giving players more than just a final score.</p>
       <p>For the full breakdown of the round, including hole-by-hole scoring, player stats, and a deeper look at how the leaderboard shook out, tour members can head over to Round Recap and dig into the numbers.</p>
+      <p><a href="https://app.roundrecap.com/auth" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 rounded-md bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary/90">Open Round Recap &rarr;</a></p>
     `,
   },
   {
