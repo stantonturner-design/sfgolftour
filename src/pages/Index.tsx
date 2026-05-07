@@ -8,7 +8,7 @@ import { Badge } from "@/components/ui/badge";
 import { parseCSV } from "@/lib/csv";
 import { format } from "date-fns";
 
-import { SHEET_URL, CORICA_URL, HANDICAPS_URL, parseCoricaResults, parseRRHomePageUrl, slugifyName } from "@/lib/playerUtils";
+import { SHEET_URL, HANDICAPS_URL, parseRRHomePageUrl, slugifyName } from "@/lib/playerUtils";
 import sfgtLogo from "@/assets/sfgt-logo.png";
 import coyoteImg from "@/assets/courses/coyote-creek.jpg";
 import roundRecapLogo from "@/assets/round-recap-logo.png";
