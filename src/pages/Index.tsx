@@ -10,19 +10,20 @@ import { format } from "date-fns";
 
 import { SHEET_URL, CORICA_URL, HANDICAPS_URL, parseCoricaResults, parseRRHomePageUrl, slugifyName } from "@/lib/playerUtils";
 import sfgtLogo from "@/assets/sfgt-logo.png";
-import coricaImg from "@/assets/courses/corica-north.jpg";
+import coyoteImg from "@/assets/courses/coyote-creek.jpg";
 import roundRecapLogo from "@/assets/round-recap-logo.png";
 
 const CURRENT_EVENT = {
-  name: "Corica Park – North Course",
-  shortName: "Corica",
-  payoutDate: "May 2",
-  anchorDay: "April 4",
-  image: coricaImg,
+  name: "Coyote Creek – Valley Course",
+  shortName: "Coyote Creek",
+  payoutDate: "June 13",
+  anchorDay: "May 31",
+  image: coyoteImg,
+  courseUrl: "https://coyotecreekgolf.com/",
   prizes: [
-    { place: "Net 1", amount: "$300" },
-    { place: "Net 2", amount: "$50" },
-    { place: "Gross", amount: "$50" },
+    { place: "Net 1", amount: "$TBD" },
+    { place: "Net 2", amount: "$TBD" },
+    { place: "Gross", amount: "$TBD" },
   ],
 };
 
