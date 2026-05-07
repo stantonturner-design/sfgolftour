@@ -2,6 +2,7 @@ import seasonImg from "@/assets/news/season-preview.jpg";
 import baylandsImg from "@/assets/news/baylands-recap.jpg";
 import presidioImg from "@/assets/news/presidio-spotlight.jpg";
 import membersImg from "@/assets/news/new-members.jpg";
+import coricaRecapImg from "@/assets/news/corica-north-recap.jpg";
 
 export interface NewsArticle {
   id: string;
@@ -10,11 +11,31 @@ export interface NewsArticle {
   excerpt: string;
   coverImage: string;
   publishDate: string; // ISO string
-  category: "Tour News" | "Schedule" | "Event News" | "Anchor Day";
+  category: "Tour News" | "Schedule" | "Event News" | "Anchor Day" | "Event Recap";
   body: string; // HTML string — will be replaced by rich text from backend later
 }
 
 export const newsArticles: NewsArticle[] = [
+  {
+    id: "6",
+    slug: "corica-north-event-recap-champ-cashes-first",
+    title: "Corica North Event Recap: The Champ Cashes First",
+    excerpt:
+      "Reigning Tour Champion Theo Tydingco opened the 2026 SFGT season with a statement, sweeping the top Net Score and Gross Score prizes at Corica North.",
+    coverImage: coricaRecapImg,
+    publishDate: "2026-05-03T12:00:00Z",
+    category: "Event Recap",
+    body: `
+      <p>The 2026 SFGT season opened at Corica North, and the first payouts of the year went exactly where the rest of the field probably hoped they wouldn't: straight into the hands of the reigning Tour Champion.</p>
+      <p>Theo Tydingco started his title defense with a complete performance, shooting 70 gross / 70 net to win both the top Net Score and top Gross Score prizes for our first event. It was the cleanest round on the board and, more importantly, the kind of opening statement that makes the rest of the tour take notice.</p>
+      <p>Theo did most of his damage with consistency. He went out in 34, came home in 36, and kept the card under control from start to finish. On a leaderboard where plenty of players had flashes, Theo separated himself by avoiding the big number and stacking pars. He finished as the only player at 70 net, the low gross player by three shots, and the clear winner of the first event of the season.</p>
+      <p>The 2nd Place Net prize went to Mattia Bortolotto, who kept his Corica form rolling with a 78 gross / 71 net. Mattia was last year's net winner at Corica North, and while he came up one shot short of defending that top net spot, he still opened the year exactly where he left off: right near the top of the leaderboard.</p>
+      <p>Behind the two cash winners, there was plenty of movement worth watching. Harry Takizawa and Brandon Choy both posted strong 73 gross scores, good enough to split second in gross rank. James Walsh finished with a 75 gross, while Kevin Novakovic and Connor Crain both carded fantastic net 72s, narrowly missing the payout line but grabbing valuable early-season points. With the top 24 ultimately fighting for a spot in the finale, those points matter already.</p>
+      <p>Event 1 also gave the tour its first real look at what the expanded 2026 format can feel like. With the entry moving from $50 to $75, the prize pool is bigger, the payouts are more meaningful, and the leaderboard has a little more bite. The new structure rewards the top net finishers, the low gross player, and adds more ways for players to stay engaged across the season.</p>
+      <p>Corica North was also the first stop in a year built around making the SFGT feel more connected. The first Anchor Day of the 2026 season was a success, and the Round Recap partnership has already seen tremendous user traffic, giving players more than just a final score.</p>
+      <p>For the full breakdown of the round, including hole-by-hole scoring, player stats, and a deeper look at how the leaderboard shook out, tour members can head over to Round Recap and dig into the numbers.</p>
+    `,
+  },
   {
     id: "5",
     slug: "new-sfgt-tour-hub-live",
