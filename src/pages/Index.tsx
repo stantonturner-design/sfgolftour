@@ -21,14 +21,7 @@ import sfgtLogo from "@/assets/sfgt-logo.png";
 import roundRecapLogo from "@/assets/round-recap-logo.png";
 import { EVENTS, getCurrentEventIndex, type EventData } from "@/data/events";
 
-  image: "https://playeasy.com/cdn-cgi/image/width=1200,fit=scale-down,format=auto,quality=85/https://storage.playeasy.com/facility-mgmt/060f01d2-5808-4a3f-b62d-d2d9e884398c",
-  courseUrl: "https://coyotecreekgolf.com/",
-  prizes: [
-    { place: "Net 1", amount: "$300" },
-    { place: "Net 2", amount: "$50" },
-    { place: "Gross", amount: "$50" },
-  ],
-};
+
 
 type TopPlayer = { rank: number; name: string; points: number };
 
