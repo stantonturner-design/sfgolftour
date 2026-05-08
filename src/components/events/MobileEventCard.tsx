@@ -1,8 +1,10 @@
 import { Link } from "react-router-dom";
-import { ClipboardList, ExternalLink, BarChart3, Anchor, DollarSign, Lock, Globe } from "lucide-react";
+import { ClipboardList, ExternalLink, BarChart3, Anchor, DollarSign, Lock, Globe, ScrollText } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { slugifyName } from "@/lib/playerUtils";
+import { SCORECARD_URLS } from "@/lib/scorecardUtils";
 
 interface EventData {
   name: string;
@@ -81,12 +83,37 @@ const MobileEventCard = ({ evt }: { evt: EventData }) => {
 
       {/* Content — stacked vertically */}
       <div className="p-5 space-y-3">
-        {/* Title */}
-        <div>
-          <h2 className="font-display text-2xl font-bold tracking-tight">{evt.name}</h2>
-          {evt.subtitle && (
-            <p className="text-base text-muted-foreground mt-0.5">{evt.subtitle}</p>
-          )}
+        {/* Title + Scorecard */}
+        <div className="flex items-start justify-between gap-3">
+          <div className="min-w-0">
+            <h2 className="font-display text-2xl font-bold tracking-tight">{evt.name}</h2>
+            {evt.subtitle && (
+              <p className="text-base text-muted-foreground mt-0.5">{evt.subtitle}</p>
+            )}
+          </div>
+          {(() => {
+            const slug = slugifyName(evt.name);
+            const hasData = !!SCORECARD_URLS[slug];
+            return (
+              <Button
+                variant="outline"
+                size="sm"
+                className="h-8 px-2.5 text-xs shrink-0"
+                asChild={hasData}
+                disabled={!hasData}
+              >
+                {hasData ? (
+                  <Link to={`/events/${slug}/scorecard`}>
+                    <ScrollText className="mr-1 h-3.5 w-3.5" /> Scorecard
+                  </Link>
+                ) : (
+                  <span>
+                    <ScrollText className="mr-1 h-3.5 w-3.5" /> Scorecard
+                  </span>
+                )}
+              </Button>
+            );
+          })()}
         </div>
 
         {/* Dates */}
