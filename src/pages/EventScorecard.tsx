@@ -245,7 +245,7 @@ const DesktopScorecard = ({
             <td className="px-3 py-1.5 text-center font-semibold bg-muted">
               {course.parTotal ?? ""}
             </td>
-            <td colSpan={2} />
+            <td colSpan={3} />
           </tr>
           {course.hcpRanking.some((h) => h != null) && (
             <tr className="border-b text-xs">
