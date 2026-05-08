@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -7,27 +7,141 @@ import { newsArticles } from "@/data/newsArticles";
 import { Badge } from "@/components/ui/badge";
 import { parseCSV } from "@/lib/csv";
 import { format } from "date-fns";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+  type CarouselApi,
+} from "@/components/ui/carousel";
 
 import { SHEET_URL, HANDICAPS_URL, parseRRHomePageUrl, slugifyName } from "@/lib/playerUtils";
 import sfgtLogo from "@/assets/sfgt-logo.png";
-import coyoteImg from "@/assets/courses/coyote-creek.jpg";
 import roundRecapLogo from "@/assets/round-recap-logo.png";
+import { EVENTS, getCurrentEventIndex, type EventData } from "@/data/events";
 
-const CURRENT_EVENT = {
-  name: "Coyote Creek – Valley Course",
-  shortName: "Coyote Creek",
-  payoutDate: "June 13",
-  anchorDay: "May 31",
-  image: "https://playeasy.com/cdn-cgi/image/width=1200,fit=scale-down,format=auto,quality=85/https://storage.playeasy.com/facility-mgmt/060f01d2-5808-4a3f-b62d-d2d9e884398c",
-  courseUrl: "https://coyotecreekgolf.com/",
-  prizes: [
-    { place: "Net 1", amount: "$300" },
-    { place: "Net 2", amount: "$50" },
-    { place: "Gross", amount: "$50" },
-  ],
-};
 
 type TopPlayer = { rank: number; name: string; points: number };
+
+const EventSlide = ({ evt, isCurrent }: { evt: EventData; isCurrent: boolean }) => {
+  const shortName = evt.name;
+  const displayName = evt.subtitle ? `${evt.name} – ${evt.subtitle}` : evt.name;
+  return (
+    <div className="rounded-xl bg-accent text-accent-foreground overflow-hidden shadow-lg border border-border relative h-full">
+      <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary via-primary/70 to-primary/30 z-10" />
+      <div className="flex flex-col md:flex-row h-full">
+        <div className="relative md:order-2 md:w-2/5 h-44 md:h-auto">
+          <img src={evt.image} alt={evt.name} className="absolute inset-0 h-full w-full object-cover object-center" />
+          <div className="absolute inset-0 bg-gradient-to-t md:bg-gradient-to-r from-accent/60 via-transparent to-transparent" />
+        </div>
+
+        <div className="md:order-1 md:w-3/5 p-5 md:p-7 flex flex-col">
+          <div className="flex items-center gap-2 mb-3">
+            <div className="flex items-center justify-center h-6 w-6 rounded-md bg-primary/10">
+              <Calendar className="h-3.5 w-3.5 text-primary" />
+            </div>
+            <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-primary">
+              {isCurrent ? "Current Event" : "Upcoming Event"}
+            </p>
+          </div>
+
+          <h3 className="text-xl md:text-2xl font-bold leading-tight">{displayName}</h3>
+
+          <div className="mt-4 grid grid-cols-2 gap-3">
+            <div className="rounded-lg bg-card/60 border border-border/50 p-3">
+              <p className="text-muted-foreground text-[10px] uppercase tracking-wider font-semibold mb-1">Cash Payout</p>
+              <p className="font-bold text-sm flex items-center gap-1.5">
+                <DollarSign className="h-3.5 w-3.5 text-primary" />
+                {evt.payoutDate}
+              </p>
+            </div>
+            <div className="rounded-lg bg-card/60 border border-border/50 p-3">
+              <p className="text-muted-foreground text-[10px] uppercase tracking-wider font-semibold mb-1">Anchor Day</p>
+              <p className="font-bold text-sm flex items-center gap-1.5">
+                <Anchor className="h-3.5 w-3.5 text-primary" />
+                {evt.anchorDay}
+              </p>
+            </div>
+          </div>
+
+          {evt.prizes.length > 0 && (
+            <div className="mt-3 flex flex-wrap gap-1.5">
+              {evt.prizes.map((p) => (
+                <Badge key={p.place} className="bg-primary/10 text-primary border-primary/20 text-xs font-semibold px-2.5 py-0.5">
+                  {p.place}: {p.amount}
+                </Badge>
+              ))}
+            </div>
+          )}
+
+          <div className="mt-auto pt-5 flex flex-wrap gap-2.5">
+            <Button size="default" className="bg-primary text-primary-foreground hover:bg-primary/90 shadow-sm" asChild>
+              <Link to="/events">
+                View Event <ArrowRight className="ml-1 h-4 w-4" />
+              </Link>
+            </Button>
+            <Button size="default" variant="outline" className="border-primary/30 text-primary hover:bg-primary/5" asChild>
+              <Link to={`/tee-sheet?event=${encodeURIComponent(shortName)}`}>
+                <ClipboardList className="mr-1 h-4 w-4" /> Tee Sheet
+              </Link>
+            </Button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const EventCarousel = () => {
+  const startIndex = useMemo(() => getCurrentEventIndex(EVENTS), []);
+  const [api, setApi] = useState<CarouselApi>();
+  const [selected, setSelected] = useState(startIndex);
+
+  useEffect(() => {
+    if (!api) return;
+    setSelected(api.selectedScrollSnap());
+    const onSelect = () => setSelected(api.selectedScrollSnap());
+    api.on("select", onSelect);
+    api.on("reInit", onSelect);
+    return () => {
+      api.off("select", onSelect);
+      api.off("reInit", onSelect);
+    };
+  }, [api]);
+
+  return (
+    <div className="relative">
+      <Carousel opts={{ startIndex, align: "start" }} setApi={setApi}>
+        <CarouselContent>
+          {EVENTS.map((evt, idx) => (
+            <CarouselItem key={evt.name}>
+              <EventSlide evt={evt} isCurrent={idx === startIndex} />
+            </CarouselItem>
+          ))}
+        </CarouselContent>
+        <CarouselPrevious className="hidden md:flex -left-4 lg:-left-12" />
+        <CarouselNext className="hidden md:flex -right-4 lg:-right-12" />
+      </Carousel>
+
+      {/* Dot indicators */}
+      <div className="mt-3 flex items-center justify-center gap-1.5">
+        {EVENTS.map((evt, idx) => (
+          <button
+            key={evt.name}
+            type="button"
+            aria-label={`Go to ${evt.name}`}
+            onClick={() => api?.scrollTo(idx)}
+            className={`h-1.5 rounded-full transition-all ${
+              idx === selected ? "w-6 bg-primary" : "w-1.5 bg-primary/25 hover:bg-primary/50"
+            }`}
+          />
+        ))}
+      </div>
+    </div>
+  );
+};
+
 
 const Index = () => {
   const latestNews = [...newsArticles]
@@ -92,73 +206,9 @@ const Index = () => {
       <section className="container -mt-6 md:-mt-10 relative z-10 mb-4">
         <div className="grid gap-4 md:gap-5 md:grid-cols-5">
 
-          {/* Current Event — featured panel (3 cols) */}
-          <div className="md:col-span-3 rounded-xl bg-accent text-accent-foreground overflow-hidden shadow-lg border border-border relative">
-            {/* Top accent bar */}
-            <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary via-primary/70 to-primary/30 z-10" />
-
-            <div className="flex flex-col md:flex-row h-full">
-              {/* Course image — right side on desktop, top on mobile */}
-              <div className="relative md:order-2 md:w-2/5 h-44 md:h-auto">
-                <img
-                  src={CURRENT_EVENT.image}
-                  alt={CURRENT_EVENT.name}
-                  className="absolute inset-0 h-full w-full object-cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t md:bg-gradient-to-r from-accent/60 via-transparent to-transparent" />
-              </div>
-
-              {/* Content — left side */}
-              <div className="md:order-1 md:w-3/5 p-5 md:p-7 flex flex-col">
-                <div className="flex items-center gap-2 mb-3">
-                  <div className="flex items-center justify-center h-6 w-6 rounded-md bg-primary/10">
-                    <Calendar className="h-3.5 w-3.5 text-primary" />
-                  </div>
-                  <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-primary">Current Event</p>
-                </div>
-
-                <h3 className="text-xl md:text-2xl font-bold leading-tight">{CURRENT_EVENT.name}</h3>
-
-                <div className="mt-4 grid grid-cols-2 gap-3">
-                  <div className="rounded-lg bg-card/60 border border-border/50 p-3">
-                    <p className="text-muted-foreground text-[10px] uppercase tracking-wider font-semibold mb-1">Cash Payout</p>
-                    <p className="font-bold text-sm flex items-center gap-1.5">
-                      <DollarSign className="h-3.5 w-3.5 text-primary" />
-                      {CURRENT_EVENT.payoutDate}
-                    </p>
-                  </div>
-                  <div className="rounded-lg bg-card/60 border border-border/50 p-3">
-                    <p className="text-muted-foreground text-[10px] uppercase tracking-wider font-semibold mb-1">Anchor Day</p>
-                    <p className="font-bold text-sm flex items-center gap-1.5">
-                      <Anchor className="h-3.5 w-3.5 text-primary" />
-                      {CURRENT_EVENT.anchorDay}
-                    </p>
-                  </div>
-                </div>
-
-                <div className="mt-3 flex flex-wrap gap-1.5">
-                  {CURRENT_EVENT.prizes.map((p) => (
-                    <Badge key={p.place} className="bg-primary/10 text-primary border-primary/20 text-xs font-semibold px-2.5 py-0.5">
-                      {p.place}: {p.amount}
-                    </Badge>
-                  ))}
-                </div>
-
-
-                <div className="mt-auto pt-5 flex flex-wrap gap-2.5">
-                  <Button size="default" className="bg-primary text-primary-foreground hover:bg-primary/90 shadow-sm" asChild>
-                    <Link to="/events">
-                      View Event <ArrowRight className="ml-1 h-4 w-4" />
-                    </Link>
-                  </Button>
-                  <Button size="default" variant="outline" className="border-primary/30 text-primary hover:bg-primary/5" asChild>
-                    <Link to={`/tee-sheet?event=${encodeURIComponent(CURRENT_EVENT.shortName)}`}>
-                      <ClipboardList className="mr-1 h-4 w-4" /> Tee Sheet
-                    </Link>
-                  </Button>
-                </div>
-              </div>
-            </div>
+          {/* Current Event — swipeable carousel (3 cols) */}
+          <div className="md:col-span-3">
+            <EventCarousel />
           </div>
 
           {/* Right column — two stacked panels (2 cols) */}
