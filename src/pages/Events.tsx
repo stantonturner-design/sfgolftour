@@ -159,9 +159,6 @@ const EventCard = ({ evt }: { evt: EventData }) => {
             </span>
           </div>
           <div className="mt-auto pt-4 space-y-2">
-            <Button variant="outline" size="sm" className="w-full h-9 text-sm" disabled>
-              <Globe className="mr-1.5 h-4 w-4" /> Course Site
-            </Button>
             <div className="grid grid-cols-2 gap-2">
               <Button variant="outline" size="sm" className="h-9 text-sm" disabled>
                 <FileText className="mr-1.5 h-4 w-4" /> Scorecard
