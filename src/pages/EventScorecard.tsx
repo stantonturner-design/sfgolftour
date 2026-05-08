@@ -313,9 +313,11 @@ type SortKey = "net" | "gross" | "front" | "back" | "name";
 const MobileScorecard = ({
   data,
   sortedPlayers,
+  indexMap,
 }: {
   data: EventScorecardData;
   sortedPlayers: EventScorecardData["players"];
+  indexMap: Record<string, number | null>;
 }) => {
   const { course } = data;
   const [query, setQuery] = useState("");
