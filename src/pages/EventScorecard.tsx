@@ -201,10 +201,7 @@ const DesktopScorecard = ({
         <thead>
           <tr className="bg-muted/50 border-b">
             <th className="sticky left-0 bg-muted/50 text-left px-3 py-2 font-semibold min-w-[220px]">
-              <div className="flex items-center justify-between gap-3">
-                <span>Player</span>
-                <span className="text-xs font-medium text-muted-foreground">HI</span>
-              </div>
+              Player
             </th>
             {HOLE_NUMS.slice(0, 9).map((h) => (
               <th key={h} className="px-2 py-2 text-center font-semibold w-10">
