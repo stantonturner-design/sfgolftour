@@ -424,7 +424,7 @@ const MobileScorecard = ({
                 {idx + 1}
               </span>
               <span className="font-semibold truncate flex-1 min-w-0">
-                {p.name}
+                {shortName(p.name)}
               </span>
               <span className="text-sm tabular-nums shrink-0 text-muted-foreground">
                 {p.total ?? "—"}
