@@ -435,6 +435,11 @@ const MobileScorecard = ({
               <span className="text-sm font-bold tabular-nums shrink-0 w-10 text-right">
                 {p.net ?? "—"}
               </span>
+              {eventPointsMap[p.slug] != null && eventPointsMap[p.slug] > 0 && (
+                <span className="shrink-0 inline-flex items-center rounded-full bg-primary/10 text-primary text-xs font-bold tabular-nums px-2 py-0.5">
+                  {eventPointsMap[p.slug].toFixed(1)}
+                </span>
+              )}
               <ChevronDown
                 className={`h-4 w-4 text-muted-foreground shrink-0 transition-transform ${
                   isOpen ? "rotate-180" : ""
