@@ -268,14 +268,14 @@ const DesktopScorecard = ({
           {sortedPlayers.map((p) => (
             <tr key={p.slug} className="border-b last:border-b-0 hover:bg-muted/30">
               <td className="sticky left-0 bg-card px-3 py-2 font-semibold whitespace-nowrap">
-                <div className="flex items-center justify-between gap-3">
-                  <Link to={`/players/${p.slug}`} className="hover:text-primary">
-                    {p.name}
-                  </Link>
-                  <span className="text-xs font-normal text-muted-foreground tabular-nums">
-                    {indexMap[p.slug] != null ? indexMap[p.slug]!.toFixed(1) : "—"}
+                <Link to={`/players/${p.slug}`} className="hover:text-primary">
+                  {p.name}
+                </Link>
+                {indexMap[p.slug] != null && (
+                  <span className="ml-1.5 text-xs font-normal text-muted-foreground tabular-nums">
+                    ({indexMap[p.slug]!.toFixed(1)})
                   </span>
-                </div>
+                )}
               </td>
               {p.holes.slice(0, 9).map((s, i) => (
                 <td key={i} className="px-1 py-1 text-center">
