@@ -263,7 +263,7 @@ const DesktopScorecard = ({
                   {h ?? ""}
                 </td>
               ))}
-              <td className="bg-muted/50" colSpan={4} />
+              <td className="bg-muted/50" colSpan={5} />
             </tr>
           )}
         </thead>
