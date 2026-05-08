@@ -80,6 +80,7 @@ const EventScorecardPage = () => {
 
   const [data, setData] = useState<EventScorecardData | null>(null);
   const [indexMap, setIndexMap] = useState<Record<string, number | null>>({});
+  const [eventPointsMap, setEventPointsMap] = useState<Record<string, number>>({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -92,8 +93,9 @@ const EventScorecardPage = () => {
     Promise.all([
       fetch(url).then((r) => r.text()),
       fetch(HANDICAPS_URL).then((r) => r.text()).catch(() => ""),
+      fetch(SHEET_URL).then((r) => r.text()).catch(() => ""),
     ])
-      .then(([text, hcpText]) => {
+      .then(([text, hcpText, lbText]) => {
         setData(parseEventScorecard(parseCSV(text)));
         if (hcpText) {
           const hcps = parseHandicaps(parseCSV(hcpText));
@@ -101,10 +103,17 @@ const EventScorecardPage = () => {
           for (const h of hcps) map[h.slug] = latestIndex(h);
           setIndexMap(map);
         }
+        if (lbText && slug && EVENT_POINTS_INDEX[slug] != null) {
+          const players = parsePlayerRows(parseCSV(lbText));
+          const idx = EVENT_POINTS_INDEX[slug];
+          const pmap: Record<string, number> = {};
+          for (const p of players) pmap[p.slug] = p.eventPoints[idx] ?? 0;
+          setEventPointsMap(pmap);
+        }
       })
       .catch(() => setError("Could not load scorecard data."))
       .finally(() => setLoading(false));
-  }, [url]);
+  }, [url, slug]);
 
   const sortedPlayers = useMemo(() => {
     if (!data) return [];
@@ -114,6 +123,7 @@ const EventScorecardPage = () => {
       return a.total - b.total;
     });
   }, [data]);
+
 
   if (!meta) {
     return (
