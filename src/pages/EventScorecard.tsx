@@ -220,6 +220,7 @@ const DesktopScorecard = ({
             <th className="px-3 py-2 text-center font-semibold bg-muted">TOT</th>
             <th className="px-2 py-2 text-center font-semibold">HCP</th>
             <th className="px-3 py-2 text-center font-semibold bg-muted">NET</th>
+            <th className="px-3 py-2 text-center font-semibold bg-muted">PTS</th>
           </tr>
           <tr className="border-b bg-accent/40 text-xs">
             <th className="sticky left-0 bg-accent/40 text-left px-3 py-1.5 font-semibold text-muted-foreground">
