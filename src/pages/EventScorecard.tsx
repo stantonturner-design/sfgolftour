@@ -176,7 +176,7 @@ const EventScorecardPage = () => {
               eventPointsMap={eventPointsMap}
             />
           ) : (
-            <DesktopScorecard data={data} sortedPlayers={sortedPlayers} indexMap={indexMap} />
+            <DesktopScorecard data={data} sortedPlayers={sortedPlayers} indexMap={indexMap} eventPointsMap={eventPointsMap} />
           )}
         </div>
       )}
