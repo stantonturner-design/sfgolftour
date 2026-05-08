@@ -324,6 +324,11 @@ const DesktopScorecard = ({
               <td className="px-3 py-2 text-center font-bold bg-muted/40">
                 {p.net ?? ""}
               </td>
+              <td className="px-3 py-2 text-center font-bold bg-muted/40 tabular-nums">
+                {eventPointsMap[p.slug] != null && eventPointsMap[p.slug] > 0
+                  ? eventPointsMap[p.slug].toFixed(1)
+                  : "—"}
+              </td>
             </tr>
           ))}
         </tbody>
