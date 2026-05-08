@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { ClipboardList, ExternalLink, BarChart3, Anchor, DollarSign, Lock, Globe, ScrollText } from "lucide-react";
+import { ClipboardList, ExternalLink, BarChart3, Anchor, DollarSign, Lock, Globe, FileText } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -59,7 +59,7 @@ const MobileEventCard = ({ evt }: { evt: EventData }) => {
             </Button>
             <div className="grid grid-cols-2 gap-2">
               <Button variant="outline" size="sm" className="h-9 text-sm" disabled>
-                <ScrollText className="mr-1.5 h-4 w-4" /> Scorecard
+                <FileText className="mr-1.5 h-4 w-4" /> Scorecard
               </Button>
               <Button variant="outline" size="sm" className="h-9 text-sm" disabled>
                 <ClipboardList className="mr-1.5 h-4 w-4" /> Tee Sheet
@@ -149,11 +149,11 @@ const MobileEventCard = ({ evt }: { evt: EventData }) => {
                 >
                   {hasScorecard ? (
                     <Link to={`/events/${slug}/scorecard`}>
-                      <ScrollText className="mr-1.5 h-4 w-4" /> Scorecard
+                      <FileText className="mr-1.5 h-4 w-4" /> Scorecard
                     </Link>
                   ) : (
                     <span>
-                      <ScrollText className="mr-1.5 h-4 w-4" /> Scorecard
+                      <FileText className="mr-1.5 h-4 w-4" /> Scorecard
                     </span>
                   )}
                 </Button>
