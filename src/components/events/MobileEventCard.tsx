@@ -61,7 +61,7 @@ const MobileEventCard = ({ evt }: { evt: EventData }) => {
               <BarChart3 className="mr-1.5 h-4 w-4" /> Handicaps
             </Button>
             <Button size="sm" className="col-span-2 h-9 text-sm" disabled>
-              <ExternalLink className="mr-1.5 h-4 w-4" /> Results
+              <ExternalLink className="mr-1.5 h-4 w-4" /> Round Recap
             </Button>
           </div>
         </div>
@@ -166,12 +166,12 @@ const MobileEventCard = ({ evt }: { evt: EventData }) => {
           {evt.results ? (
             <Button size="sm" className={`h-9 text-sm ${evt.courseUrl ? "" : "col-span-2"}`} asChild>
               <a href={evt.results} target="_blank" rel="noopener noreferrer">
-                <ExternalLink className="mr-1.5 h-4 w-4" /> Results
+                <ExternalLink className="mr-1.5 h-4 w-4" /> Round Recap
               </a>
             </Button>
           ) : (
             <Button size="sm" className={`h-9 text-sm ${evt.courseUrl ? "" : "col-span-2"}`} disabled>
-              <ExternalLink className="mr-1.5 h-4 w-4" /> Results
+              <ExternalLink className="mr-1.5 h-4 w-4" /> Round Recap
             </Button>
           )}
           {evt.courseUrl && (
