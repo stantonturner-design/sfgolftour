@@ -54,9 +54,6 @@ const MobileEventCard = ({ evt }: { evt: EventData }) => {
             </div>
           </div>
           <div className="space-y-2 pt-1">
-            <Button variant="outline" size="sm" className="w-full h-9 text-sm" disabled>
-              <Globe className="mr-1.5 h-4 w-4" /> Course Site
-            </Button>
             <div className="grid grid-cols-2 gap-2">
               <Button variant="outline" size="sm" className="h-9 text-sm" disabled>
                 <FileText className="mr-1.5 h-4 w-4" /> Scorecard
@@ -88,11 +85,20 @@ const MobileEventCard = ({ evt }: { evt: EventData }) => {
 
       {/* Content — stacked vertically */}
       <div className="p-5 space-y-3">
-        {/* Title */}
-        <div>
-          <h2 className="font-display text-2xl font-bold tracking-tight">{evt.name}</h2>
-          {evt.subtitle && (
-            <p className="text-base text-muted-foreground mt-0.5">{evt.subtitle}</p>
+        {/* Title + Course Site */}
+        <div className="flex items-start justify-between gap-3">
+          <div className="min-w-0">
+            <h2 className="font-display text-2xl font-bold tracking-tight">{evt.name}</h2>
+            {evt.subtitle && (
+              <p className="text-base text-muted-foreground mt-0.5">{evt.subtitle}</p>
+            )}
+          </div>
+          {evt.courseUrl && (
+            <Button variant="outline" size="sm" className="h-8 px-2.5 text-xs shrink-0" asChild>
+              <a href={evt.courseUrl} target="_blank" rel="noopener noreferrer">
+                <Globe className="mr-1 h-3.5 w-3.5" /> Course Site
+              </a>
+            </Button>
           )}
         </div>
 
@@ -132,13 +138,6 @@ const MobileEventCard = ({ evt }: { evt: EventData }) => {
           const hasResults = !!evt.results;
           return (
             <div className="space-y-2 pt-1">
-              {evt.courseUrl && (
-                <Button variant="outline" size="sm" className="w-full h-9 text-sm" asChild>
-                  <a href={evt.courseUrl} target="_blank" rel="noopener noreferrer">
-                    <Globe className="mr-1.5 h-4 w-4" /> Course Site
-                  </a>
-                </Button>
-              )}
               <div className="grid grid-cols-2 gap-2">
                 <Button
                   variant="outline"
