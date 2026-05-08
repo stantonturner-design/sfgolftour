@@ -151,9 +151,9 @@ const MobileEventCard = ({ evt }: { evt: EventData }) => {
                       <FileText className="mr-1.5 h-4 w-4" /> Scorecard
                     </Link>
                   ) : (
-                    <span>
+                    <>
                       <FileText className="mr-1.5 h-4 w-4" /> Scorecard
-                    </span>
+                    </>
                   )}
                 </Button>
                 <Button variant="outline" size="sm" className="h-9 text-sm" asChild>
