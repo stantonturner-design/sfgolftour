@@ -158,14 +158,19 @@ const EventCard = ({ evt }: { evt: EventData }) => {
               <span className="font-medium text-muted-foreground">TBD</span>
             </span>
           </div>
-          <div className="mt-auto pt-4 flex gap-2.5">
-            <Button variant="outline" size="sm" className="h-9 px-4 text-sm" disabled>
-              <ClipboardList className="mr-1.5 h-4 w-4" /> Tee Sheet
+          <div className="mt-auto pt-4 space-y-2">
+            <Button variant="outline" size="sm" className="w-full h-9 text-sm" disabled>
+              <Globe className="mr-1.5 h-4 w-4" /> Course Site
             </Button>
-            <Button variant="outline" size="sm" className="h-9 px-4 text-sm" disabled>
-              <BarChart3 className="mr-1.5 h-4 w-4" /> Handicaps
-            </Button>
-            <Button size="sm" className="h-9 px-4 text-sm" disabled>
+            <div className="grid grid-cols-2 gap-2">
+              <Button variant="outline" size="sm" className="h-9 text-sm" disabled>
+                <ScrollText className="mr-1.5 h-4 w-4" /> Scorecard
+              </Button>
+              <Button variant="outline" size="sm" className="h-9 text-sm" disabled>
+                <ClipboardList className="mr-1.5 h-4 w-4" /> Tee Sheet
+              </Button>
+            </div>
+            <Button size="sm" className="w-full h-9 text-sm" disabled>
               <ExternalLink className="mr-1.5 h-4 w-4" /> Round Recap
             </Button>
           </div>
@@ -183,34 +188,9 @@ const EventCard = ({ evt }: { evt: EventData }) => {
           {/* Left column: identity + anchor day */}
           <div className="flex-1 min-w-0 flex flex-col gap-3">
             <div>
-              <div className="flex items-center gap-3 flex-wrap">
-                <h2 className="font-display text-3xl font-bold tracking-tight leading-tight">
-                  {evt.name}
-                </h2>
-                {(() => {
-                  const slug = slugifyName(evt.name);
-                  const hasData = !!SCORECARD_URLS[slug];
-                  return (
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      className="h-7 px-2.5 text-xs"
-                      asChild={hasData}
-                      disabled={!hasData}
-                    >
-                      {hasData ? (
-                        <Link to={`/events/${slug}/scorecard`}>
-                          <ScrollText className="mr-1 h-3.5 w-3.5" /> Scorecard
-                        </Link>
-                      ) : (
-                        <span>
-                          <ScrollText className="mr-1 h-3.5 w-3.5" /> Scorecard
-                        </span>
-                      )}
-                    </Button>
-                  );
-                })()}
-              </div>
+              <h2 className="font-display text-3xl font-bold tracking-tight leading-tight">
+                {evt.name}
+              </h2>
               {evt.subtitle && (
                 <p className="text-lg text-muted-foreground mt-0.5">
                   {evt.subtitle}
@@ -245,43 +225,58 @@ const EventCard = ({ evt }: { evt: EventData }) => {
           <p className="text-sm text-muted-foreground italic">{evt.note}</p>
         )}
 
-        {/* Action buttons */}
-        <div className="mt-auto pt-2 flex flex-wrap gap-2.5">
-          <Button variant="outline" size="sm" className="h-9 px-4 text-sm" asChild>
-            <Link to={`/tee-sheet?event=${encodeURIComponent(evt.name)}`}>
-              <ClipboardList className="mr-1.5 h-4 w-4" /> Tee Sheet
-            </Link>
-          </Button>
-          {evt.handicaps ? (
-            <Button variant="outline" size="sm" className="h-9 px-4 text-sm" asChild>
-              <a href={evt.handicaps} target="_blank" rel="noopener noreferrer">
-                <BarChart3 className="mr-1.5 h-4 w-4" /> Handicaps
-              </a>
-            </Button>
-          ) : (
-            <Button variant="outline" size="sm" className="h-9 px-4 text-sm" disabled>
-              <BarChart3 className="mr-1.5 h-4 w-4" /> Handicaps
-            </Button>
-          )}
-          {evt.results ? (
-            <Button size="sm" className="h-9 px-4 text-sm" asChild>
-              <a href={evt.results} target="_blank" rel="noopener noreferrer">
-                <ExternalLink className="mr-1.5 h-4 w-4" /> Round Recap
-              </a>
-            </Button>
-          ) : (
-            <Button size="sm" className="h-9 px-4 text-sm" disabled>
-              <ExternalLink className="mr-1.5 h-4 w-4" /> Round Recap
-            </Button>
-          )}
-          {evt.courseUrl && (
-            <Button variant="ghost" size="sm" className="h-9 px-4 text-sm text-muted-foreground" asChild>
-              <a href={evt.courseUrl} target="_blank" rel="noopener noreferrer">
-                <Globe className="mr-1.5 h-4 w-4" /> Course Website
-              </a>
-            </Button>
-          )}
-        </div>
+        {/* Action buttons: Course Site → [Scorecard | Tee Sheet] → Round Recap */}
+        {(() => {
+          const slug = slugifyName(evt.name);
+          const hasScorecard = !!SCORECARD_URLS[slug];
+          const hasResults = !!evt.results;
+          return (
+            <div className="mt-auto pt-2 space-y-2">
+              {evt.courseUrl && (
+                <Button variant="outline" size="sm" className="w-full h-9 text-sm" asChild>
+                  <a href={evt.courseUrl} target="_blank" rel="noopener noreferrer">
+                    <Globe className="mr-1.5 h-4 w-4" /> Course Site
+                  </a>
+                </Button>
+              )}
+              <div className="grid grid-cols-2 gap-2">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="h-9 text-sm"
+                  asChild={hasScorecard}
+                  disabled={!hasScorecard}
+                >
+                  {hasScorecard ? (
+                    <Link to={`/events/${slug}/scorecard`}>
+                      <ScrollText className="mr-1.5 h-4 w-4" /> Scorecard
+                    </Link>
+                  ) : (
+                    <span>
+                      <ScrollText className="mr-1.5 h-4 w-4" /> Scorecard
+                    </span>
+                  )}
+                </Button>
+                <Button variant="outline" size="sm" className="h-9 text-sm" asChild>
+                  <Link to={`/tee-sheet?event=${encodeURIComponent(evt.name)}`}>
+                    <ClipboardList className="mr-1.5 h-4 w-4" /> Tee Sheet
+                  </Link>
+                </Button>
+              </div>
+              {hasResults ? (
+                <Button size="sm" className="w-full h-9 text-sm" asChild>
+                  <a href={evt.results} target="_blank" rel="noopener noreferrer">
+                    <ExternalLink className="mr-1.5 h-4 w-4" /> Round Recap
+                  </a>
+                </Button>
+              ) : (
+                <Button size="sm" className="w-full h-9 text-sm" disabled>
+                  <ExternalLink className="mr-1.5 h-4 w-4" /> Round Recap
+                </Button>
+              )}
+            </div>
+          );
+        })()}
       </div>
     </Card>
   );
