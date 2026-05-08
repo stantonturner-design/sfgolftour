@@ -55,6 +55,13 @@ const latestIndex = (h: HandicapData | undefined): number | null => {
 
 const HOLE_NUMS = Array.from({ length: 18 }, (_, i) => i + 1);
 
+// "John Smith" → "J. Smith"; passes through single-word names.
+const shortName = (full: string): string => {
+  const parts = full.trim().split(/\s+/);
+  if (parts.length < 2) return full;
+  return `${parts[0][0]}. ${parts.slice(1).join(" ")}`;
+};
+
 const toPar = (score: number | null, par: number | null): string => {
   if (score == null || par == null) return "";
   const diff = score - par;
@@ -176,7 +183,7 @@ const EventScorecardPage = () => {
               eventPointsMap={eventPointsMap}
             />
           ) : (
-            <DesktopScorecard data={data} sortedPlayers={sortedPlayers} indexMap={indexMap} />
+            <DesktopScorecard data={data} sortedPlayers={sortedPlayers} indexMap={indexMap} eventPointsMap={eventPointsMap} />
           )}
         </div>
       )}
@@ -189,10 +196,12 @@ const DesktopScorecard = ({
   data,
   sortedPlayers,
   indexMap,
+  eventPointsMap,
 }: {
   data: EventScorecardData;
   sortedPlayers: EventScorecardData["players"];
   indexMap: Record<string, number | null>;
+  eventPointsMap: Record<string, number>;
 }) => {
   const { course } = data;
   return (
@@ -218,6 +227,7 @@ const DesktopScorecard = ({
             <th className="px-3 py-2 text-center font-semibold bg-muted">TOT</th>
             <th className="px-2 py-2 text-center font-semibold">HCP</th>
             <th className="px-3 py-2 text-center font-semibold bg-muted">NET</th>
+            <th className="px-3 py-2 text-center font-semibold bg-muted">PTS</th>
           </tr>
           <tr className="border-b bg-accent/40 text-xs">
             <th className="sticky left-0 bg-accent/40 text-left px-3 py-1.5 font-semibold text-muted-foreground">
@@ -242,7 +252,7 @@ const DesktopScorecard = ({
             <td className="px-3 py-1.5 text-center font-semibold bg-muted">
               {course.parTotal ?? ""}
             </td>
-            <td colSpan={2} />
+            <td colSpan={3} />
           </tr>
           {course.hcpRanking.some((h) => h != null) && (
             <tr className="border-b text-xs">
@@ -260,7 +270,7 @@ const DesktopScorecard = ({
                   {h ?? ""}
                 </td>
               ))}
-              <td className="bg-muted/50" colSpan={4} />
+              <td className="bg-muted/50" colSpan={5} />
             </tr>
           )}
         </thead>
@@ -320,6 +330,11 @@ const DesktopScorecard = ({
               </td>
               <td className="px-3 py-2 text-center font-bold bg-muted/40">
                 {p.net ?? ""}
+              </td>
+              <td className="px-3 py-2 text-center font-bold bg-muted/40 tabular-nums">
+                {eventPointsMap[p.slug] != null && eventPointsMap[p.slug] > 0
+                  ? eventPointsMap[p.slug].toFixed(1)
+                  : "—"}
               </td>
             </tr>
           ))}
@@ -409,7 +424,7 @@ const MobileScorecard = ({
                 {idx + 1}
               </span>
               <span className="font-semibold truncate flex-1 min-w-0">
-                {p.name}
+                {shortName(p.name)}
               </span>
               <span className="text-sm tabular-nums shrink-0 text-muted-foreground">
                 {p.total ?? "—"}
@@ -420,6 +435,11 @@ const MobileScorecard = ({
               <span className="text-sm font-bold tabular-nums shrink-0 w-10 text-right">
                 {p.net ?? "—"}
               </span>
+              {eventPointsMap[p.slug] != null && eventPointsMap[p.slug] > 0 && (
+                <span className="shrink-0 inline-flex items-center rounded-full bg-primary/10 text-primary text-xs font-bold tabular-nums px-2 py-0.5">
+                  {eventPointsMap[p.slug].toFixed(1)}
+                </span>
+              )}
               <ChevronDown
                 className={`h-4 w-4 text-muted-foreground shrink-0 transition-transform ${
                   isOpen ? "rotate-180" : ""
@@ -429,7 +449,7 @@ const MobileScorecard = ({
 
             {isOpen && (
               <div className="px-3 pb-3 pt-1 border-t bg-muted/10">
-                <div className="flex justify-between items-center text-xs text-muted-foreground mb-2 mt-2 gap-3">
+                <div className="flex justify-between items-center text-xs text-muted-foreground mb-2 mt-2 gap-3 flex-wrap">
                   <Link
                     to={`/players/${p.slug}`}
                     className="hover:text-primary font-medium"
@@ -444,6 +464,13 @@ const MobileScorecard = ({
                     <span className="mx-1.5 text-muted-foreground/50">·</span>
                     Course HCP{" "}
                     <span className="text-foreground font-medium">{p.hcp ?? "—"}</span>
+                    <span className="mx-1.5 text-muted-foreground/50">·</span>
+                    Points earned{" "}
+                    <span className="text-foreground font-semibold">
+                      {eventPointsMap[p.slug] != null && eventPointsMap[p.slug] > 0
+                        ? eventPointsMap[p.slug].toFixed(1)
+                        : "—"}
+                    </span>
                   </span>
                 </div>
                 <NineHoleRow
