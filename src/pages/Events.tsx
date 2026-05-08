@@ -1,10 +1,12 @@
-import { Calendar, ExternalLink, ClipboardList, Trophy, DollarSign, BarChart3, Anchor, Lock, Globe } from "lucide-react";
+import { Calendar, ExternalLink, ClipboardList, Trophy, DollarSign, BarChart3, Anchor, Lock, Globe, ScrollText } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { useIsMobile } from "@/hooks/use-mobile";
 import MobileEventCard from "@/components/events/MobileEventCard";
+import { slugifyName } from "@/lib/playerUtils";
+import { SCORECARD_URLS } from "@/lib/scorecardUtils";
 
 import coricaImg from "@/assets/courses/corica-north.jpg";
 import coyoteImg from "@/assets/courses/coyote-creek.jpg";
