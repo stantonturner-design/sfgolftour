@@ -1,8 +1,16 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { ArrowLeft, ClipboardList } from "lucide-react";
+import { ArrowLeft, ChevronDown, ClipboardList, Search } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { parseCSV } from "@/lib/csv";
 import { useIsMobile } from "@/hooks/use-mobile";
 import {
@@ -255,7 +263,9 @@ const DesktopScorecard = ({
   );
 };
 
-// ---------- Mobile: per-player cards with two 9-hole rows ----------
+// ---------- Mobile: searchable, sortable, collapsible cards ----------
+type SortKey = "net" | "gross" | "front" | "back" | "name";
+
 const MobileScorecard = ({
   data,
   sortedPlayers,
@@ -264,53 +274,138 @@ const MobileScorecard = ({
   sortedPlayers: EventScorecardData["players"];
 }) => {
   const { course } = data;
+  const [query, setQuery] = useState("");
+  const [sortKey, setSortKey] = useState<SortKey>("net");
+  const [expanded, setExpanded] = useState<Record<string, boolean>>({});
+
+  const toggle = (slug: string) =>
+    setExpanded((e) => ({ ...e, [slug]: !e[slug] }));
+
+  const displayed = useMemo(() => {
+    const nullsLast = (v: number | null) =>
+      v == null ? Number.POSITIVE_INFINITY : v;
+    const list = sortedPlayers.filter((p) =>
+      p.name.toLowerCase().includes(query.trim().toLowerCase())
+    );
+    const sorted = [...list].sort((a, b) => {
+      switch (sortKey) {
+        case "name":
+          return a.name.localeCompare(b.name);
+        case "gross":
+          return nullsLast(a.total) - nullsLast(b.total);
+        case "front":
+          return nullsLast(a.out) - nullsLast(b.out);
+        case "back":
+          return nullsLast(a.in_) - nullsLast(b.in_);
+        case "net":
+        default:
+          return nullsLast(a.net) - nullsLast(b.net);
+      }
+    });
+    return sorted;
+  }, [sortedPlayers, query, sortKey]);
+
   return (
     <div className="space-y-3">
-      {sortedPlayers.map((p, idx) => (
-        <Card key={p.slug} className="p-4">
-          <div className="flex items-baseline justify-between mb-3">
-            <div className="flex items-baseline gap-2 min-w-0">
-              <span className="text-xs text-muted-foreground font-semibold">
-                #{idx + 1}
-              </span>
-              <Link
-                to={`/players/${p.slug}`}
-                className="font-semibold truncate hover:text-primary"
-              >
-                {p.name}
-              </Link>
-            </div>
-            <div className="text-right shrink-0">
-              <div className="text-lg font-bold leading-none">
-                {p.total ?? "—"}
-              </div>
-              <div className="text-xs text-muted-foreground">
-                Net {p.net ?? "—"}
-              </div>
-            </div>
-          </div>
-
-          {/* Front 9 */}
-          <NineHoleRow
-            label="Front"
-            holes={p.holes.slice(0, 9)}
-            par={course.par.slice(0, 9)}
-            sub={p.out}
-            subPar={course.parOut}
+      {/* Controls */}
+      <div className="flex gap-2 sticky top-0 z-10 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80 py-2 -mx-1 px-1">
+        <div className="relative flex-1 min-w-0">
+          <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+          <Input
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            placeholder="Search players"
+            className="pl-8 h-9"
           />
-          {/* Back 9 */}
-          <div className="mt-2">
-            <NineHoleRow
-              label="Back"
-              holes={p.holes.slice(9)}
-              par={course.par.slice(9)}
-              sub={p.in_}
-              subPar={course.parIn}
-              startHole={10}
-            />
-          </div>
-        </Card>
-      ))}
+        </div>
+        <Select value={sortKey} onValueChange={(v) => setSortKey(v as SortKey)}>
+          <SelectTrigger className="h-9 w-[120px] shrink-0">
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="net">Net</SelectItem>
+            <SelectItem value="gross">Gross</SelectItem>
+            <SelectItem value="front">Front 9</SelectItem>
+            <SelectItem value="back">Back 9</SelectItem>
+            <SelectItem value="name">Name</SelectItem>
+          </SelectContent>
+        </Select>
+      </div>
+
+      {displayed.length === 0 && (
+        <p className="text-sm text-muted-foreground text-center py-6">
+          No players match "{query}".
+        </p>
+      )}
+
+      {displayed.map((p, idx) => {
+        const isOpen = !!expanded[p.slug];
+        const toParTotal =
+          p.total != null && course.parTotal != null
+            ? toPar(p.total, course.parTotal)
+            : "";
+        return (
+          <Card key={p.slug} className="overflow-hidden">
+            <button
+              type="button"
+              onClick={() => toggle(p.slug)}
+              className="w-full flex items-center gap-3 px-3 py-2.5 text-left hover:bg-muted/30 transition-colors"
+            >
+              <span className="text-xs text-muted-foreground font-semibold w-5 shrink-0">
+                {idx + 1}
+              </span>
+              <span className="font-semibold truncate flex-1 min-w-0">
+                {p.name}
+              </span>
+              <span className="text-sm tabular-nums shrink-0 text-muted-foreground">
+                {p.total ?? "—"}
+                {toParTotal && (
+                  <span className="ml-1 text-xs">({toParTotal})</span>
+                )}
+              </span>
+              <span className="text-sm font-bold tabular-nums shrink-0 w-10 text-right">
+                {p.net ?? "—"}
+              </span>
+              <ChevronDown
+                className={`h-4 w-4 text-muted-foreground shrink-0 transition-transform ${
+                  isOpen ? "rotate-180" : ""
+                }`}
+              />
+            </button>
+
+            {isOpen && (
+              <div className="px-3 pb-3 pt-1 border-t bg-muted/10">
+                <div className="flex justify-between text-xs text-muted-foreground mb-2 mt-2">
+                  <Link
+                    to={`/players/${p.slug}`}
+                    className="hover:text-primary font-medium"
+                  >
+                    View player profile →
+                  </Link>
+                  <span>HCP {p.hcp ?? "—"}</span>
+                </div>
+                <NineHoleRow
+                  label="Front"
+                  holes={p.holes.slice(0, 9)}
+                  par={course.par.slice(0, 9)}
+                  sub={p.out}
+                  subPar={course.parOut}
+                />
+                <div className="mt-2">
+                  <NineHoleRow
+                    label="Back"
+                    holes={p.holes.slice(9)}
+                    par={course.par.slice(9)}
+                    sub={p.in_}
+                    subPar={course.parIn}
+                    startHole={10}
+                  />
+                </div>
+              </div>
+            )}
+          </Card>
+        );
+      })}
     </div>
   );
 };
