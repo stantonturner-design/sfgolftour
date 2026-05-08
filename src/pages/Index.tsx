@@ -207,7 +207,7 @@ const Index = () => {
         <div className="grid gap-4 md:gap-5 md:grid-cols-5">
 
           {/* Current Event — swipeable carousel (3 cols) */}
-          <div className="md:col-span-3">
+          <div className="md:col-span-3 min-w-0">
             <EventCarousel />
           </div>
 
