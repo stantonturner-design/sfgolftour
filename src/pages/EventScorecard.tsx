@@ -1,9 +1,8 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { ArrowLeft, ChevronDown, ClipboardList, Search } from "lucide-react";
+import { ArrowLeft, ChevronDown, ClipboardList } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import {
   Select,
   SelectContent,
@@ -21,9 +20,20 @@ import {
 } from "@/lib/scorecardUtils";
 import {
   HANDICAPS_URL,
+  SHEET_URL,
   parseHandicaps,
+  parsePlayerRows,
   type HandicapData,
 } from "@/lib/playerUtils";
+
+// Map event slug → index into PlayerData.eventPoints
+const EVENT_POINTS_INDEX: Record<string, number> = {
+  corica: 0,
+  "coyote-creek": 1,
+  chardonnay: 2,
+  "poppy-ridge": 3,
+  presidio: 4,
+};
 
 // Latest posted HI for a player (most recent event back to preseason)
 const latestIndex = (h: HandicapData | undefined): number | null => {
@@ -70,6 +80,7 @@ const EventScorecardPage = () => {
 
   const [data, setData] = useState<EventScorecardData | null>(null);
   const [indexMap, setIndexMap] = useState<Record<string, number | null>>({});
+  const [eventPointsMap, setEventPointsMap] = useState<Record<string, number>>({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -82,8 +93,9 @@ const EventScorecardPage = () => {
     Promise.all([
       fetch(url).then((r) => r.text()),
       fetch(HANDICAPS_URL).then((r) => r.text()).catch(() => ""),
+      fetch(SHEET_URL).then((r) => r.text()).catch(() => ""),
     ])
-      .then(([text, hcpText]) => {
+      .then(([text, hcpText, lbText]) => {
         setData(parseEventScorecard(parseCSV(text)));
         if (hcpText) {
           const hcps = parseHandicaps(parseCSV(hcpText));
@@ -91,10 +103,17 @@ const EventScorecardPage = () => {
           for (const h of hcps) map[h.slug] = latestIndex(h);
           setIndexMap(map);
         }
+        if (lbText && slug && EVENT_POINTS_INDEX[slug] != null) {
+          const players = parsePlayerRows(parseCSV(lbText));
+          const idx = EVENT_POINTS_INDEX[slug];
+          const pmap: Record<string, number> = {};
+          for (const p of players) pmap[p.slug] = p.eventPoints[idx] ?? 0;
+          setEventPointsMap(pmap);
+        }
       })
       .catch(() => setError("Could not load scorecard data."))
       .finally(() => setLoading(false));
-  }, [url]);
+  }, [url, slug]);
 
   const sortedPlayers = useMemo(() => {
     if (!data) return [];
@@ -104,6 +123,7 @@ const EventScorecardPage = () => {
       return a.total - b.total;
     });
   }, [data]);
+
 
   if (!meta) {
     return (
@@ -149,7 +169,12 @@ const EventScorecardPage = () => {
       {data && !loading && (
         <div className="mt-6 space-y-6">
           {isMobile ? (
-            <MobileScorecard data={data} sortedPlayers={sortedPlayers} indexMap={indexMap} />
+            <MobileScorecard
+              data={data}
+              sortedPlayers={sortedPlayers}
+              indexMap={indexMap}
+              eventPointsMap={eventPointsMap}
+            />
           ) : (
             <DesktopScorecard data={data} sortedPlayers={sortedPlayers} indexMap={indexMap} />
           )}
@@ -176,10 +201,7 @@ const DesktopScorecard = ({
         <thead>
           <tr className="bg-muted/50 border-b">
             <th className="sticky left-0 bg-muted/50 text-left px-3 py-2 font-semibold min-w-[220px]">
-              <div className="flex items-center justify-between gap-3">
-                <span>Player</span>
-                <span className="text-xs font-medium text-muted-foreground">HI</span>
-              </div>
+              Player
             </th>
             {HOLE_NUMS.slice(0, 9).map((h) => (
               <th key={h} className="px-2 py-2 text-center font-semibold w-10">
@@ -246,14 +268,14 @@ const DesktopScorecard = ({
           {sortedPlayers.map((p) => (
             <tr key={p.slug} className="border-b last:border-b-0 hover:bg-muted/30">
               <td className="sticky left-0 bg-card px-3 py-2 font-semibold whitespace-nowrap">
-                <div className="flex items-center justify-between gap-3">
-                  <Link to={`/players/${p.slug}`} className="hover:text-primary">
-                    {p.name}
-                  </Link>
-                  <span className="text-xs font-normal text-muted-foreground tabular-nums">
-                    {indexMap[p.slug] != null ? indexMap[p.slug]!.toFixed(1) : "—"}
+                <Link to={`/players/${p.slug}`} className="hover:text-primary">
+                  {p.name}
+                </Link>
+                {indexMap[p.slug] != null && (
+                  <span className="ml-1.5 text-xs font-normal text-muted-foreground tabular-nums">
+                    ({indexMap[p.slug]!.toFixed(1)})
                   </span>
-                </div>
+                )}
               </td>
               {p.holes.slice(0, 9).map((s, i) => (
                 <td key={i} className="px-1 py-1 text-center">
@@ -307,82 +329,68 @@ const DesktopScorecard = ({
   );
 };
 
-// ---------- Mobile: searchable, sortable, collapsible cards ----------
-type SortKey = "net" | "gross" | "front" | "back" | "name";
-
+// ---------- Mobile: jump-to-player + collapsible cards, ranked by event points ----------
 const MobileScorecard = ({
   data,
   sortedPlayers,
   indexMap,
+  eventPointsMap,
 }: {
   data: EventScorecardData;
   sortedPlayers: EventScorecardData["players"];
   indexMap: Record<string, number | null>;
+  eventPointsMap: Record<string, number>;
 }) => {
   const { course } = data;
-  const [query, setQuery] = useState("");
-  const [sortKey, setSortKey] = useState<SortKey>("net");
   const [expanded, setExpanded] = useState<Record<string, boolean>>({});
 
   const toggle = (slug: string) =>
     setExpanded((e) => ({ ...e, [slug]: !e[slug] }));
 
+  // Rank by event points (desc); tiebreak on net.
   const displayed = useMemo(() => {
     const nullsLast = (v: number | null) =>
       v == null ? Number.POSITIVE_INFINITY : v;
-    const list = sortedPlayers.filter((p) =>
-      p.name.toLowerCase().includes(query.trim().toLowerCase())
-    );
-    const sorted = [...list].sort((a, b) => {
-      switch (sortKey) {
-        case "name":
-          return a.name.localeCompare(b.name);
-        case "gross":
-          return nullsLast(a.total) - nullsLast(b.total);
-        case "front":
-          return nullsLast(a.out) - nullsLast(b.out);
-        case "back":
-          return nullsLast(a.in_) - nullsLast(b.in_);
-        case "net":
-        default:
-          return nullsLast(a.net) - nullsLast(b.net);
-      }
+    return [...sortedPlayers].sort((a, b) => {
+      const pa = eventPointsMap[a.slug] ?? 0;
+      const pb = eventPointsMap[b.slug] ?? 0;
+      if (pb !== pa) return pb - pa;
+      return nullsLast(a.net) - nullsLast(b.net);
     });
-    return sorted;
-  }, [sortedPlayers, query, sortKey]);
+  }, [sortedPlayers, eventPointsMap]);
+
+  // Player jump dropdown (alphabetical for easy lookup)
+  const jumpOptions = useMemo(
+    () => [...sortedPlayers].sort((a, b) => a.name.localeCompare(b.name)),
+    [sortedPlayers]
+  );
+
+  const jumpToPlayer = (slug: string) => {
+    setExpanded((e) => ({ ...e, [slug]: true }));
+    requestAnimationFrame(() => {
+      const el = document.getElementById(`player-${slug}`);
+      if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+  };
 
   return (
     <div className="space-y-3">
-      {/* Controls */}
-      <div className="flex gap-2 sticky top-0 z-10 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80 py-2 -mx-1 px-1">
-        <div className="relative flex-1 min-w-0">
-          <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-          <Input
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            placeholder="Search players"
-            className="pl-8 h-9"
-          />
-        </div>
-        <Select value={sortKey} onValueChange={(v) => setSortKey(v as SortKey)}>
-          <SelectTrigger className="h-9 w-[120px] shrink-0">
-            <SelectValue />
+      {/* Jump-to-player dropdown */}
+      <div className="sticky top-0 z-10 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80 py-2 -mx-1 px-1">
+        <Select value="" onValueChange={jumpToPlayer}>
+          <SelectTrigger className="h-9 w-full">
+            <SelectValue placeholder="Find a player…" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="net">Net</SelectItem>
-            <SelectItem value="gross">Gross</SelectItem>
-            <SelectItem value="front">Front 9</SelectItem>
-            <SelectItem value="back">Back 9</SelectItem>
-            <SelectItem value="name">Name</SelectItem>
+            {jumpOptions.map((p) => (
+              <SelectItem key={p.slug} value={p.slug}>
+                {p.name}
+              </SelectItem>
+            ))}
           </SelectContent>
         </Select>
       </div>
 
-      {displayed.length === 0 && (
-        <p className="text-sm text-muted-foreground text-center py-6">
-          No players match "{query}".
-        </p>
-      )}
 
       {displayed.map((p, idx) => {
         const isOpen = !!expanded[p.slug];
@@ -391,7 +399,7 @@ const MobileScorecard = ({
             ? toPar(p.total, course.parTotal)
             : "";
         return (
-          <Card key={p.slug} className="overflow-hidden">
+          <Card key={p.slug} id={`player-${p.slug}`} className="overflow-hidden scroll-mt-16">
             <button
               type="button"
               onClick={() => toggle(p.slug)}
