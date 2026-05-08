@@ -1,10 +1,12 @@
-import { Calendar, ExternalLink, ClipboardList, Trophy, DollarSign, BarChart3, Anchor, Lock, Globe } from "lucide-react";
+import { Calendar, ExternalLink, ClipboardList, Trophy, DollarSign, BarChart3, Anchor, Lock, Globe, ScrollText } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { useIsMobile } from "@/hooks/use-mobile";
 import MobileEventCard from "@/components/events/MobileEventCard";
+import { slugifyName } from "@/lib/playerUtils";
+import { SCORECARD_URLS } from "@/lib/scorecardUtils";
 
 import coricaImg from "@/assets/courses/corica-north.jpg";
 import coyoteImg from "@/assets/courses/coyote-creek.jpg";
@@ -181,9 +183,34 @@ const EventCard = ({ evt }: { evt: EventData }) => {
           {/* Left column: identity + anchor day */}
           <div className="flex-1 min-w-0 flex flex-col gap-3">
             <div>
-              <h2 className="font-display text-3xl font-bold tracking-tight leading-tight">
-                {evt.name}
-              </h2>
+              <div className="flex items-center gap-3 flex-wrap">
+                <h2 className="font-display text-3xl font-bold tracking-tight leading-tight">
+                  {evt.name}
+                </h2>
+                {(() => {
+                  const slug = slugifyName(evt.name);
+                  const hasData = !!SCORECARD_URLS[slug];
+                  return (
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="h-7 px-2.5 text-xs"
+                      asChild={hasData}
+                      disabled={!hasData}
+                    >
+                      {hasData ? (
+                        <Link to={`/events/${slug}/scorecard`}>
+                          <ScrollText className="mr-1 h-3.5 w-3.5" /> Scorecard
+                        </Link>
+                      ) : (
+                        <span>
+                          <ScrollText className="mr-1 h-3.5 w-3.5" /> Scorecard
+                        </span>
+                      )}
+                    </Button>
+                  );
+                })()}
+              </div>
               {evt.subtitle && (
                 <p className="text-lg text-muted-foreground mt-0.5">
                   {evt.subtitle}
