@@ -421,14 +421,22 @@ const MobileScorecard = ({
 
             {isOpen && (
               <div className="px-3 pb-3 pt-1 border-t bg-muted/10">
-                <div className="flex justify-between text-xs text-muted-foreground mb-2 mt-2">
+                <div className="flex justify-between items-center text-xs text-muted-foreground mb-2 mt-2 gap-3">
                   <Link
                     to={`/players/${p.slug}`}
                     className="hover:text-primary font-medium"
                   >
                     View player profile →
                   </Link>
-                  <span>HCP {p.hcp ?? "—"}</span>
+                  <span className="tabular-nums">
+                    Index{" "}
+                    <span className="text-foreground font-medium">
+                      {indexMap[p.slug] != null ? indexMap[p.slug]!.toFixed(1) : "—"}
+                    </span>
+                    <span className="mx-1.5 text-muted-foreground/50">·</span>
+                    Course HCP{" "}
+                    <span className="text-foreground font-medium">{p.hcp ?? "—"}</span>
+                  </span>
                 </div>
                 <NineHoleRow
                   label="Front"
