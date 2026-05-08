@@ -69,6 +69,7 @@ const EventScorecardPage = () => {
   const isMobile = useIsMobile();
 
   const [data, setData] = useState<EventScorecardData | null>(null);
+  const [indexMap, setIndexMap] = useState<Record<string, number | null>>({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -78,9 +79,19 @@ const EventScorecardPage = () => {
       return;
     }
     setLoading(true);
-    fetch(url)
-      .then((r) => r.text())
-      .then((text) => setData(parseEventScorecard(parseCSV(text))))
+    Promise.all([
+      fetch(url).then((r) => r.text()),
+      fetch(HANDICAPS_URL).then((r) => r.text()).catch(() => ""),
+    ])
+      .then(([text, hcpText]) => {
+        setData(parseEventScorecard(parseCSV(text)));
+        if (hcpText) {
+          const hcps = parseHandicaps(parseCSV(hcpText));
+          const map: Record<string, number | null> = {};
+          for (const h of hcps) map[h.slug] = latestIndex(h);
+          setIndexMap(map);
+        }
+      })
       .catch(() => setError("Could not load scorecard data."))
       .finally(() => setLoading(false));
   }, [url]);
