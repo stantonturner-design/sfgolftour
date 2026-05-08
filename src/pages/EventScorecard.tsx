@@ -19,6 +19,29 @@ import {
   parseEventScorecard,
   type EventScorecard as EventScorecardData,
 } from "@/lib/scorecardUtils";
+import {
+  HANDICAPS_URL,
+  parseHandicaps,
+  type HandicapData,
+} from "@/lib/playerUtils";
+
+// Latest posted HI for a player (most recent event back to preseason)
+const latestIndex = (h: HandicapData | undefined): number | null => {
+  if (!h) return null;
+  const keys: (keyof HandicapData)[] = [
+    "presidio",
+    "poppyRidge",
+    "chardonnay",
+    "coyoteCreek",
+    "corica",
+    "preseason",
+  ];
+  for (const k of keys) {
+    const v = h[k];
+    if (typeof v === "number") return v;
+  }
+  return null;
+};
 
 const HOLE_NUMS = Array.from({ length: 18 }, (_, i) => i + 1);
 
