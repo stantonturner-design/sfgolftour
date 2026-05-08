@@ -399,7 +399,7 @@ const MobileScorecard = ({
             ? toPar(p.total, course.parTotal)
             : "";
         return (
-          <Card key={p.slug} className="overflow-hidden">
+          <Card key={p.slug} id={`player-${p.slug}`} className="overflow-hidden scroll-mt-16">
             <button
               type="button"
               onClick={() => toggle(p.slug)}
