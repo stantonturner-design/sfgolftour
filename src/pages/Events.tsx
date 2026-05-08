@@ -1,3 +1,5 @@
+import { useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import { Calendar, ExternalLink, ClipboardList, Trophy, DollarSign, BarChart3, Anchor, Lock, Globe, FileText } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Card } from "@/components/ui/card";
