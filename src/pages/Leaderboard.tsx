@@ -97,7 +97,12 @@ const Leaderboard = () => {
                       key={e}
                       className={`text-center whitespace-nowrap text-foreground/80 font-semibold ${i === EVENT_NAMES.length - 1 ? "border-r" : ""}`}
                     >
-                      {e}
+                      <Link
+                        to={`/events/${slugifyName(e)}/scorecard`}
+                        className="hover:text-primary transition-colors"
+                      >
+                        {e}
+                      </Link>
                     </TableHead>
                   ))}
                   {finishHeaders.map((h, i) => (
