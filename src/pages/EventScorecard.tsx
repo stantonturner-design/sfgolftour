@@ -163,9 +163,11 @@ const EventScorecardPage = () => {
 const DesktopScorecard = ({
   data,
   sortedPlayers,
+  indexMap,
 }: {
   data: EventScorecardData;
   sortedPlayers: EventScorecardData["players"];
+  indexMap: Record<string, number | null>;
 }) => {
   const { course } = data;
   return (
