@@ -225,43 +225,58 @@ const EventCard = ({ evt }: { evt: EventData }) => {
           <p className="text-sm text-muted-foreground italic">{evt.note}</p>
         )}
 
-        {/* Action buttons */}
-        <div className="mt-auto pt-2 flex flex-wrap gap-2.5">
-          <Button variant="outline" size="sm" className="h-9 px-4 text-sm" asChild>
-            <Link to={`/tee-sheet?event=${encodeURIComponent(evt.name)}`}>
-              <ClipboardList className="mr-1.5 h-4 w-4" /> Tee Sheet
-            </Link>
-          </Button>
-          {evt.handicaps ? (
-            <Button variant="outline" size="sm" className="h-9 px-4 text-sm" asChild>
-              <a href={evt.handicaps} target="_blank" rel="noopener noreferrer">
-                <BarChart3 className="mr-1.5 h-4 w-4" /> Handicaps
-              </a>
-            </Button>
-          ) : (
-            <Button variant="outline" size="sm" className="h-9 px-4 text-sm" disabled>
-              <BarChart3 className="mr-1.5 h-4 w-4" /> Handicaps
-            </Button>
-          )}
-          {evt.results ? (
-            <Button size="sm" className="h-9 px-4 text-sm" asChild>
-              <a href={evt.results} target="_blank" rel="noopener noreferrer">
-                <ExternalLink className="mr-1.5 h-4 w-4" /> Round Recap
-              </a>
-            </Button>
-          ) : (
-            <Button size="sm" className="h-9 px-4 text-sm" disabled>
-              <ExternalLink className="mr-1.5 h-4 w-4" /> Round Recap
-            </Button>
-          )}
-          {evt.courseUrl && (
-            <Button variant="ghost" size="sm" className="h-9 px-4 text-sm text-muted-foreground" asChild>
-              <a href={evt.courseUrl} target="_blank" rel="noopener noreferrer">
-                <Globe className="mr-1.5 h-4 w-4" /> Course Website
-              </a>
-            </Button>
-          )}
-        </div>
+        {/* Action buttons: Course Site → [Scorecard | Tee Sheet] → Round Recap */}
+        {(() => {
+          const slug = slugifyName(evt.name);
+          const hasScorecard = !!SCORECARD_URLS[slug];
+          const hasResults = !!evt.results;
+          return (
+            <div className="mt-auto pt-2 space-y-2">
+              {evt.courseUrl && (
+                <Button variant="outline" size="sm" className="w-full h-9 text-sm" asChild>
+                  <a href={evt.courseUrl} target="_blank" rel="noopener noreferrer">
+                    <Globe className="mr-1.5 h-4 w-4" /> Course Site
+                  </a>
+                </Button>
+              )}
+              <div className="grid grid-cols-2 gap-2">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="h-9 text-sm"
+                  asChild={hasScorecard}
+                  disabled={!hasScorecard}
+                >
+                  {hasScorecard ? (
+                    <Link to={`/events/${slug}/scorecard`}>
+                      <ScrollText className="mr-1.5 h-4 w-4" /> Scorecard
+                    </Link>
+                  ) : (
+                    <span>
+                      <ScrollText className="mr-1.5 h-4 w-4" /> Scorecard
+                    </span>
+                  )}
+                </Button>
+                <Button variant="outline" size="sm" className="h-9 text-sm" asChild>
+                  <Link to={`/tee-sheet?event=${encodeURIComponent(evt.name)}`}>
+                    <ClipboardList className="mr-1.5 h-4 w-4" /> Tee Sheet
+                  </Link>
+                </Button>
+              </div>
+              {hasResults ? (
+                <Button size="sm" className="w-full h-9 text-sm" asChild>
+                  <a href={evt.results} target="_blank" rel="noopener noreferrer">
+                    <ExternalLink className="mr-1.5 h-4 w-4" /> Round Recap
+                  </a>
+                </Button>
+              ) : (
+                <Button size="sm" className="w-full h-9 text-sm" disabled>
+                  <ExternalLink className="mr-1.5 h-4 w-4" /> Round Recap
+                </Button>
+              )}
+            </div>
+          );
+        })()}
       </div>
     </Card>
   );
