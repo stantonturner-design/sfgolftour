@@ -1,9 +1,8 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { ArrowLeft, ChevronDown, ClipboardList, Search } from "lucide-react";
+import { ArrowLeft, ChevronDown, ClipboardList } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import {
   Select,
   SelectContent,
@@ -21,9 +20,20 @@ import {
 } from "@/lib/scorecardUtils";
 import {
   HANDICAPS_URL,
+  SHEET_URL,
   parseHandicaps,
+  parsePlayerRows,
   type HandicapData,
 } from "@/lib/playerUtils";
+
+// Map event slug → index into PlayerData.eventPoints
+const EVENT_POINTS_INDEX: Record<string, number> = {
+  corica: 0,
+  "coyote-creek": 1,
+  chardonnay: 2,
+  "poppy-ridge": 3,
+  presidio: 4,
+};
 
 // Latest posted HI for a player (most recent event back to preseason)
 const latestIndex = (h: HandicapData | undefined): number | null => {
