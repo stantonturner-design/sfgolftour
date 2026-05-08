@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -7,17 +7,20 @@ import { newsArticles } from "@/data/newsArticles";
 import { Badge } from "@/components/ui/badge";
 import { parseCSV } from "@/lib/csv";
 import { format } from "date-fns";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+  type CarouselApi,
+} from "@/components/ui/carousel";
 
 import { SHEET_URL, HANDICAPS_URL, parseRRHomePageUrl, slugifyName } from "@/lib/playerUtils";
 import sfgtLogo from "@/assets/sfgt-logo.png";
-import coyoteImg from "@/assets/courses/coyote-creek.jpg";
 import roundRecapLogo from "@/assets/round-recap-logo.png";
+import { EVENTS, getCurrentEventIndex, type EventData } from "@/data/events";
 
-const CURRENT_EVENT = {
-  name: "Coyote Creek – Valley Course",
-  shortName: "Coyote Creek",
-  payoutDate: "June 13",
-  anchorDay: "May 31",
   image: "https://playeasy.com/cdn-cgi/image/width=1200,fit=scale-down,format=auto,quality=85/https://storage.playeasy.com/facility-mgmt/060f01d2-5808-4a3f-b62d-d2d9e884398c",
   courseUrl: "https://coyotecreekgolf.com/",
   prizes: [
