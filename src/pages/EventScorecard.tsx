@@ -1,8 +1,16 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { ArrowLeft, ClipboardList } from "lucide-react";
+import { ArrowLeft, ChevronDown, ClipboardList, Search } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { parseCSV } from "@/lib/csv";
 import { useIsMobile } from "@/hooks/use-mobile";
 import {
