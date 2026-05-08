@@ -1,3 +1,5 @@
+import { useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import { Calendar, ExternalLink, ClipboardList, Trophy, DollarSign, BarChart3, Anchor, Lock, Globe, FileText } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Card } from "@/components/ui/card";
@@ -176,6 +178,18 @@ const EventCard = ({ evt }: { evt: EventData }) => {
 };
 const Events = () => {
   const isMobile = useIsMobile();
+  const location = useLocation();
+
+  useEffect(() => {
+    if (!location.hash) return;
+    const id = decodeURIComponent(location.hash.slice(1));
+    // Wait a tick so cards have mounted
+    const t = setTimeout(() => {
+      const el = document.getElementById(id);
+      if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 50);
+    return () => clearTimeout(t);
+  }, [location.hash, isMobile]);
 
   return (
     <div className="container py-16">
@@ -190,13 +204,17 @@ const Events = () => {
       {isMobile ? (
         <div className="mt-8 space-y-5">
           {EVENTS.map((evt) => (
-            <MobileEventCard key={evt.name} evt={evt} />
+            <div key={evt.name} id={slugifyName(evt.name)} className="scroll-mt-20">
+              <MobileEventCard evt={evt} />
+            </div>
           ))}
         </div>
       ) : (
         <div className="mt-10 grid grid-cols-1 md:grid-cols-2 gap-6">
           {EVENTS.map((evt) => (
-            <EventCard key={evt.name} evt={evt} />
+            <div key={evt.name} id={slugifyName(evt.name)} className="scroll-mt-24">
+              <EventCard evt={evt} />
+            </div>
           ))}
         </div>
       )}

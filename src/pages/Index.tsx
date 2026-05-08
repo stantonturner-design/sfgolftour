@@ -77,13 +77,8 @@ const EventSlide = ({ evt, isCurrent }: { evt: EventData; isCurrent: boolean }) 
 
           <div className="mt-auto pt-5 flex flex-wrap gap-2.5">
             <Button size="default" className="bg-primary text-primary-foreground hover:bg-primary/90 shadow-sm" asChild>
-              <Link to="/events">
+              <Link to={`/events#${slugifyName(evt.name)}`}>
                 View Event <ArrowRight className="ml-1 h-4 w-4" />
-              </Link>
-            </Button>
-            <Button size="default" variant="outline" className="border-primary/30 text-primary hover:bg-primary/5" asChild>
-              <Link to={`/tee-sheet?event=${encodeURIComponent(shortName)}`}>
-                <ClipboardList className="mr-1 h-4 w-4" /> Tee Sheet
               </Link>
             </Button>
           </div>
