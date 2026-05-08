@@ -189,10 +189,12 @@ const DesktopScorecard = ({
   data,
   sortedPlayers,
   indexMap,
+  eventPointsMap,
 }: {
   data: EventScorecardData;
   sortedPlayers: EventScorecardData["players"];
   indexMap: Record<string, number | null>;
+  eventPointsMap: Record<string, number>;
 }) => {
   const { course } = data;
   return (
