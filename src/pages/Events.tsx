@@ -128,13 +128,22 @@ const EVENTS: EventData[] = [
 
 const EventCard = ({ evt }: { evt: EventData }) => {
   const imageSection = (
-    <div className="w-full aspect-[16/9] bg-muted relative shrink-0">
-      <img src={evt.image} alt={evt.name} className="h-full w-full object-cover" loading="lazy" width={800} height={512} />
-      {evt.isFinale && (
-        <div className="absolute inset-0 bg-foreground/5 flex items-center justify-center">
-          <Lock className="h-8 w-8 text-muted-foreground/40" />
-        </div>
-      )}
+    <div className="w-full shrink-0">
+      <AspectRatio ratio={16 / 9} className="bg-muted overflow-hidden">
+        <img
+          src={evt.image}
+          alt={evt.name}
+          className="absolute inset-0 h-full w-full object-cover object-center"
+          loading="lazy"
+          width={800}
+          height={450}
+        />
+        {evt.isFinale && (
+          <div className="absolute inset-0 bg-foreground/5 flex items-center justify-center">
+            <Lock className="h-8 w-8 text-muted-foreground/40" />
+          </div>
+        )}
+      </AspectRatio>
     </div>
   );
 
