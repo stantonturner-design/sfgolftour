@@ -237,13 +237,6 @@ const EventCard = ({ evt }: { evt: EventData }) => {
           const hasResults = !!evt.results;
           return (
             <div className="mt-auto pt-2 space-y-2">
-              {evt.courseUrl && (
-                <Button variant="outline" size="sm" className="w-full h-9 text-sm" asChild>
-                  <a href={evt.courseUrl} target="_blank" rel="noopener noreferrer">
-                    <Globe className="mr-1.5 h-4 w-4" /> Course Site
-                  </a>
-                </Button>
-              )}
               <div className="grid grid-cols-2 gap-2">
                 <Button
                   variant="outline"
