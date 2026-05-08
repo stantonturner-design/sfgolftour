@@ -55,6 +55,13 @@ const latestIndex = (h: HandicapData | undefined): number | null => {
 
 const HOLE_NUMS = Array.from({ length: 18 }, (_, i) => i + 1);
 
+// "John Smith" → "J. Smith"; passes through single-word names.
+const shortName = (full: string): string => {
+  const parts = full.trim().split(/\s+/);
+  if (parts.length < 2) return full;
+  return `${parts[0][0]}. ${parts.slice(1).join(" ")}`;
+};
+
 const toPar = (score: number | null, par: number | null): string => {
   if (score == null || par == null) return "";
   const diff = score - par;
