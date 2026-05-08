@@ -19,6 +19,29 @@ import {
   parseEventScorecard,
   type EventScorecard as EventScorecardData,
 } from "@/lib/scorecardUtils";
+import {
+  HANDICAPS_URL,
+  parseHandicaps,
+  type HandicapData,
+} from "@/lib/playerUtils";
+
+// Latest posted HI for a player (most recent event back to preseason)
+const latestIndex = (h: HandicapData | undefined): number | null => {
+  if (!h) return null;
+  const keys: (keyof HandicapData)[] = [
+    "presidio",
+    "poppyRidge",
+    "chardonnay",
+    "coyoteCreek",
+    "corica",
+    "preseason",
+  ];
+  for (const k of keys) {
+    const v = h[k];
+    if (typeof v === "number") return v;
+  }
+  return null;
+};
 
 const HOLE_NUMS = Array.from({ length: 18 }, (_, i) => i + 1);
 
@@ -46,6 +69,7 @@ const EventScorecardPage = () => {
   const isMobile = useIsMobile();
 
   const [data, setData] = useState<EventScorecardData | null>(null);
+  const [indexMap, setIndexMap] = useState<Record<string, number | null>>({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -55,9 +79,19 @@ const EventScorecardPage = () => {
       return;
     }
     setLoading(true);
-    fetch(url)
-      .then((r) => r.text())
-      .then((text) => setData(parseEventScorecard(parseCSV(text))))
+    Promise.all([
+      fetch(url).then((r) => r.text()),
+      fetch(HANDICAPS_URL).then((r) => r.text()).catch(() => ""),
+    ])
+      .then(([text, hcpText]) => {
+        setData(parseEventScorecard(parseCSV(text)));
+        if (hcpText) {
+          const hcps = parseHandicaps(parseCSV(hcpText));
+          const map: Record<string, number | null> = {};
+          for (const h of hcps) map[h.slug] = latestIndex(h);
+          setIndexMap(map);
+        }
+      })
       .catch(() => setError("Could not load scorecard data."))
       .finally(() => setLoading(false));
   }, [url]);
@@ -115,9 +149,9 @@ const EventScorecardPage = () => {
       {data && !loading && (
         <div className="mt-6 space-y-6">
           {isMobile ? (
-            <MobileScorecard data={data} sortedPlayers={sortedPlayers} />
+            <MobileScorecard data={data} sortedPlayers={sortedPlayers} indexMap={indexMap} />
           ) : (
-            <DesktopScorecard data={data} sortedPlayers={sortedPlayers} />
+            <DesktopScorecard data={data} sortedPlayers={sortedPlayers} indexMap={indexMap} />
           )}
         </div>
       )}
@@ -129,9 +163,11 @@ const EventScorecardPage = () => {
 const DesktopScorecard = ({
   data,
   sortedPlayers,
+  indexMap,
 }: {
   data: EventScorecardData;
   sortedPlayers: EventScorecardData["players"];
+  indexMap: Record<string, number | null>;
 }) => {
   const { course } = data;
   return (
@@ -139,8 +175,11 @@ const DesktopScorecard = ({
       <table className="w-full text-sm border-collapse">
         <thead>
           <tr className="bg-muted/50 border-b">
-            <th className="sticky left-0 bg-muted/50 text-left px-3 py-2 font-semibold min-w-[180px]">
-              Player
+            <th className="sticky left-0 bg-muted/50 text-left px-3 py-2 font-semibold min-w-[220px]">
+              <div className="flex items-center justify-between gap-3">
+                <span>Player</span>
+                <span className="text-xs font-medium text-muted-foreground">HI</span>
+              </div>
             </th>
             {HOLE_NUMS.slice(0, 9).map((h) => (
               <th key={h} className="px-2 py-2 text-center font-semibold w-10">
@@ -207,9 +246,14 @@ const DesktopScorecard = ({
           {sortedPlayers.map((p) => (
             <tr key={p.slug} className="border-b last:border-b-0 hover:bg-muted/30">
               <td className="sticky left-0 bg-card px-3 py-2 font-semibold whitespace-nowrap">
-                <Link to={`/players/${p.slug}`} className="hover:text-primary">
-                  {p.name}
-                </Link>
+                <div className="flex items-center justify-between gap-3">
+                  <Link to={`/players/${p.slug}`} className="hover:text-primary">
+                    {p.name}
+                  </Link>
+                  <span className="text-xs font-normal text-muted-foreground tabular-nums">
+                    {indexMap[p.slug] != null ? indexMap[p.slug]!.toFixed(1) : "—"}
+                  </span>
+                </div>
               </td>
               {p.holes.slice(0, 9).map((s, i) => (
                 <td key={i} className="px-1 py-1 text-center">
@@ -269,9 +313,11 @@ type SortKey = "net" | "gross" | "front" | "back" | "name";
 const MobileScorecard = ({
   data,
   sortedPlayers,
+  indexMap,
 }: {
   data: EventScorecardData;
   sortedPlayers: EventScorecardData["players"];
+  indexMap: Record<string, number | null>;
 }) => {
   const { course } = data;
   const [query, setQuery] = useState("");
@@ -375,14 +421,22 @@ const MobileScorecard = ({
 
             {isOpen && (
               <div className="px-3 pb-3 pt-1 border-t bg-muted/10">
-                <div className="flex justify-between text-xs text-muted-foreground mb-2 mt-2">
+                <div className="flex justify-between items-center text-xs text-muted-foreground mb-2 mt-2 gap-3">
                   <Link
                     to={`/players/${p.slug}`}
                     className="hover:text-primary font-medium"
                   >
                     View player profile →
                   </Link>
-                  <span>HCP {p.hcp ?? "—"}</span>
+                  <span className="tabular-nums">
+                    Index{" "}
+                    <span className="text-foreground font-medium">
+                      {indexMap[p.slug] != null ? indexMap[p.slug]!.toFixed(1) : "—"}
+                    </span>
+                    <span className="mx-1.5 text-muted-foreground/50">·</span>
+                    Course HCP{" "}
+                    <span className="text-foreground font-medium">{p.hcp ?? "—"}</span>
+                  </span>
                 </div>
                 <NineHoleRow
                   label="Front"
