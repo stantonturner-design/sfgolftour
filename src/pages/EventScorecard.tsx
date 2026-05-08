@@ -169,7 +169,12 @@ const EventScorecardPage = () => {
       {data && !loading && (
         <div className="mt-6 space-y-6">
           {isMobile ? (
-            <MobileScorecard data={data} sortedPlayers={sortedPlayers} indexMap={indexMap} />
+            <MobileScorecard
+              data={data}
+              sortedPlayers={sortedPlayers}
+              indexMap={indexMap}
+              eventPointsMap={eventPointsMap}
+            />
           ) : (
             <DesktopScorecard data={data} sortedPlayers={sortedPlayers} indexMap={indexMap} />
           )}
