@@ -1,4 +1,4 @@
-import { Calendar, ExternalLink, ClipboardList, Trophy, DollarSign, BarChart3, Anchor, Lock, Globe, ScrollText } from "lucide-react";
+import { Calendar, ExternalLink, ClipboardList, Trophy, DollarSign, BarChart3, Anchor, Lock, Globe, FileText } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -159,12 +159,9 @@ const EventCard = ({ evt }: { evt: EventData }) => {
             </span>
           </div>
           <div className="mt-auto pt-4 space-y-2">
-            <Button variant="outline" size="sm" className="w-full h-9 text-sm" disabled>
-              <Globe className="mr-1.5 h-4 w-4" /> Course Site
-            </Button>
             <div className="grid grid-cols-2 gap-2">
               <Button variant="outline" size="sm" className="h-9 text-sm" disabled>
-                <ScrollText className="mr-1.5 h-4 w-4" /> Scorecard
+                <FileText className="mr-1.5 h-4 w-4" /> Scorecard
               </Button>
               <Button variant="outline" size="sm" className="h-9 text-sm" disabled>
                 <ClipboardList className="mr-1.5 h-4 w-4" /> Tee Sheet
@@ -183,28 +180,36 @@ const EventCard = ({ evt }: { evt: EventData }) => {
     <Card className="overflow-hidden flex flex-col">
       {imageSection}
       <div className="flex flex-1 flex-col p-7 gap-5">
-        {/* Two-column content panel */}
+        {/* Header: title + Course Site (top-right) */}
+        <div className="flex items-start justify-between gap-3">
+          <div className="min-w-0">
+            <h2 className="font-display text-3xl font-bold tracking-tight leading-tight">
+              {evt.name}
+            </h2>
+            {evt.subtitle && (
+              <p className="text-lg text-muted-foreground mt-0.5">
+                {evt.subtitle}
+              </p>
+            )}
+          </div>
+          {evt.courseUrl && (
+            <Button variant="outline" size="sm" className="h-8 px-3 text-xs shrink-0" asChild>
+              <a href={evt.courseUrl} target="_blank" rel="noopener noreferrer">
+                <Globe className="mr-1.5 h-3.5 w-3.5" /> Course Site
+              </a>
+            </Button>
+          )}
+        </div>
+
+        {/* Two-column details panel */}
         <div className="flex gap-8">
-          {/* Left column: identity + anchor day */}
-          <div className="flex-1 min-w-0 flex flex-col gap-3">
-            <div>
-              <h2 className="font-display text-3xl font-bold tracking-tight leading-tight">
-                {evt.name}
-              </h2>
-              {evt.subtitle && (
-                <p className="text-lg text-muted-foreground mt-0.5">
-                  {evt.subtitle}
-                </p>
-              )}
-            </div>
+          <div className="flex-1 min-w-0">
             <div className="flex items-center gap-2 text-base">
               <Anchor className="h-4.5 w-4.5 text-primary shrink-0" />
               <span className="text-muted-foreground">Anchor Day:</span>
               <span className="font-semibold text-lg">{evt.anchorDay}</span>
             </div>
           </div>
-
-          {/* Right column: payout + prizes */}
           <div className="shrink-0 flex flex-col items-end gap-3">
             <div className="flex items-center gap-2 text-base">
               <DollarSign className="h-4.5 w-4.5 text-primary shrink-0" />
@@ -232,13 +237,6 @@ const EventCard = ({ evt }: { evt: EventData }) => {
           const hasResults = !!evt.results;
           return (
             <div className="mt-auto pt-2 space-y-2">
-              {evt.courseUrl && (
-                <Button variant="outline" size="sm" className="w-full h-9 text-sm" asChild>
-                  <a href={evt.courseUrl} target="_blank" rel="noopener noreferrer">
-                    <Globe className="mr-1.5 h-4 w-4" /> Course Site
-                  </a>
-                </Button>
-              )}
               <div className="grid grid-cols-2 gap-2">
                 <Button
                   variant="outline"
@@ -249,11 +247,11 @@ const EventCard = ({ evt }: { evt: EventData }) => {
                 >
                   {hasScorecard ? (
                     <Link to={`/events/${slug}/scorecard`}>
-                      <ScrollText className="mr-1.5 h-4 w-4" /> Scorecard
+                      <FileText className="mr-1.5 h-4 w-4" /> Scorecard
                     </Link>
                   ) : (
                     <span>
-                      <ScrollText className="mr-1.5 h-4 w-4" /> Scorecard
+                      <FileText className="mr-1.5 h-4 w-4" /> Scorecard
                     </span>
                   )}
                 </Button>
