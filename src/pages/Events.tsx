@@ -183,9 +183,34 @@ const EventCard = ({ evt }: { evt: EventData }) => {
           {/* Left column: identity + anchor day */}
           <div className="flex-1 min-w-0 flex flex-col gap-3">
             <div>
-              <h2 className="font-display text-3xl font-bold tracking-tight leading-tight">
-                {evt.name}
-              </h2>
+              <div className="flex items-center gap-3 flex-wrap">
+                <h2 className="font-display text-3xl font-bold tracking-tight leading-tight">
+                  {evt.name}
+                </h2>
+                {(() => {
+                  const slug = slugifyName(evt.name);
+                  const hasData = !!SCORECARD_URLS[slug];
+                  return (
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="h-7 px-2.5 text-xs"
+                      asChild={hasData}
+                      disabled={!hasData}
+                    >
+                      {hasData ? (
+                        <Link to={`/events/${slug}/scorecard`}>
+                          <ScrollText className="mr-1 h-3.5 w-3.5" /> Scorecard
+                        </Link>
+                      ) : (
+                        <span>
+                          <ScrollText className="mr-1 h-3.5 w-3.5" /> Scorecard
+                        </span>
+                      )}
+                    </Button>
+                  );
+                })()}
+              </div>
               {evt.subtitle && (
                 <p className="text-lg text-muted-foreground mt-0.5">
                   {evt.subtitle}
