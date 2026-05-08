@@ -329,82 +329,68 @@ const DesktopScorecard = ({
   );
 };
 
-// ---------- Mobile: searchable, sortable, collapsible cards ----------
-type SortKey = "net" | "gross" | "front" | "back" | "name";
-
+// ---------- Mobile: jump-to-player + collapsible cards, ranked by event points ----------
 const MobileScorecard = ({
   data,
   sortedPlayers,
   indexMap,
+  eventPointsMap,
 }: {
   data: EventScorecardData;
   sortedPlayers: EventScorecardData["players"];
   indexMap: Record<string, number | null>;
+  eventPointsMap: Record<string, number>;
 }) => {
   const { course } = data;
-  const [query, setQuery] = useState("");
-  const [sortKey, setSortKey] = useState<SortKey>("net");
   const [expanded, setExpanded] = useState<Record<string, boolean>>({});
 
   const toggle = (slug: string) =>
     setExpanded((e) => ({ ...e, [slug]: !e[slug] }));
 
+  // Rank by event points (desc); tiebreak on net.
   const displayed = useMemo(() => {
     const nullsLast = (v: number | null) =>
       v == null ? Number.POSITIVE_INFINITY : v;
-    const list = sortedPlayers.filter((p) =>
-      p.name.toLowerCase().includes(query.trim().toLowerCase())
-    );
-    const sorted = [...list].sort((a, b) => {
-      switch (sortKey) {
-        case "name":
-          return a.name.localeCompare(b.name);
-        case "gross":
-          return nullsLast(a.total) - nullsLast(b.total);
-        case "front":
-          return nullsLast(a.out) - nullsLast(b.out);
-        case "back":
-          return nullsLast(a.in_) - nullsLast(b.in_);
-        case "net":
-        default:
-          return nullsLast(a.net) - nullsLast(b.net);
-      }
+    return [...sortedPlayers].sort((a, b) => {
+      const pa = eventPointsMap[a.slug] ?? 0;
+      const pb = eventPointsMap[b.slug] ?? 0;
+      if (pb !== pa) return pb - pa;
+      return nullsLast(a.net) - nullsLast(b.net);
     });
-    return sorted;
-  }, [sortedPlayers, query, sortKey]);
+  }, [sortedPlayers, eventPointsMap]);
+
+  // Player jump dropdown (alphabetical for easy lookup)
+  const jumpOptions = useMemo(
+    () => [...sortedPlayers].sort((a, b) => a.name.localeCompare(b.name)),
+    [sortedPlayers]
+  );
+
+  const jumpToPlayer = (slug: string) => {
+    setExpanded((e) => ({ ...e, [slug]: true }));
+    requestAnimationFrame(() => {
+      const el = document.getElementById(`player-${slug}`);
+      if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+  };
 
   return (
     <div className="space-y-3">
-      {/* Controls */}
-      <div className="flex gap-2 sticky top-0 z-10 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80 py-2 -mx-1 px-1">
-        <div className="relative flex-1 min-w-0">
-          <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-          <Input
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            placeholder="Search players"
-            className="pl-8 h-9"
-          />
-        </div>
-        <Select value={sortKey} onValueChange={(v) => setSortKey(v as SortKey)}>
-          <SelectTrigger className="h-9 w-[120px] shrink-0">
-            <SelectValue />
+      {/* Jump-to-player dropdown */}
+      <div className="sticky top-0 z-10 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80 py-2 -mx-1 px-1">
+        <Select value="" onValueChange={jumpToPlayer}>
+          <SelectTrigger className="h-9 w-full">
+            <SelectValue placeholder="Find a player…" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="net">Net</SelectItem>
-            <SelectItem value="gross">Gross</SelectItem>
-            <SelectItem value="front">Front 9</SelectItem>
-            <SelectItem value="back">Back 9</SelectItem>
-            <SelectItem value="name">Name</SelectItem>
+            {jumpOptions.map((p) => (
+              <SelectItem key={p.slug} value={p.slug}>
+                {p.name}
+              </SelectItem>
+            ))}
           </SelectContent>
         </Select>
       </div>
 
-      {displayed.length === 0 && (
-        <p className="text-sm text-muted-foreground text-center py-6">
-          No players match "{query}".
-        </p>
-      )}
 
       {displayed.map((p, idx) => {
         const isOpen = !!expanded[p.slug];
