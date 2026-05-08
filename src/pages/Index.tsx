@@ -113,9 +113,9 @@ const EventCarousel = () => {
   return (
     <div className="relative">
       <Carousel opts={{ startIndex, align: "start" }} setApi={setApi}>
-        <CarouselContent>
+        <CarouselContent className="ml-0">
           {EVENTS.map((evt, idx) => (
-            <CarouselItem key={evt.name}>
+            <CarouselItem key={evt.name} className="pl-0">
               <EventSlide evt={evt} isCurrent={idx === startIndex} />
             </CarouselItem>
           ))}
