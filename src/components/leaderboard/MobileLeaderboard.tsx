@@ -92,7 +92,12 @@ const MobileLeaderboard = ({ players, eventNames }: Props) => {
                   <div className="grid grid-cols-2 gap-x-4 gap-y-1">
                     {eventNames.map((name, i) => (
                       <div key={name} className="flex justify-between text-sm">
-                        <span className="text-muted-foreground">{name}</span>
+                        <Link
+                          to={`/events/${slugifyName(name)}/scorecard`}
+                          className="text-muted-foreground hover:text-primary transition-colors"
+                        >
+                          {name}
+                        </Link>
                         <span className="font-medium">
                           {p.eventPoints[i] > 0 ? p.eventPoints[i].toFixed(1) : "—"}
                         </span>
