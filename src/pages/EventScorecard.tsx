@@ -449,7 +449,7 @@ const MobileScorecard = ({
 
             {isOpen && (
               <div className="px-3 pb-3 pt-1 border-t bg-muted/10">
-                <div className="flex justify-between items-center text-xs text-muted-foreground mb-2 mt-2 gap-3">
+                <div className="flex justify-between items-center text-xs text-muted-foreground mb-2 mt-2 gap-3 flex-wrap">
                   <Link
                     to={`/players/${p.slug}`}
                     className="hover:text-primary font-medium"
@@ -464,6 +464,13 @@ const MobileScorecard = ({
                     <span className="mx-1.5 text-muted-foreground/50">·</span>
                     Course HCP{" "}
                     <span className="text-foreground font-medium">{p.hcp ?? "—"}</span>
+                    <span className="mx-1.5 text-muted-foreground/50">·</span>
+                    Points earned{" "}
+                    <span className="text-foreground font-semibold">
+                      {eventPointsMap[p.slug] != null && eventPointsMap[p.slug] > 0
+                        ? eventPointsMap[p.slug].toFixed(1)
+                        : "—"}
+                    </span>
                   </span>
                 </div>
                 <NineHoleRow
