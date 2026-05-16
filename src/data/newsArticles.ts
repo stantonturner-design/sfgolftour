@@ -12,7 +12,7 @@ export interface NewsArticle {
   excerpt: string;
   coverImage: string;
   publishDate: string; // ISO string
-  category: "Tour News" | "Schedule" | "Event News" | "Anchor Day" | "Event Recap";
+  category: "Tour News" | "Schedule" | "Event News" | "Event Preview" | "Anchor Day" | "Event Recap";
   body: string; // HTML string — will be replaced by rich text from backend later
 }
 
