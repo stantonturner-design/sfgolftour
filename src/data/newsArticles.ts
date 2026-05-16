@@ -3,6 +3,7 @@ import baylandsImg from "@/assets/news/baylands-recap.jpg";
 import presidioImg from "@/assets/news/presidio-spotlight.jpg";
 import membersImg from "@/assets/news/new-members.jpg";
 import coricaRecapImg from "@/assets/news/corica-north-recap.jpg";
+import coyoteCreekImg from "@/assets/news/coyote-creek-preview.jpg";
 
 export interface NewsArticle {
   id: string;
@@ -11,11 +12,29 @@ export interface NewsArticle {
   excerpt: string;
   coverImage: string;
   publishDate: string; // ISO string
-  category: "Tour News" | "Schedule" | "Event News" | "Anchor Day" | "Event Recap";
+  category: "Tour News" | "Schedule" | "Event News" | "Event Preview" | "Anchor Day" | "Event Recap";
   body: string; // HTML string — will be replaced by rich text from backend later
 }
 
 export const newsArticles: NewsArticle[] = [
+  {
+    id: "7",
+    slug: "coyote-creek-awaits-tour-heads-south",
+    title: "Coyote Creek Awaits: The Tour Heads South",
+    excerpt:
+      "Event No. 2 takes the SFGT to Coyote Creek Golf Club's Valley Course in San Jose — a brand new stop, an Anchor Day on May 31, and a June 13 payout date keeping the chase rolling.",
+    coverImage: coyoteCreekImg,
+    publishDate: "2026-05-16T12:00:00Z",
+    category: "Event Preview",
+    body: `
+      <p>After a great season opener at Corica, the SFGT is officially back in motion — and the next stop takes the tour somewhere brand new.</p>
+      <p>Event No. 2 brings the tour to Coyote Creek Golf Club's Valley Course, located in San Jose. Coyote Creek is home to 36 Jack Nicklaus-designed holes across the Valley and Tournament courses, making this a fitting first-time stop for the tour.</p>
+      <p>The Valley Course should be a great follow-up to Corica: playable enough for everyone to post a number, but with enough trouble to punish loose swings and shaky decisions. The hole everyone will be talking about is likely No. 7, the course's signature par 3 — the kind of hole that can change a round quickly and give the group chat plenty to work with after the cards come in.</p>
+      <p>Our Anchor Day is Sunday, May 31, with 24 spots available. It will give players a chance to tee it up together, build momentum, climb the standings, and start making an early case that they belong in the mix.</p>
+      <p>With the June 13 payout date approaching, and golf season starting to hit full stride, now is the time to get going. Get your round declared, get your group together, and get back into the chase.</p>
+      <p>Corica got the season started. Coyote Creek is where the chase continues.</p>
+    `,
+  },
   {
     id: "6",
     slug: "corica-north-event-recap-champ-cashes-first",
