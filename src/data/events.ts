@@ -49,7 +49,7 @@ export const EVENTS: EventData[] = [
     ],
     teeSheet: "#",
     handicaps: "",
-    results: "",
+    results: "https://roundrecap.com/g/sfgt/rounds/2026-cayote-creek-valley-course-481bed80-e95b-49be-babf-576e8710ff0d",
     courseUrl: "https://coyotecreekgolf.com/",
   },
   {
