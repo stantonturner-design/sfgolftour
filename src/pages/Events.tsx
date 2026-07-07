@@ -130,27 +130,14 @@ const EventCard = ({ evt }: { evt: EventData }) => {
         {/* Action buttons: Course Site → [Scorecard | Tee Sheet] → Round Recap */}
         {(() => {
           const slug = slugifyName(evt.name);
-          const hasScorecard = !!SCORECARD_URLS[slug];
           const hasResults = !!evt.results;
           return (
             <div className="mt-auto pt-2 space-y-2">
               <div className="grid grid-cols-2 gap-2">
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="h-9 text-sm"
-                  asChild={hasScorecard}
-                  disabled={!hasScorecard}
-                >
-                  {hasScorecard ? (
-                    <Link to={`/events/${slug}/scorecard`}>
-                      <FileText className="mr-1.5 h-4 w-4" /> Scorecard
-                    </Link>
-                  ) : (
-                    <span>
-                      <FileText className="mr-1.5 h-4 w-4" /> Scorecard
-                    </span>
-                  )}
+                <Button variant="outline" size="sm" className="h-9 text-sm" asChild>
+                  <Link to={`/events/${slug}/scorecard`}>
+                    <FileText className="mr-1.5 h-4 w-4" /> Scorecard
+                  </Link>
                 </Button>
                 <Button variant="outline" size="sm" className="h-9 text-sm" asChild>
                   <Link to={`/tee-sheet?event=${encodeURIComponent(evt.name)}`}>
