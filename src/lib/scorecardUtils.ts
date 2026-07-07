@@ -6,10 +6,10 @@ const SHEET_BASE =
 // Slug → CSV URL for hole-by-hole event sheet. Empty/missing = no scorecard yet.
 export const SCORECARD_URLS: Record<string, string | null> = {
   corica: `${SHEET_BASE}?gid=397283659&single=true&output=csv`,
-  "coyote-creek": null,
-  chardonnay: null,
-  "poppy-ridge": null,
-  presidio: null,
+  "coyote-creek": `${SHEET_BASE}?gid=1206260632&single=true&output=csv`,
+  chardonnay: `${SHEET_BASE}?gid=790209862&single=true&output=csv`,
+  "poppy-ridge": `${SHEET_BASE}?gid=1808339927&single=true&output=csv`,
+  presidio: `${SHEET_BASE}?gid=680330453&single=true&output=csv`,
   finale: null,
 };
 
