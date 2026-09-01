@@ -20,6 +20,7 @@ export interface EventData {
   courseUrl?: string;
   note?: string;
   isFinale?: boolean;
+  isMajor?: boolean;
 }
 
 export const EVENTS: EventData[] = [
@@ -84,8 +85,9 @@ export const EVENTS: EventData[] = [
     name: "Poppy Ridge",
     subtitle: "",
     image: poppyImg,
-    payoutDate: "September 26",
-    anchorDay: "TBD",
+    payoutDate: "November 11",
+    anchorDay: "September 27",
+    isMajor: true,
     netFirstPrize: 425,
     netSecondPrize: 75,
     grossFirstPrize: 75,
@@ -103,8 +105,8 @@ export const EVENTS: EventData[] = [
     name: "Presidio",
     subtitle: "",
     image: presidioImg,
-    payoutDate: "November 7",
-    anchorDay: "TBD",
+    payoutDate: "November 11",
+    anchorDay: "",
     netFirstPrize: 300,
     netSecondPrize: 50,
     grossFirstPrize: 50,
