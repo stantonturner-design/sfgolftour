@@ -81,8 +81,13 @@ const EventCard = ({ evt }: { evt: EventData }) => {
         {/* Header: title + Course Site (top-right) */}
         <div className="flex items-start justify-between gap-3">
           <div className="min-w-0">
-            <h2 className="font-display text-3xl font-bold tracking-tight leading-tight">
+            <h2 className="font-display text-3xl font-bold tracking-tight leading-tight flex items-center gap-2">
               {evt.name}
+              {evt.isMajor && (
+                <span title="Major event — double points" className="inline-flex items-center gap-1 rounded-full bg-primary/10 px-2 py-0.5 text-xs font-semibold text-primary">
+                  <Trophy className="h-3.5 w-3.5" /> Major · 2x Points
+                </span>
+              )}
             </h2>
             {evt.subtitle && (
               <p className="text-lg text-muted-foreground mt-0.5">
@@ -102,11 +107,13 @@ const EventCard = ({ evt }: { evt: EventData }) => {
         {/* Two-column details panel */}
         <div className="flex gap-8">
           <div className="flex-1 min-w-0">
-            <div className="flex items-center gap-2 text-base">
-              <Anchor className="h-4.5 w-4.5 text-primary shrink-0" />
-              <span className="text-muted-foreground">Anchor Day:</span>
-              <span className="font-semibold text-lg">{evt.anchorDay}</span>
-            </div>
+            {evt.anchorDay && (
+              <div className="flex items-center gap-2 text-base">
+                <Anchor className="h-4.5 w-4.5 text-primary shrink-0" />
+                <span className="text-muted-foreground">Anchor Day:</span>
+                <span className="font-semibold text-lg">{evt.anchorDay}</span>
+              </div>
+            )}
           </div>
           <div className="shrink-0 flex flex-col items-end gap-3">
             <div className="flex items-center gap-2 text-base">
