@@ -4,6 +4,7 @@ import presidioImg from "@/assets/news/presidio-spotlight.jpg";
 import membersImg from "@/assets/news/new-members.jpg";
 import coricaRecapImg from "@/assets/news/corica-north-recap.jpg";
 import coyoteCreekImg from "@/assets/news/coyote-creek-preview.jpg";
+import stretchRunImg from "@/assets/news/stretch-run.jpg";
 
 export interface NewsArticle {
   id: string;
