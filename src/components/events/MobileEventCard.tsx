@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { ClipboardList, ExternalLink, BarChart3, Anchor, DollarSign, Lock, Globe, FileText } from "lucide-react";
+import { ClipboardList, ExternalLink, BarChart3, Trophy, Anchor, DollarSign, Lock, Globe, FileText } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -76,7 +76,14 @@ const MobileEventCard = ({ evt }: { evt: EventData }) => {
         {/* Title + Course Site */}
         <div className="flex items-start justify-between gap-3">
           <div className="min-w-0">
-            <h2 className="font-display text-2xl font-bold tracking-tight">{evt.name}</h2>
+            <h2 className="font-display text-2xl font-bold tracking-tight flex items-center gap-2 flex-wrap">
+              {evt.name}
+              {evt.isMajor && (
+                <span className="inline-flex items-center gap-1 rounded-full bg-primary/10 px-2 py-0.5 text-[11px] font-semibold text-primary">
+                  <Trophy className="h-3 w-3" /> Major · 2x
+                </span>
+              )}
+            </h2>
             {evt.subtitle && (
               <p className="text-base text-muted-foreground mt-0.5">{evt.subtitle}</p>
             )}
@@ -97,11 +104,13 @@ const MobileEventCard = ({ evt }: { evt: EventData }) => {
             <span className="text-muted-foreground">Cash Prize Payout:</span>
             <span className="font-semibold">{evt.payoutDate}</span>
           </div>
-          <div className="flex items-center gap-2 text-sm">
-            <Anchor className="h-4 w-4 text-primary shrink-0" />
-            <span className="text-muted-foreground">Anchor Day:</span>
-            <span className="font-semibold">{evt.anchorDay}</span>
-          </div>
+          {evt.anchorDay && (
+            <div className="flex items-center gap-2 text-sm">
+              <Anchor className="h-4 w-4 text-primary shrink-0" />
+              <span className="text-muted-foreground">Anchor Day:</span>
+              <span className="font-semibold">{evt.anchorDay}</span>
+            </div>
+          )}
         </div>
 
         {/* Prize chips */}
