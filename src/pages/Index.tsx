@@ -47,7 +47,14 @@ const EventSlide = ({ evt, isCurrent }: { evt: EventData; isCurrent: boolean }) 
             </p>
           </div>
 
-          <h3 className="text-xl md:text-2xl font-bold leading-tight">{displayName}</h3>
+          <h3 className="text-xl md:text-2xl font-bold leading-tight flex items-center gap-2 flex-wrap">
+            {displayName}
+            {evt.isMajor && (
+              <span className="inline-flex items-center gap-1 rounded-full bg-primary/10 px-2 py-0.5 text-[11px] font-semibold text-primary">
+                <Trophy className="h-3 w-3" /> Major · 2x
+              </span>
+            )}
+          </h3>
 
           <div className="mt-4 grid grid-cols-2 gap-3">
             <div className="rounded-lg bg-card/60 border border-border/50 p-3">
@@ -61,7 +68,7 @@ const EventSlide = ({ evt, isCurrent }: { evt: EventData; isCurrent: boolean }) 
               <p className="text-muted-foreground text-[10px] uppercase tracking-wider font-semibold mb-1">Anchor Day</p>
               <p className="font-bold text-sm flex items-center gap-1.5">
                 <Anchor className="h-3.5 w-3.5 text-primary" />
-                {evt.anchorDay}
+                {evt.anchorDay || "TBD"}
               </p>
             </div>
           </div>
