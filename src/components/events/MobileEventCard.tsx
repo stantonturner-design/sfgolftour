@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { ClipboardList, ExternalLink, BarChart3, Anchor, DollarSign, Lock, Globe, FileText } from "lucide-react";
+import { ClipboardList, ExternalLink, BarChart3, Trophy, Anchor, DollarSign, Lock, Globe, FileText } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
