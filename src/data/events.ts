@@ -10,6 +10,9 @@ export interface EventData {
   image: string;
   payoutDate: string;
   anchorDay: string;
+  netFirstPrize: number;
+  netSecondPrize: number;
+  grossFirstPrize: number;
   prizes: { place: string; amount: string }[];
   teeSheet: string;
   handicaps: string;
@@ -26,6 +29,9 @@ export const EVENTS: EventData[] = [
     image: coricaImg,
     payoutDate: "May 2",
     anchorDay: "April 4",
+    netFirstPrize: 300,
+    netSecondPrize: 50,
+    grossFirstPrize: 50,
     prizes: [
       { place: "Net 1", amount: "$300" },
       { place: "Net 2", amount: "$50" },
@@ -42,6 +48,9 @@ export const EVENTS: EventData[] = [
     image: "https://playeasy.com/cdn-cgi/image/width=1200,fit=scale-down,format=auto,quality=85/https://storage.playeasy.com/facility-mgmt/060f01d2-5808-4a3f-b62d-d2d9e884398c",
     payoutDate: "June 13",
     anchorDay: "May 31",
+    netFirstPrize: 300,
+    netSecondPrize: 50,
+    grossFirstPrize: 50,
     prizes: [
       { place: "Net 1", amount: "$300" },
       { place: "Net 2", amount: "$50" },
@@ -58,10 +67,13 @@ export const EVENTS: EventData[] = [
     image: chardonnayImg,
     payoutDate: "August 1",
     anchorDay: "July 11",
+    netFirstPrize: 300,
+    netSecondPrize: 50,
+    grossFirstPrize: 50,
     prizes: [
-      { place: "Net 1", amount: "$TBD" },
-      { place: "Net 2", amount: "$TBD" },
-      { place: "Gross", amount: "$TBD" },
+      { place: "Net 1", amount: "$300" },
+      { place: "Net 2", amount: "$50" },
+      { place: "Gross", amount: "$50" },
     ],
     teeSheet: "#",
     handicaps: "",
@@ -74,10 +86,13 @@ export const EVENTS: EventData[] = [
     image: poppyImg,
     payoutDate: "September 26",
     anchorDay: "TBD",
+    netFirstPrize: 425,
+    netSecondPrize: 75,
+    grossFirstPrize: 75,
     prizes: [
-      { place: "Net 1", amount: "$TBD" },
-      { place: "Net 2", amount: "$TBD" },
-      { place: "Gross", amount: "$TBD" },
+      { place: "Net 1", amount: "$425" },
+      { place: "Net 2", amount: "$75" },
+      { place: "Gross", amount: "$75" },
     ],
     teeSheet: "#",
     handicaps: "",
@@ -90,10 +105,13 @@ export const EVENTS: EventData[] = [
     image: presidioImg,
     payoutDate: "November 7",
     anchorDay: "TBD",
+    netFirstPrize: 300,
+    netSecondPrize: 50,
+    grossFirstPrize: 50,
     prizes: [
-      { place: "Net 1", amount: "$TBD" },
-      { place: "Net 2", amount: "$TBD" },
-      { place: "Gross", amount: "$TBD" },
+      { place: "Net 1", amount: "$300" },
+      { place: "Net 2", amount: "$50" },
+      { place: "Gross", amount: "$50" },
     ],
     teeSheet: "#",
     handicaps: "",
@@ -106,6 +124,9 @@ export const EVENTS: EventData[] = [
     image: finaleImg,
     payoutDate: "TBD",
     anchorDay: "TBD",
+    netFirstPrize: 0,
+    netSecondPrize: 0,
+    grossFirstPrize: 0,
     prizes: [],
     teeSheet: "#",
     handicaps: "",
@@ -113,6 +134,25 @@ export const EVENTS: EventData[] = [
     isFinale: true,
   },
 ];
+
+/** Total cash purse for an event, derived from its prize fields. */
+export function getEventPurse(evt: EventData): number {
+  return evt.netFirstPrize + evt.netSecondPrize + evt.grossFirstPrize;
+}
+
+/** Formats a whole-dollar amount, e.g. 300 -> "$300". */
+export function formatPrize(amount: number): string {
+  return `$${amount.toLocaleString("en-US")}`;
+}
+
+/** Prize breakdown rows for display. */
+export function getPrizeBreakdown(evt: EventData) {
+  return [
+    { label: "Net 1st", amount: evt.netFirstPrize },
+    { label: "Net 2nd", amount: evt.netSecondPrize },
+    { label: "Gross 1st", amount: evt.grossFirstPrize },
+  ];
+}
 
 /**
  * Returns the index of the next/current event based on payoutDate (assumed in current year).

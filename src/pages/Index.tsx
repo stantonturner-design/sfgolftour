@@ -19,6 +19,7 @@ import {
 import { SHEET_URL, HANDICAPS_URL, parseRRHomePageUrl, slugifyName } from "@/lib/playerUtils";
 import sfgtLogo from "@/assets/sfgt-logo.png";
 import roundRecapLogo from "@/assets/round-recap-logo.png";
+import PrizeMoney from "@/components/events/PrizeMoney";
 import { EVENTS, getCurrentEventIndex, type EventData } from "@/data/events";
 
 
@@ -65,15 +66,7 @@ const EventSlide = ({ evt, isCurrent }: { evt: EventData; isCurrent: boolean }) 
             </div>
           </div>
 
-          {evt.prizes.length > 0 && (
-            <div className="mt-3 flex flex-wrap gap-1.5">
-              {evt.prizes.map((p) => (
-                <Badge key={p.place} className="bg-primary/10 text-primary border-primary/20 text-xs font-semibold px-2.5 py-0.5">
-                  {p.place}: {p.amount}
-                </Badge>
-              ))}
-            </div>
-          )}
+          <PrizeMoney evt={evt} className="mt-3 bg-card/60 border-border/50" />
 
           <div className="mt-auto pt-5 flex flex-wrap gap-2.5">
             <Button size="default" className="bg-primary text-primary-foreground hover:bg-primary/90 shadow-sm" asChild>

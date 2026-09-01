@@ -8,6 +8,7 @@ import { Badge } from "@/components/ui/badge";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { useIsMobile } from "@/hooks/use-mobile";
 import MobileEventCard from "@/components/events/MobileEventCard";
+import PrizeMoney from "@/components/events/PrizeMoney";
 import { slugifyName } from "@/lib/playerUtils";
 import { SCORECARD_URLS } from "@/lib/scorecardUtils";
 
@@ -113,13 +114,7 @@ const EventCard = ({ evt }: { evt: EventData }) => {
               <span className="text-muted-foreground">Payout:</span>
               <span className="font-semibold text-lg">{evt.payoutDate}</span>
             </div>
-            <div className="flex flex-wrap justify-end gap-2">
-              {evt.prizes.map((p) => (
-                <Badge key={p.place} variant="secondary" className="text-xs font-semibold px-2 py-1">
-                  {p.place}: {p.amount}
-                </Badge>
-              ))}
-            </div>
+            <PrizeMoney evt={evt} className="w-[220px]" />
           </div>
         </div>
 
