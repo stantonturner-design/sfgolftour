@@ -5,21 +5,9 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { slugifyName } from "@/lib/playerUtils";
 import { SCORECARD_URLS } from "@/lib/scorecardUtils";
+import PrizeMoney from "@/components/events/PrizeMoney";
 
-interface EventData {
-  name: string;
-  subtitle: string;
-  image: string;
-  payoutDate: string;
-  anchorDay: string;
-  prizes: { place: string; amount: string }[];
-  teeSheet: string;
-  handicaps: string;
-  results: string;
-  courseUrl?: string;
-  note?: string;
-  isFinale?: boolean;
-}
+import type { EventData } from "@/data/events";
 
 const MobileEventCard = ({ evt }: { evt: EventData }) => {
   if (evt.isFinale) {
@@ -117,15 +105,7 @@ const MobileEventCard = ({ evt }: { evt: EventData }) => {
         </div>
 
         {/* Prize chips */}
-        {evt.prizes.length > 0 && (
-          <div className="flex flex-wrap gap-1.5">
-            {evt.prizes.map((p) => (
-              <Badge key={p.place} variant="secondary" className="text-xs font-semibold px-2 py-1">
-                {p.place}: {p.amount}
-              </Badge>
-            ))}
-          </div>
-        )}
+        <PrizeMoney evt={evt} />
 
         {evt.note && (
           <p className="text-sm text-muted-foreground italic">{evt.note}</p>
