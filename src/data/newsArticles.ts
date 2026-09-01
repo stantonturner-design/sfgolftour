@@ -4,6 +4,7 @@ import presidioImg from "@/assets/news/presidio-spotlight.jpg";
 import membersImg from "@/assets/news/new-members.jpg";
 import coricaRecapImg from "@/assets/news/corica-north-recap.jpg";
 import coyoteCreekImg from "@/assets/news/coyote-creek-preview.jpg";
+import stretchRunImg from "@/assets/news/stretch-run.jpg";
 
 export interface NewsArticle {
   id: string;
@@ -17,6 +18,48 @@ export interface NewsArticle {
 }
 
 export const newsArticles: NewsArticle[] = [
+  {
+    id: "8",
+    slug: "stretch-run-barker-returns-poppy-window-extended",
+    title:
+      "The Stretch Run Is Here: Barker Returns, Poppy Window Extended & Anchor Day Set",
+    excerpt:
+      "Jake Barker returned from a broken rib and immediately won Chardonnay. Now the Major window is extended, Poppy Ridge has 2X points on the table, and the final 10 weeks of the SFGT season are set up for chaos.",
+    coverImage: stretchRunImg,
+    publishDate: "2026-09-01T12:00:00Z",
+    category: "Tour News",
+    body: `
+      <p>The back half of the SFGT season snuck all the way up on us, but somehow the leaderboard is only getting messier.</p>
+      <p>At Chardonnay, Jake Barker made his 2026 season debut in style, returning from a broken rib and immediately taking down the event.</p>
+      <p>Apparently the preferred recovery plan is rest, rehab, and then showing up months into the season and beating everyone.</p>
+      <p>The win launched Barker straight into the playoff picture, and as things currently stand, he holds a spot in the field for the Finale. With plenty of golf still left to play, his arrival adds another name to an already crowded race for the postseason.</p>
+      <p>And that race is about to get even more interesting.</p>
+
+      <h2>More Time to Take a Shot at the Major</h2>
+      <p>We are officially extending the Poppy Ridge play-by date through the end of the regular season.</p>
+      <p>That means both Poppy Ridge and Presidio can now be played anytime between now and <strong>November 11</strong>, when the regular-season points standings will officially close ahead of the <strong>SFGT Finale on November 14</strong>.</p>
+      <p>The goal is simple: give everybody a real opportunity to get the biggest round of the season on the books.</p>
+      <p>Because Poppy isn't just another stop.</p>
+      <p><strong>Poppy Ridge is the 2026 Major, and 2X points are up for grabs.</strong></p>
+      <p>With roughly 10 weeks remaining in the regular season, that gives players plenty of time to make a move — while also creating the possibility for some absolute leaderboard chaos down the stretch.</p>
+      <p>Someone sitting outside the playoff field today could look very different after a big Major finish. Someone comfortably inside the cut line might suddenly find themselves sweating in November.</p>
+      <p>In other words: no spot is safe yet.</p>
+
+      <h2>Poppy Ridge Anchor Day — September 27</h2>
+      <p>For anyone looking to play the Major with the group, the official Poppy Ridge Anchor Day is set:</p>
+      <p><strong>Sunday, September 27 at 11:00 AM</strong></p>
+      <p>We'll have a group heading out together for what should be one of the biggest days of the Tour season.</p>
+      <p>If you can make the Anchor Day, get it on the calendar. If you can't, you've now got all the way through November 11 to get your Major round completed.</p>
+      <p>Either way, get it played.</p>
+
+      <h2>Ten Weeks. Two Rounds. One Finale.</h2>
+      <p>The season has reached the part where every point starts to matter.</p>
+      <p>Barker just went from making his season debut to sitting in a playoff position. Poppy Ridge has double points sitting on the table. Presidio is still waiting. And the Finale field won't be locked until November 11.</p>
+      <p>There is a lot of golf left.</p>
+      <p>There is also a lot of room for things to get weird.</p>
+      <p><strong>Welcome to the stretch run.</strong></p>
+    `,
+  },
   {
     id: "7",
     slug: "coyote-creek-awaits-tour-heads-south",
