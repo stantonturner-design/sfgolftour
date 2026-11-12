@@ -1,3 +1,4 @@
+import FinaleEventCard from "@/components/events/FinaleEventCard";
 import { Link } from "react-router-dom";
 import { ClipboardList, ExternalLink, BarChart3, Trophy, Anchor, DollarSign, Lock, Globe, FileText } from "lucide-react";
 import { Card } from "@/components/ui/card";
@@ -10,54 +11,7 @@ import PrizeMoney from "@/components/events/PrizeMoney";
 import type { EventData } from "@/data/events";
 
 const MobileEventCard = ({ evt }: { evt: EventData }) => {
-  if (evt.isFinale) {
-    return (
-      <Card className="overflow-hidden opacity-75">
-        <div className="w-full aspect-[16/9] bg-muted relative">
-          <img
-            src={evt.image}
-            alt={evt.name}
-            className="h-full w-full object-cover"
-            loading="lazy"
-          />
-          <div className="absolute inset-0 bg-foreground/5 flex items-center justify-center">
-            <Lock className="h-8 w-8 text-muted-foreground/40" />
-          </div>
-        </div>
-        <div className="p-5 space-y-3">
-          <div>
-            <h2 className="font-display text-2xl font-bold">{evt.name}</h2>
-            <p className="text-base text-muted-foreground italic">{evt.subtitle}</p>
-          </div>
-          <div className="space-y-1.5 text-sm text-muted-foreground">
-            <div className="flex items-center gap-2">
-              <DollarSign className="h-4 w-4 text-muted-foreground/40" />
-              <span>Cash Prize Payout:</span>
-              <span className="font-medium">TBD</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <Anchor className="h-4 w-4 text-muted-foreground/40" />
-              <span>Anchor Day:</span>
-              <span className="font-medium">TBD</span>
-            </div>
-          </div>
-          <div className="space-y-2 pt-1">
-            <div className="grid grid-cols-2 gap-2">
-              <Button variant="outline" size="sm" className="h-9 text-sm" disabled>
-                <FileText className="mr-1.5 h-4 w-4" /> Scorecard
-              </Button>
-              <Button variant="outline" size="sm" className="h-9 text-sm" disabled>
-                <ClipboardList className="mr-1.5 h-4 w-4" /> Tee Sheet
-              </Button>
-            </div>
-            <Button size="sm" className="w-full h-9 text-sm" disabled>
-              <ExternalLink className="mr-1.5 h-4 w-4" /> Round Recap
-            </Button>
-          </div>
-        </div>
-      </Card>
-    );
-  }
+  if (evt.isFinale) return <FinaleEventCard evt={evt} mobile />;
 
   return (
     <Card className="overflow-hidden">
