@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Layout from "@/components/layout/Layout";
 import Index from "./pages/Index";
 import Events from "./pages/Events";
+import Finale2026 from "./pages/Finale2026";
 import EventScorecard from "./pages/EventScorecard";
 import Leaderboard from "./pages/Leaderboard";
 import News from "./pages/News";
@@ -28,6 +29,7 @@ const App = () => (
           <Route element={<Layout />}>
             <Route path="/" element={<Index />} />
             <Route path="/events" element={<Events />} />
+            <Route path="/finale-2026" element={<Finale2026 />} />
             <Route path="/events/:slug/scorecard" element={<EventScorecard />} />
             <Route path="/leaderboard" element={<Leaderboard />} />
             <Route path="/news" element={<News />} />
