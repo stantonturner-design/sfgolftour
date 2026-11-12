@@ -23,6 +23,19 @@ export interface EventData {
   isMajor?: boolean;
 }
 
+/** Presentation details only; this does not determine standings or eligibility. */
+export const FINALE_CHAMPIONSHIP = {
+  title: "2026 SFGT Finale",
+  subtitle: "The Road to the Championship Ends Here.",
+  date: "November 14, 2026",
+  weekday: "Saturday",
+  qualifyingPlayers: 24,
+  roundHoles: 18,
+  playoffPlayers: 4,
+  playoffHoles: 4,
+  prizePurse: "To Be Announced",
+} as const;
+
 export const EVENTS: EventData[] = [
   {
     name: "Corica",
